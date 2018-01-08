@@ -124,7 +124,7 @@ public class Constant {
 	public static long Stop_Time = 0;
 
 	// ================== about gprs info =================================
-	
+	// 模块Imei
 	public static String Gprs_Imei = "861390030083946";
 	
 	// Mac地址
