@@ -153,7 +153,7 @@ public class Utils {
 	 * @param src
 	 * @return
 	 */
-	public static byte[] longToBytes(Long src) {
+	public static byte[] longToBytes(long src) {
 
 		byte[] value = new byte[8];
 
