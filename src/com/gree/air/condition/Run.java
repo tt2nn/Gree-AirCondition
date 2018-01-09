@@ -3,7 +3,6 @@ package com.gree.air.condition;
 import com.gree.air.condition.center.DataCenter;
 import com.gree.air.condition.center.Timer;
 import com.gree.air.condition.sms.SmsServer;
-import com.gree.air.condition.tcp.TcpServer;
 import com.gree.air.condition.uart.UartServer;
 
 /**
@@ -29,9 +28,9 @@ public class Run {
 
 			SmsServer.startServer();
 
-//			TcpServer.startServer();
+			// TcpServer.startServer();
 
-//			DataCenter.chooseTransmit();
+			// DataCenter.chooseTransmit();
 
 			DataCenter.startUploadData();
 

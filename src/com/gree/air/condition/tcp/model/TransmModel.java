@@ -89,32 +89,32 @@ public class TransmModel {
 	/**
 	 * GPRS模块上传机组数据
 	 */
-	public static void dataTransm(int dataLength) {
+	public static void dataTransm(int dataLength, long time) {
 
-		Constant.Tcp_Out_Buffer[18] = (byte) 0x96;
+		Constant.Tcp_Out_Data_Buffer[18] = (byte) 0x96;
 
-		// int year = Constant.Tcp_Out_Buffer[19] & 0xFF + 2000;
-		// int month = Constant.Tcp_Out_Buffer[20] & 0xFF;
-		// int day = Constant.Tcp_Out_Buffer[21] & 0xFF;
-		// int hour = Constant.Tcp_Out_Buffer[22] & 0xFF;
-		// int min = Constant.Tcp_Out_Buffer[23] & 0xFF;
-		// int sec = Constant.Tcp_Out_Buffer[24] & 0xFF;
-		//
-		// long dataTime = Utils.getTime(year, month, day, hour, min, sec);
-		//
-		// date.setTime(Constant.Heart_Time - dataTime);
-		// calendar.setTime(date);
-		// Constant.Tcp_Out_Buffer[19] = (byte) (calendar.get(Calendar.YEAR) - 2000);
-		// Constant.Tcp_Out_Buffer[20] = (byte) (calendar.get(Calendar.MONTH) + 1);
-		// Constant.Tcp_Out_Buffer[21] = (byte) calendar.get(Calendar.DATE);
-		//
-		// int localDay = calendar.get(Calendar.HOUR_OF_DAY) + 8;
-		// localDay = localDay > 24 ? localDay - 24 : localDay;
-		// Constant.Tcp_Out_Buffer[22] = (byte) localDay;
-		// Constant.Tcp_Out_Buffer[23] = (byte) calendar.get(Calendar.MINUTE);
-		// Constant.Tcp_Out_Buffer[24] = (byte) calendar.get(Calendar.SECOND);
+		// 获取年月日时分秒
+		date.setTime(Constant.System_Time);
+		calendar.setTime(date);
+		Constant.Tcp_Out_Data_Buffer[19] = (byte) (calendar.get(Calendar.YEAR) - 2000);
+		Constant.Tcp_Out_Data_Buffer[20] = (byte) (calendar.get(Calendar.MONTH) + 1);
 
-		TcpModel.build(dataLength + 1, dataLength + 19);
+		int localDay = calendar.get(Calendar.DATE);
+		int localHour = calendar.get(Calendar.HOUR_OF_DAY) + 8;
+
+		if (localHour > 23) {
+
+			localDay++;
+			localHour -= 24;
+
+		}
+
+		Constant.Tcp_Out_Data_Buffer[21] = (byte) localDay;
+		Constant.Tcp_Out_Data_Buffer[22] = (byte) localHour;
+		Constant.Tcp_Out_Data_Buffer[23] = (byte) calendar.get(Calendar.MINUTE);
+		Constant.Tcp_Out_Data_Buffer[24] = (byte) calendar.get(Calendar.SECOND);
+
+		TcpModel.buildForTransm(dataLength + 7, dataLength + 25);
 	}
 
 	/**

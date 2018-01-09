@@ -68,10 +68,11 @@ public class ControlCenter {
 	 * 传输数据
 	 * 
 	 * @param length
+	 * @param time
 	 */
-	public static void transmitData(int length) {
+	public static void transmitData(int length, long time) {
 
-		TransmModel.dataTransm(length);
+		TransmModel.dataTransm(length, time);
 	}
 
 	/**

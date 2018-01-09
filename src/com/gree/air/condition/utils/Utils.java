@@ -147,4 +147,46 @@ public class Utils {
 
 	}
 
+	/**
+	 * long 转 byte[8] 高位在前地位在后
+	 * 
+	 * @param src
+	 * @return
+	 */
+	public static byte[] longToBytes(Long src) {
+
+		byte[] value = new byte[8];
+
+		long temp = src / 1000;
+
+		value[0] = (byte) ((temp >> (8 * 7)) & 0xFF);
+		value[1] = (byte) ((temp >> (8 * 6)) & 0xFF);
+		value[2] = (byte) ((temp >> (8 * 5)) & 0xFF);
+		value[3] = (byte) ((temp >> (8 * 4)) & 0xFF);
+		value[4] = (byte) ((temp >> (8 * 3)) & 0xFF);
+		value[5] = (byte) ((temp >> (8 * 2)) & 0xFF);
+		value[6] = (byte) ((temp >> 8) & 0xFF);
+		value[7] = (byte) (temp & 0xFF);
+
+		return value;
+	}
+
+	/**
+	 * byte[8] 转 long 高位在前地位在后
+	 * 
+	 * @param src
+	 * @return
+	 */
+	public static long bytesToLong(byte[] src, int start) {
+
+		long value;
+
+		value = (long) (((src[start] & 0xFF) << (8 * 7)) | ((src[start + 1] & 0xFF) << (8 * 6))
+				| ((src[start + 2] & 0xFF) << (8 * 5)) | ((src[start + 3] & 0xFF) << (8 * 4))
+				| ((src[start + 4] & 0xFF) << (8 * 3)) | ((src[start + 5] & 0xFF) << (8 * 2))
+				| ((src[start + 6] & 0xFF) << 8) | (src[start + 7] & 0xFF));
+
+		return value * 1000;
+	}
+
 }

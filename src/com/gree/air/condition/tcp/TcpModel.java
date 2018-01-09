@@ -110,6 +110,11 @@ public class TcpModel {
 	 */
 	public static void build(int dataLength, int crcPosition) {
 
+		if (!TcpServer.isServerWorking()) {
+
+			return;
+		}
+
 		while (!TcpServer.isServerNormal()) {
 
 			try {
@@ -155,6 +160,70 @@ public class TcpModel {
 		}
 
 		System.out.println("tcp send message ---" + s);
+
+		TcpServer.sendData(crcPosition + 1);
+	}
+
+	/**
+	 * TCP 输出流 构建 至 上传机组数据使用
+	 * 
+	 * @param dataLength
+	 *            有效数据长度
+	 * @param crcPosition
+	 *            crc校验码位置
+	 */
+	public static void buildForTransm(int dataLength, int crcPosition) {
+
+		if (!TcpServer.isServerWorking()) {
+
+			return;
+		}
+
+		while (!TcpServer.isServerNormal()) {
+
+			try {
+
+				Thread.sleep(1000);
+
+			} catch (InterruptedException e) {
+
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		// 引导码
+		Constant.Tcp_Out_Data_Buffer[0] = (byte) 0x7E;
+		Constant.Tcp_Out_Data_Buffer[1] = (byte) 0x7E;
+
+		// 目标地址
+		for (int i = 0; i < Constant.Server_Mac.length; i++) {
+
+			Constant.Tcp_Out_Data_Buffer[i + 2] = Constant.Server_Mac[i];
+		}
+
+		// 源地址
+		for (int i = 0; i < Constant.Gprs_Mac.length; i++) {
+
+			Constant.Tcp_Out_Data_Buffer[i + 9] = Constant.Gprs_Mac[i];
+		}
+
+		// 数据长度
+		byte[] lengthBytes = Utils.intToBytes(dataLength);
+		Constant.Tcp_Out_Data_Buffer[16] = lengthBytes[0];
+		Constant.Tcp_Out_Data_Buffer[17] = lengthBytes[1];
+
+		// crc8校验码
+		Constant.Tcp_Out_Data_Buffer[crcPosition] = CRC.crc8(Constant.Tcp_Out_Data_Buffer, 2, crcPosition);
+
+		String s = "";
+		for (int i = 0; i < crcPosition + 1; i++) {
+
+			s = s + " " + Integer.toHexString(Constant.Tcp_Out_Data_Buffer[i] & 0xFF);
+		}
+
+		System.out.println("tcp send transm message ---" + s);
 
 		TcpServer.sendData(crcPosition + 1);
 	}

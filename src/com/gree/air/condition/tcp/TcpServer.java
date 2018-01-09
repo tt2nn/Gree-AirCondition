@@ -161,14 +161,31 @@ public class TcpServer implements Runnable {
 	 */
 	public static synchronized void sendData(int length) {
 
-		// System.out.println("=================== tcp send data
-		// =========================" + length);
-
 		try {
 
 			if (outputStream != null) {
 
 				outputStream.write(Constant.Tcp_Out_Buffer, 0, length);
+			}
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+			closeStream();
+		}
+	}
+
+	/**
+	 * 发送数据
+	 */
+	public static synchronized void sendDataForTransm(int length) {
+
+		try {
+
+			if (outputStream != null) {
+
+				outputStream.write(Constant.Tcp_Out_Data_Buffer, 0, length);
 			}
 
 		} catch (IOException e) {

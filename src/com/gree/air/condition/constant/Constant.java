@@ -25,13 +25,13 @@ public class Constant {
 	// TCP通讯收Buffer
 	public static byte[] Tcp_In_Buffer = new byte[512];
 	// TCP通讯发Buffer
-	public static byte[] Tcp_Out_Buffer = new byte[4096];
+	public static byte[] Tcp_Out_Buffer = new byte[512];
 	// TCP 上传数据 Buffer
-	public static byte[] Tcp_Out_Data_Buffer = new byte[4096];
+	public static byte[] Tcp_Out_Data_Buffer = new byte[2048];
 
 	// 用于存储服务器的机组数据
-	public static byte[] Data_Buffer = new byte[4096];
-	public static byte[] Data_Cache_Buffer = new byte[4096];
+	public static byte[] Data_Buffer = new byte[2048];
+	public static byte[] Data_Cache_Buffer = new byte[2048];
 
 	// 实时监控上报
 	public static final byte TRANSM_TYPE_ALWAYS = (byte) 0x00;
@@ -53,27 +53,6 @@ public class Constant {
 	public static final byte TRANSM_TYPE_STOP = (byte) 0x10;
 	// 缓存 上报数据状态 默认无
 	public static byte Transm_Type = TRANSM_TYPE_STOP;
-
-	// =================== about transm constant ===================
-	// 传输级别
-	public static final int TRANSM_TYPE_STOP_LEVEL = 0;
-	public static final int TRANSM_TYPE_BOOT_LEVEL = 1;
-	public static final int TRANSM_TYPE_CHOOSE_LEVEL = 2;
-	public static final int TRANSM_TYPE_WARNING_LEVEL = 3;
-	public static final int TRANSM_TYPE_PUSHKEY_LEVEL = 4;
-	public static final int TRANSM_TYPE_CHANGE_LEVEL = 5;
-	public static final int TRANSM_TYPE_ERROR_LEVEL = 6;
-	public static final int TRANSM_TYPE_DEBUG_LEVEL = 7;
-	public static final int TRANSM_TYPE_ALWAYS_LEVEL = 8;
-	public static int Transm_Level = TRANSM_TYPE_STOP_LEVEL;
-
-	// 上报优先级 实时监控-工程调试-故障-厂家参数-按键触发-亚健康-选举-上电
-	// 故障标志位
-	public static int Transm_Error_Mark = 0;
-	// 异常标志位
-	public static int Transm_Warning_Mark = 0;
-	// 参数变化标志位
-	public static int Transm_Change_Mark = 0;
 
 	// =============== about sms constant =====================
 
@@ -112,10 +91,6 @@ public class Constant {
 	// =================== about other constant ===================
 	// 记录GPRS模块是否被选中
 	public static boolean GPRS_IS_CHOOSE = false;
-	// 数据使用游标 由 0-2047
-	public static int Data_Buffer_Mark = 0;
-	public static int Data_Buffer_Out_Mark = 0;
-	public static int Data_Buffer_Out_End_Mark = -1;
 	// 服务器下发的数据
 	public static byte[] Server_Data_Buffer = new byte[1024];
 	// 系统时间
