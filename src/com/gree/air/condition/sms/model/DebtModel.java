@@ -1,6 +1,7 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -17,7 +18,7 @@ public class DebtModel {
 	 */
 	public static void smsAnalyze() {
 
-		if (Constant.Sms_Receive.endsWith(Constant.Sms_Query_Symbol)) {
+		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
 
 			debtQueryReceive();
 
@@ -46,7 +47,7 @@ public class DebtModel {
 		int minute = 0;
 		String smsValue = minute + "";
 
-		SmsModel.buildMessage(Constant.Sms_Type_Debt, smsValue);
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Debt, smsValue);
 	}
 
 	/**
@@ -68,7 +69,7 @@ public class DebtModel {
 	 */
 	public static void debtSetSend() {
 
-		SmsModel.buildMessageOk(Constant.Sms_Type_Debt);
+		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Debt);
 
 	}
 }

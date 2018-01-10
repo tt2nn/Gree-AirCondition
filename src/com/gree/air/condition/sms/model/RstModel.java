@@ -1,6 +1,7 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -36,7 +37,7 @@ public class RstModel {
 
 		String smsValue = "ok";
 
-		SmsModel.buildMessage(Constant.Sms_Type_Rst, smsValue);
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Rst, smsValue);
 
 	}
 }

@@ -1,6 +1,7 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -17,7 +18,7 @@ public class PwdModel {
 	 */
 	public static void smsAnalyze() {
 
-		if (Constant.Sms_Receive.endsWith(Constant.Sms_Query_Symbol)) {
+		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
 
 			pwdQueryReceive();
 
@@ -43,7 +44,7 @@ public class PwdModel {
 	 */
 	public static void pwdQuerySend() {
 		String pwd = "";
-		SmsModel.buildMessage(Constant.Sms_Type_Pwd, pwd);
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Pwd, pwd);
 	}
 
 	/**
@@ -65,7 +66,7 @@ public class PwdModel {
 	 */
 	public static void pwdSetSend() {
 
-		SmsModel.buildMessageOk(Constant.Sms_Type_Pwd);
+		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Pwd);
 
 	}
 }

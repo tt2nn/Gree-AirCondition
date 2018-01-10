@@ -1,6 +1,7 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -17,7 +18,7 @@ public class ButtModel {
 	 */
 	public static void smsAnalyze() {
 
-		if (Constant.Sms_Receive.endsWith(Constant.Sms_Query_Symbol)) {
+		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
 
 			buttQueryReceive();
 
@@ -42,11 +43,11 @@ public class ButtModel {
 	 * 
 	 */
 	public static void buttQuerySend() {
-		
+
 		int minute = 0;
 		String smsValue = minute + "";
 
-		SmsModel.buildMessage(Constant.Sms_Type_Butt, smsValue);
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Butt, smsValue);
 	}
 
 	/**
@@ -68,7 +69,7 @@ public class ButtModel {
 	 */
 	public static void buttSetSend() {
 
-		SmsModel.buildMessageOk(Constant.Sms_Type_Butt);
+		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Butt);
 
 	}
 }

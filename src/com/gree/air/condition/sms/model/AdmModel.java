@@ -1,6 +1,7 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -17,7 +18,7 @@ public class AdmModel {
 	 */
 	public static void smsAnalyze() {
 
-		if (Constant.Sms_Receive.endsWith(Constant.Sms_Query_Symbol)) {
+		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
 
 			admQueryReceive();
 
@@ -44,9 +45,9 @@ public class AdmModel {
 	public static void admQuerySend() {
 		String value1 = "1";
 		String admPhone = "";
-		String smsValue = value1 + Constant.Sms_Split_Value_Symbol + admPhone;
+		String smsValue = value1 + SmsConstant.Sms_Split_Value_Symbol + admPhone;
 
-		SmsModel.buildMessage(Constant.Sms_Type_Adm, smsValue);
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Adm, smsValue);
 	}
 
 	/**
@@ -60,7 +61,7 @@ public class AdmModel {
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
 		int start = 0;
-		int end = smsValue.indexOf(Constant.Sms_Split_Value_Symbol, start);
+		int end = smsValue.indexOf(SmsConstant.Sms_Split_Value_Symbol, start);
 		String number = smsValue.substring(start, end);
 
 		start = end + 1;
@@ -74,7 +75,7 @@ public class AdmModel {
 	 */
 	public static void admSetSend() {
 
-		SmsModel.buildMessageOk(Constant.Sms_Type_Adm);
+		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Adm);
 
 	}
 }

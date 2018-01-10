@@ -1,6 +1,7 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -17,7 +18,7 @@ public class ErrtModel {
 	 */
 	public static void smsAnalyze() {
 
-		if (Constant.Sms_Receive.endsWith(Constant.Sms_Query_Symbol)) {
+		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
 
 			errtQueryReceive();
 
@@ -46,7 +47,7 @@ public class ErrtModel {
 		int minute = 0;
 		String smsValue = minute + "";
 
-		SmsModel.buildMessage(Constant.Sms_Type_Errt, smsValue);
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Errt, smsValue);
 	}
 
 	/**
@@ -68,7 +69,7 @@ public class ErrtModel {
 	 */
 	public static void errtSetSend() {
 
-		SmsModel.buildMessageOk(Constant.Sms_Type_Errt);
+		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Errt);
 
 	}
 }

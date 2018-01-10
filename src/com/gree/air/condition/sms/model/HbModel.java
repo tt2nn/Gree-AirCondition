@@ -1,6 +1,7 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -17,7 +18,7 @@ public class HbModel {
 	 */
 	public static void smsAnalyze() {
 
-		if (Constant.Sms_Receive.endsWith(Constant.Sms_Query_Symbol)) {
+		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
 
 			hbQueryReceive();
 
@@ -45,9 +46,10 @@ public class HbModel {
 		int second = 0;
 		String value1 = "heart";
 		String value2 = "0";
-		String smsValue = value1 + Constant.Sms_Split_Value_Symbol + value2 + Constant.Sms_Split_Value_Symbol + second;
+		String smsValue = value1 + SmsConstant.Sms_Split_Value_Symbol + value2 + SmsConstant.Sms_Split_Value_Symbol
+				+ second;
 
-		SmsModel.buildMessage(Constant.Sms_Type_Hb, smsValue);
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Hb, smsValue);
 	}
 
 	/**
@@ -72,7 +74,7 @@ public class HbModel {
 	 */
 	public static void hbSetSend() {
 
-		SmsModel.buildMessageOk(Constant.Sms_Type_Hb);
+		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Hb);
 
 	}
 }

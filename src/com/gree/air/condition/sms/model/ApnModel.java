@@ -1,6 +1,7 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -18,7 +19,7 @@ public class ApnModel {
 	 */
 	public static void smsAnalyze() {
 
-		if (Constant.Sms_Receive.endsWith(Constant.Sms_Query_Symbol)) {
+		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
 
 			apnQueryReceive();
 
@@ -48,9 +49,10 @@ public class ApnModel {
 		String apn = "";
 		String userName = "";
 		String password = "";
-		String smsValue = apn + Constant.Sms_Split_Value_Symbol + userName + Constant.Sms_Split_Value_Symbol + password;
+		String smsValue = apn + SmsConstant.Sms_Split_Value_Symbol + userName + SmsConstant.Sms_Split_Value_Symbol
+				+ password;
 
-		SmsModel.buildMessage(Constant.Sms_Type_Apn, smsValue);
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Apn, smsValue);
 	}
 
 	/**
@@ -65,11 +67,11 @@ public class ApnModel {
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
 		int start = 0;
-		int end = smsValue.indexOf(Constant.Sms_Split_Value_Symbol, start);
+		int end = smsValue.indexOf(SmsConstant.Sms_Split_Value_Symbol, start);
 		String apn = smsValue.substring(start, end);
 
 		start = end + 1;
-		end = smsValue.indexOf(Constant.Sms_Split_Value_Symbol, start);
+		end = smsValue.indexOf(SmsConstant.Sms_Split_Value_Symbol, start);
 		String userName = smsValue.substring(start, end);
 
 		start = end + 1;
@@ -83,7 +85,7 @@ public class ApnModel {
 	 */
 	public static void apnSetSend() {
 
-		SmsModel.buildMessageOk(Constant.Sms_Type_Apn);
+		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Apn);
 
 	}
 }

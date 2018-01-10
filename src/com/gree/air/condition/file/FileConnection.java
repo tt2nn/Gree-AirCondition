@@ -6,6 +6,8 @@ import java.io.OutputStream;
 
 import javax.microedition.io.Connector;
 
+import com.gree.air.condition.constant.Constant;
+
 public class FileConnection {
 
 	private static OutputStream outputStream;
@@ -54,8 +56,27 @@ public class FileConnection {
 
 	}
 
+	/**
+	 * 读文件
+	 * 
+	 * @param fileName
+	 */
 	public static void readFile(String fileName) {
-		
+
+		try {
+
+			openFile(fileName);
+
+			inputStream = fileConn.openInputStream();
+
+			Constant.File_Buffer_Length = inputStream.read(Constant.File_Buffer, 0, Constant.File_Buffer.length);
+
+			closeFile();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -70,7 +91,33 @@ public class FileConnection {
 			openFile(fileName);
 
 			outputStream = fileConn.openOutputStream();
-			
+
+			outputStream.write(Constant.File_Buffer, start, length);
+
+			closeFile();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * 写文件
+	 * 
+	 * @param fileName
+	 */
+	public static void writeFile(String fileName) {
+
+		try {
+
+			openFile(fileName);
+
+			outputStream = fileConn.openOutputStream();
+
+			outputStream.write(Constant.File_Buffer, 0, Constant.File_Buffer.length);
+
 			closeFile();
 
 		} catch (IOException e) {

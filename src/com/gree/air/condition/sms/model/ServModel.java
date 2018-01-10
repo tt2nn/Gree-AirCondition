@@ -1,6 +1,7 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -17,7 +18,7 @@ public class ServModel {
 	 */
 	public static void smsAnalyze() {
 
-		if (Constant.Sms_Receive.endsWith(Constant.Sms_Query_Symbol)) {
+		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
 
 			servQueryReceive();
 
@@ -45,8 +46,8 @@ public class ServModel {
 		String serv = "";
 		String port = "";
 
-		String smsValue = serv + Constant.Sms_Split_Value_Symbol + port;
-		SmsModel.buildMessage(Constant.Sms_Type_Serv, smsValue);
+		String smsValue = serv + SmsConstant.Sms_Split_Value_Symbol + port;
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Serv, smsValue);
 	}
 
 	/**
@@ -60,11 +61,11 @@ public class ServModel {
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
 		int start = 0;
-		int end = smsValue.indexOf(Constant.Sms_Split_Value_Symbol, start);
+		int end = smsValue.indexOf(SmsConstant.Sms_Split_Value_Symbol, start);
 		String serv = smsValue.substring(start, end);
 
 		start = end + 1;
-		end = smsValue.indexOf(Constant.Sms_Split_Value_Symbol, start);
+		end = smsValue.indexOf(SmsConstant.Sms_Split_Value_Symbol, start);
 		String port = smsValue.substring(start, end);
 
 	}
@@ -74,7 +75,7 @@ public class ServModel {
 	 */
 	public static void servSetSend() {
 
-		SmsModel.buildMessageOk(Constant.Sms_Type_Serv);
+		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Serv);
 
 	}
 }

@@ -1,6 +1,7 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -17,7 +18,7 @@ public class HealtModel {
 	 */
 	public static void smsAnalyze() {
 
-		if (Constant.Sms_Receive.endsWith(Constant.Sms_Query_Symbol)) {
+		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
 
 			healtQueryReceive();
 
@@ -45,7 +46,7 @@ public class HealtModel {
 		int minute = 0;
 		String smsValue = minute + "";
 
-		SmsModel.buildMessage(Constant.Sms_Type_Healt, smsValue);
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Healt, smsValue);
 	}
 
 	/**
@@ -67,7 +68,7 @@ public class HealtModel {
 	 */
 	public static void healtSetSend() {
 
-		SmsModel.buildMessageOk(Constant.Sms_Type_Healt);
+		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Healt);
 
 	}
 }

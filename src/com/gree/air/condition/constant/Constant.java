@@ -59,38 +59,13 @@ public class Constant {
 	public static String Sms_Receive = "";
 	public static String Sms_Send = "";
 
-	public static final String Sms_Type_Apn = "*apn*";
-	public static final String Sms_Type_Serv = "*serv*";
-	public static final String Sms_Type_Hb = "*hb*";
-	public static final String Sms_Type_Pwd = "*pwd*";
-	public static final String Sms_Type_Start = "*start*";
-	public static final String Sms_Type_Stop = "*stop*";
-	public static final String Sms_Type_Ver = "*ver*";
-	public static final String Sms_Type_Adm = "*adm*";
-	public static final String Sms_Type_Usron = "*usron*";
-	public static final String Sms_Type_Rst = "*rst*";
-	public static final String Sms_Type_Errt = "*errt*";
-	public static final String Sms_Type_Debt = "*debt*";
-	public static final String Sms_Type_Healt = "*healt*";
-	public static final String Sms_Type_Butt = "*butt*";
+	// ================= about file constant ================
 
-	public static final String Sms_Query_Symbol = "*?*";
-	public static final String Sms_Split_Key_Symbol = "*";
-	public static final String Sms_Split_Value_Symbol = ",";
-	public static final String Sms_Set_Ok = "set ok";
-	public static final String Sms_Message_Error = "error";
-	public static final String Sms_Message_Empty = "empty";
+	public static byte[] File_Buffer = new byte[256];
+	public static int File_Buffer_Length = 0;
 
-	// 普通手机号白名单
-	public static String Sms_User_List = "18926932769 13128540406 13113444079 13128541143 18666911714 07568663110 07568522593 07568668938 07568669703 07568668717";
-	// 管理员手机号白名单
-	public static String Sms_Admin_List = "18023036958 13128553002 1069800006512610 18926932781 15992681809";
-	// 手机短信
-	public static String Sms_Pwd = "123456";
+	// =============== about cache constant ===================
 
-	// =================== about other constant ===================
-	// 记录GPRS模块是否被选中
-	public static boolean GPRS_IS_CHOOSE = false;
 	// 服务器下发的数据
 	public static byte[] Server_Data_Buffer = new byte[1024];
 	// 系统时间
@@ -98,10 +73,21 @@ public class Constant {
 	// 静默时间戳
 	public static long Stop_Time = 0;
 
+	// =================== about params ===================
+
+	// 普通手机号白名单
+	public static String Sms_User_List = "18926932769 13128540406 13113444079 13128541143 18666911714 07568663110 07568522593 07568668938 07568669703 07568668717";
+	// 管理员手机号白名单
+	public static String Sms_Admin_List = "18023036958 13128553002 1069800006512610 18926932781 15992681809";
+	// 手机短信
+	public static String Sms_Pwd = "123456";
+	// 记录GPRS模块是否被选中
+	public static boolean GPRS_IS_CHOOSE = false;
+
 	// ================== about gprs info =================================
 	// 模块Imei
 	public static String Gprs_Imei = "861390030083946";
-	
+
 	// Mac地址
 	public static byte[] Gprs_Mac = { (byte) 0x61, (byte) 0x39, (byte) 0x00, (byte) 0x30, (byte) 0x08, (byte) 0x39,
 			(byte) 0x46 };

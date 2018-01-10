@@ -1,6 +1,7 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -34,7 +35,7 @@ public class StartModel {
 	 */
 	public static void startSend() {
 
-		SmsModel.buildMessage(Constant.Sms_Type_Start, "ok");
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Start, "ok");
 
 	}
 
