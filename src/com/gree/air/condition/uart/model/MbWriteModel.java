@@ -1,6 +1,6 @@
 package com.gree.air.condition.uart.model;
 
-import com.gree.air.condition.center.DataCenter;
+import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.uart.UartModel;
 import com.gree.air.condition.utils.CRC;
@@ -40,6 +40,11 @@ public class MbWriteModel {
 	 */
 	private static void choose() {
 
+		if (Constant.Gprs_Choosed) {
+
+			ControlCenter.chooseRest();
+		}
+
 		if (!DoChoose.choose()) {
 
 			return;
@@ -63,8 +68,13 @@ public class MbWriteModel {
 
 		if (!Constant.Gprs_Choosed && DoChoose.isChooseResp()) {
 
-			Constant.Gprs_Choosed = true;
-			DataCenter.chooseTransmit();
+			ControlCenter.chooseGprs();
+		}
+
+		// 判断是否是 上电是状态为选中
+		if (!DoChoose.isChooseResp() && Constant.System_Time > 30 * 1000) {
+
+			ControlCenter.powerCall();
 		}
 
 		buildSendBuffer();

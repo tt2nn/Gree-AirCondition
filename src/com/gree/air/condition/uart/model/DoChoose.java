@@ -47,5 +47,5 @@ public class DoChoose {
 	public static boolean isChooseResp() {
 		return chooseResp;
 	}
-	
+
 }

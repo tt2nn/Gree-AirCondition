@@ -63,7 +63,7 @@ public class DataCenter implements Runnable {
 	 */
 	public static void writeDataBuffer() {
 
-		if (!Constant.Gprs_Choosed) {
+		if (!ControlCenter.canWorking()) {
 
 			return;
 		}

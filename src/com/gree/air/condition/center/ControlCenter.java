@@ -1,5 +1,7 @@
 package com.gree.air.condition.center;
 
+import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.tcp.TcpServer;
 import com.gree.air.condition.tcp.model.LoginModel;
 import com.gree.air.condition.tcp.model.ParamModel;
@@ -15,6 +17,21 @@ import com.gree.air.condition.tcp.model.TransmModel;
 public class ControlCenter {
 
 	public static boolean waittingHeart = false;
+
+	/**
+	 * 判断App是否可以工作
+	 * 
+	 * @return
+	 */
+	public static boolean canWorking() {
+
+		if (Constant.Gprs_Choosed && Constant.System_Time > 946656000000L) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	/**
 	 * 登录
@@ -81,6 +98,35 @@ public class ControlCenter {
 	public static void stopTcpServer() {
 
 		TcpServer.stopServer();
+	}
+
+	/**
+	 * 重新选举
+	 */
+	public static void chooseRest() {
+
+		Constant.Gprs_Choosed = false;
+		FileModel.setNotChoosed();
+		DataCenter.stopUploadData();
+
+	}
+
+	/**
+	 * 选中GPRS
+	 */
+	public static void chooseGprs() {
+
+		Constant.Gprs_Choosed = true;
+		FileModel.setIsChoosed();
+		DataCenter.chooseTransmit();
+	}
+
+	/**
+	 * 上电点名
+	 */
+	public static void powerCall() {
+
+		DataCenter.powerTransmit();
 	}
 
 }
