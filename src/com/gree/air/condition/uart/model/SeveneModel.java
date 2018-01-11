@@ -71,14 +71,14 @@ public class SeveneModel {
 	 */
 	private static void call() {
 
-		if (!Constant.GPRS_IS_CHOOSE && !DoChoose.isChooseResp()) {
+		if (!Constant.Gprs_Choosed && !DoChoose.isChooseResp()) {
 
 			return;
 		}
 
-		if (!Constant.GPRS_IS_CHOOSE && DoChoose.isChooseResp()) {
+		if (!Constant.Gprs_Choosed && DoChoose.isChooseResp()) {
 
-			Constant.GPRS_IS_CHOOSE = true;
+			Constant.Gprs_Choosed = true;
 			DataCenter.chooseTransmit();
 		}
 

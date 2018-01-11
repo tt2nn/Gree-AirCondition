@@ -1,6 +1,7 @@
 package com.gree.air.condition.center;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.lzo.LzoCompressor1x_1;
 import com.gree.air.condition.lzo.lzo_uintp;
 import com.gree.air.condition.tcp.TcpServer;
@@ -16,7 +17,7 @@ public class DataCenter implements Runnable {
 
 	// 传输级别
 	private static final int TRANSM_TYPE_STOP_LEVEL = 0;
-	private static final int TRANSM_TYPE_BOOT_LEVEL = 1;
+	private static final int TRANSM_TYPE_POWER_LEVEL = 1;
 	private static final int TRANSM_TYPE_CHOOSE_LEVEL = 2;
 	private static final int TRANSM_TYPE_WARNING_LEVEL = 3;
 	private static final int TRANSM_TYPE_PUSHKEY_LEVEL = 4;
@@ -62,7 +63,7 @@ public class DataCenter implements Runnable {
 	 */
 	public static void writeDataBuffer() {
 
-		if (!Constant.GPRS_IS_CHOOSE) {
+		if (!Constant.Gprs_Choosed) {
 
 			return;
 		}
@@ -179,11 +180,19 @@ public class DataCenter implements Runnable {
 					continue;
 				}
 
+				// 判断服务器是否正常
+				if (!TcpServer.isServerNormal()) {
+
+					Thread.sleep(1000);
+					continue;
+				}
+
 				// 每10分钟需要上传GPRS信号
 				if (Constant.System_Time - Upload_Data_Interval_Time >= 10 * 60 * 1000) {
 
 					Upload_Data_Interval_Time = Constant.System_Time;
 					ControlCenter.sendGprsSignal();
+
 				}
 
 				// TODO 选举上报 需要在 90秒后启动
@@ -193,13 +202,6 @@ public class DataCenter implements Runnable {
 				// Thread.sleep(1000);
 				// continue;
 				// }
-
-				// 判断服务器是否正常
-				if (!TcpServer.isServerNormal()) {
-
-					Thread.sleep(1000);
-					continue;
-				}
 
 				int length = 0;
 				long time = 0L;
@@ -260,13 +262,15 @@ public class DataCenter implements Runnable {
 
 		if (Transm_Level < TRANSM_TYPE_ALWAYS_LEVEL) {
 
-			stopUploadData();
+			pauseUploadData();
 
 			Constant.Transm_Type = Constant.TRANSM_TYPE_ALWAYS;
 			Transm_Level = TRANSM_TYPE_ALWAYS_LEVEL;
 
 			// 重置静默时间
 			Constant.Stop_Time = 0;
+			
+			FileModel.setAlwaysTransm();
 
 			ControlCenter.requestStartUpload();
 
@@ -274,18 +278,29 @@ public class DataCenter implements Runnable {
 	}
 
 	/**
-	 * 上电传输
+	 * 上电上报
 	 */
-	public static void bootTransmit() {
+	public static void powerTransmit() {
 
-		if (Transm_Level < TRANSM_TYPE_BOOT_LEVEL && Constant.System_Time > Constant.Stop_Time) {
+		if (Transm_Level < TRANSM_TYPE_POWER_LEVEL && Constant.System_Time > Constant.Stop_Time) {
 
-			stopUploadData();
+			pauseUploadData();
 
-			Constant.Transm_Type = Constant.TRANSM_TYPE_BOOT;
-			Transm_Level = TRANSM_TYPE_BOOT_LEVEL;
+			Constant.Transm_Type = Constant.TRANSM_TYPE_POWER;
+			Transm_Level = TRANSM_TYPE_POWER_LEVEL;
 
 			ControlCenter.requestStartUpload();
+
+			// 判断缓存的上传类型
+			switch (Constant.Transfer_Power_Type) {
+
+			case Constant.TRANSM_TYPE_ALWAYS:
+
+				chooseTransmit();
+
+				break;
+			}
+
 		}
 
 	}
@@ -297,7 +312,7 @@ public class DataCenter implements Runnable {
 
 		if (Transm_Level < TRANSM_TYPE_CHOOSE_LEVEL && Constant.System_Time > Constant.Stop_Time) {
 
-			stopUploadData();
+			pauseUploadData();
 
 			// 重置发送游标，选举上报持续发送5分钟数据
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
@@ -407,15 +422,25 @@ public class DataCenter implements Runnable {
 	}
 
 	/**
-	 * 停止上传数据
+	 * 暂停数据传输
 	 */
-	public static void stopUploadData() {
+	public static void pauseUploadData() {
 
 		Can_Upload_Data = false;
 		Data_Buffer_Out_End_Mark = -1;
 
 		Constant.Transm_Type = Constant.TRANSM_TYPE_STOP;
 		Transm_Level = TRANSM_TYPE_STOP_LEVEL;
+
+		FileModel.setStopTransm();
+	}
+
+	/**
+	 * 停止上传数据
+	 */
+	public static void stopUploadData() {
+
+		pauseUploadData();
 
 		ControlCenter.stopTcpServer();
 	}

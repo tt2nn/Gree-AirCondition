@@ -21,7 +21,50 @@ public class FileModel {
 			Constant.File_Buffer[i] = pwdBytes[i];
 		}
 
-		FileConnection.writeFile(FileConstant.FIME_NAME_SMS_PASSWORD);
+		FileConnection.writeFile(FileConstant.FILE_NAME_SMS_PASSWORD);
 
+	}
+
+	/**
+	 * 存储实时上报模式
+	 */
+	public static void setAlwaysTransm() {
+
+		Constant.File_Buffer[0] = Constant.TRANSM_TYPE_ALWAYS;
+
+		FileConnection.writeFile(FileConstant.FILE_NAME_DATA_TRANSM);
+
+	}
+
+	/**
+	 * 清空上报模式
+	 */
+	public static void setStopTransm() {
+
+		Constant.File_Buffer[0] = Constant.TRANSM_TYPE_STOP;
+
+		FileConnection.writeFile(FileConstant.FILE_NAME_DATA_TRANSM);
+
+	}
+
+	/**
+	 * 记录用户被选中
+	 */
+	public static void setIsChoosed() {
+
+		Constant.File_Buffer[0] = (byte) 0x01;
+
+		FileConnection.writeFile(FileConstant.FILE_NAME_GPRS_CHOOSED);
+
+	}
+
+	/**
+	 * 清空用户选中状态
+	 */
+	public static void setNotChoosed() {
+
+		Constant.File_Buffer[0] = (byte) 0x00;
+
+		FileConnection.writeFile(FileConstant.FILE_NAME_GPRS_CHOOSED);
 	}
 }

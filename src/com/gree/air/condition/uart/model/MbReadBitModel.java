@@ -18,7 +18,7 @@ public class MbReadBitModel {
 	 */
 	public static void analyze() {
 
-		if (!Constant.GPRS_IS_CHOOSE && !DoChoose.isChooseResp()) {
+		if (!Constant.Gprs_Choosed && !DoChoose.isChooseResp()) {
 
 			return;
 		}
