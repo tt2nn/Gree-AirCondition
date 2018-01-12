@@ -33,6 +33,8 @@ public class ControlCenter {
 		return false;
 	}
 
+	/* =========== TCP 通信相关 ============== */
+
 	/**
 	 * 登录
 	 */
@@ -100,6 +102,8 @@ public class ControlCenter {
 		TcpServer.stopServer();
 	}
 
+	/* =========== 数据中心控制相关 ============== */
+
 	/**
 	 * 重新选举
 	 */
@@ -122,11 +126,35 @@ public class ControlCenter {
 	}
 
 	/**
+	 * 实时传输
+	 */
+	public static void alwaysTransmit() {
+
+		DataCenter.alwaysTransmit();
+	}
+
+	/**
 	 * 上电点名
 	 */
 	public static void powerCall() {
 
 		DataCenter.powerTransmit();
+	}
+
+	/**
+	 * 上传数据
+	 */
+	public static void uploadData() {
+
+		DataCenter.notifyUploadData();
+	}
+
+	/**
+	 * 停止上传
+	 */
+	public static void stopUploadData() {
+
+		DataCenter.stopUploadData();
 	}
 
 }

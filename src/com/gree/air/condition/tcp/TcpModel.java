@@ -1,6 +1,5 @@
 package com.gree.air.condition.tcp;
 
-import com.gree.air.condition.center.DataCenter;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.tcp.model.LoginModel;
 import com.gree.air.condition.tcp.model.ParamModel;
@@ -62,8 +61,8 @@ public class TcpModel {
 
 		case (byte) 0x93: // 进行实时监控 请求
 
-			DataCenter.alwaysTransmit();
-
+			TransmModel.monitorResponse();
+			
 			break;
 
 		case (byte) 0x94: // 修改GPRS模块 请求

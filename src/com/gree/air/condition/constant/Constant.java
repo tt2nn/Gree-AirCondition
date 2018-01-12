@@ -49,6 +49,10 @@ public class Constant {
 	public static final byte TRANSM_TYPE_CHOOSE = (byte) 0x07;
 	// 上电上报
 	public static final byte TRANSM_TYPE_POWER = (byte) 0x08;
+	// 打卡上报
+	public static final byte TRANSM_TYPE_CLOCK = (byte) 0x09;
+	// 开机上报
+	public static final byte TRANSM_TYPE_BOOT = (byte) 0X0A;
 	// 停止上报
 	public static final byte TRANSM_TYPE_STOP = (byte) 0xFF;
 	// 缓存 上报数据状态 默认无

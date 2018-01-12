@@ -17,14 +17,17 @@ public class DataCenter implements Runnable {
 
 	// 传输级别
 	private static final int TRANSM_TYPE_STOP_LEVEL = 0;
-	private static final int TRANSM_TYPE_POWER_LEVEL = 1;
-	private static final int TRANSM_TYPE_CHOOSE_LEVEL = 2;
-	private static final int TRANSM_TYPE_WARNING_LEVEL = 3;
-	private static final int TRANSM_TYPE_PUSHKEY_LEVEL = 4;
-	private static final int TRANSM_TYPE_CHANGE_LEVEL = 5;
-	private static final int TRANSM_TYPE_ERROR_LEVEL = 6;
-	private static final int TRANSM_TYPE_DEBUG_LEVEL = 7;
-	private static final int TRANSM_TYPE_ALWAYS_LEVEL = 8;
+	private static final int TRANSM_TYPE_CLOCK_LEVEL = 1;
+	private static final int TRANSM_TYPE_BOOT_CLOSE_LEVEL = 2;
+	private static final int TRANSM_TYPE_POWER_LEVEL = 3;
+	private static final int TRANSM_TYPE_CHOOSE_LEVEL = 4;
+	private static final int TRANSM_TYPE_WARNING_LEVEL = 5;
+	private static final int TRANSM_TYPE_PUSHKEY_LEVEL = 6;
+	private static final int TRANSM_TYPE_CHANGE_LEVEL = 7;
+	private static final int TRANSM_TYPE_ERROR_LEVEL = 8;
+	private static final int TRANSM_TYPE_DEBUG_LEVEL = 9;
+	private static final int TRANSM_TYPE_BOOT_OPEN_LEVEL = 10;
+	private static final int TRANSM_TYPE_ALWAYS_LEVEL = 10;
 	private static int Transm_Level = TRANSM_TYPE_STOP_LEVEL;
 
 	// 上报优先级 实时监控-工程调试-故障-厂家参数-按键触发-亚健康-选举-上电

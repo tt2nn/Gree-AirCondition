@@ -3,7 +3,7 @@ package com.gree.air.condition.tcp.model;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.gree.air.condition.center.DataCenter;
+import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.tcp.TcpModel;
 import com.gree.air.condition.utils.Utils;
@@ -54,19 +54,19 @@ public class TransmModel {
 	}
 
 	/**
-	 * 开始传输 响应
+	 * 服务器响应开始传输
 	 */
 	public static void startResponse() {
 
 		if (Constant.Tcp_In_Buffer[19] == (byte) 0x00) {
 
-			DataCenter.notifyUploadData();
+			ControlCenter.uploadData();
 		}
 
 	}
 
 	/**
-	 * 停止传输 响应服务器
+	 * GPRS响应服务器停止传输
 	 */
 	public static void stop() {
 
@@ -78,12 +78,35 @@ public class TransmModel {
 	}
 
 	/**
-	 * 停止传输 响应 处理停止传输操作
+	 * 解析服务器停止传输请求
 	 */
 	public static void stopResponse() {
 
-		DataCenter.stopUploadData();
+		ControlCenter.stopUploadData();
 		stop();
+	}
+
+	/**
+	 * 实时监控
+	 */
+	public static void monitorResponse() {
+
+		switch (Constant.Tcp_Out_Buffer[19]) {
+
+		case (byte) 0x01:
+
+			ControlCenter.alwaysTransmit();
+
+			break;
+
+		case Constant.TRANSM_TYPE_BOOT:
+
+			break;
+
+		case Constant.TRANSM_TYPE_CLOCK:
+
+			break;
+		}
 	}
 
 	/**
@@ -118,7 +141,7 @@ public class TransmModel {
 	}
 
 	/**
-	 * 数据传输 响应 服务器下发机组数据
+	 * GPRS解析服务器下发机组数据
 	 */
 	public static void dataTransmResponse() {
 
