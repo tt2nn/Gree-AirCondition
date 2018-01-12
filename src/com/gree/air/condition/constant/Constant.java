@@ -53,6 +53,7 @@ public class Constant {
 	public static final byte TRANSM_TYPE_STOP = (byte) 0xFF;
 	// 缓存 上报数据状态 默认无
 	public static byte Transm_Type = TRANSM_TYPE_STOP;
+	public static byte Transm_Type_Cache = TRANSM_TYPE_STOP;
 
 	// =============== about sms constant =====================
 
@@ -83,9 +84,8 @@ public class Constant {
 	public static String Sms_Pwd = "123456";
 	// 记录GPRS模块是否被选中
 	public static boolean Gprs_Choosed = false;
-	
+
 	public static byte Transfer_Power_Type = TRANSM_TYPE_STOP;
-	
 
 	// ================== about gprs info =================================
 	// 模块Imei
