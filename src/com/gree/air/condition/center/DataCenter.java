@@ -332,6 +332,24 @@ public class DataCenter implements Runnable {
 	}
 
 	/**
+	 * 亚健康上报
+	 */
+	public static void warningTransmit() {
+
+		pauseUploadData();
+
+		// 重置发送游标，上报变化点前5分钟到后1分钟数据
+		Data_Buffer_Out_Mark = Data_Buffer_Mark;
+		Data_Buffer_Out_End_Mark = -1;
+
+		Constant.Transm_Type = Constant.TRANSM_TYPE_WARNING;
+		Transm_Level = TRANSM_TYPE_WARNING_LEVEL;
+
+		ControlCenter.requestStartUpload();
+
+	}
+
+	/**
 	 * 选举上报
 	 */
 	public static void chooseTransmit() {
@@ -411,6 +429,7 @@ public class DataCenter implements Runnable {
 		if (Transm_Warning_Mark == 1 && warning == 0) {
 
 			Transm_Warning_Mark = 0;
+			Constant.Transm_Type_Cache = Constant.TRANSM_TYPE_STOP;
 
 			// 如果正在亚健康上报，停止上报。
 
@@ -422,21 +441,20 @@ public class DataCenter implements Runnable {
 
 		}
 
+		// 判断静默时间
+		if (Constant.System_Time <= Constant.Stop_Time) {
+
+			return;
+		}
+
 		// 如果现在的 上传级别 小于 故障上传 则 判断故障上传
 		if (Transm_Level < TRANSM_TYPE_ERROR_LEVEL) {
 
 			if (Transm_Error_Mark == 0 && error == 1) {
+
 				// 如果标志位 由 0 变为1；启动故障上报
-
 				Transm_Error_Mark = 1;
-				Constant.Stop_Time = 0;
-
 				errorTransmit();
-
-				return;
-			}
-
-			if (Constant.System_Time <= Constant.Stop_Time) {
 
 				return;
 			}
@@ -447,8 +465,8 @@ public class DataCenter implements Runnable {
 				if (Transm_Change_Mark == 0 && change == 1) {
 
 					// 如果标志位由0-1，启动厂家参数变化上传
-
 					Transm_Change_Mark = 1;
+					changeTransmit();
 
 					return;
 
@@ -456,9 +474,10 @@ public class DataCenter implements Runnable {
 
 				// 如果上报级别小于 异常上报，则判断异常上报标志位
 				if (Transm_Level < TRANSM_TYPE_WARNING_LEVEL && Transm_Warning_Mark == 0 && warning == 1) {
-					// 如果标志位0-1 启动亚健康（异常）上报
 
+					// 如果标志位0-1 启动亚健康（异常）上报
 					Transm_Warning_Mark = 1;
+					warningTransmit();
 
 					return;
 
