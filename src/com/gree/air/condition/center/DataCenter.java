@@ -305,6 +305,33 @@ public class DataCenter implements Runnable {
 	}
 
 	/**
+	 * 厂家参数变化上报
+	 */
+	public static void changeTransmit() {
+
+		pauseUploadData();
+
+		// 重置发送游标，上报变化点前5分钟到后1分钟数据
+		Data_Buffer_Out_Mark = Data_Buffer_Mark - (5 * 60 / 3);
+		if (Data_Buffer_Out_Mark < 0) {
+
+			Data_Buffer_Out_Mark = Data_Buffer_Out_Mark + BUFFER_MARK_SIZE;
+		}
+		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (60 / 3);
+
+		if (Can_Upload_Data) {
+
+			Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
+		}
+
+		Constant.Transm_Type = Constant.TRANSM_TYPE_CHANGE;
+		Transm_Level = TRANSM_TYPE_CHANGE_LEVEL;
+
+		ControlCenter.requestStartUpload();
+
+	}
+
+	/**
 	 * 选举上报
 	 */
 	public static void chooseTransmit() {
