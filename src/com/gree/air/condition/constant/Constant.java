@@ -96,6 +96,8 @@ public class Constant {
 	public static int Tcp_Error_After_Second = 300;
 	//厂家参数改变前传输结束时间
 	public static int Tcp_Change_Before_Second = 60;
+	//按键调试周期
+	public static int Tcp_Pushkey_Second = 14400;
 	//信号信息周期
 	public static int Tcp_Sig_Second = 600;
 	//打卡周期

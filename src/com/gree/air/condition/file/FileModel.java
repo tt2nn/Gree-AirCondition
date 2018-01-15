@@ -64,124 +64,145 @@ public class FileModel {
 		FileConnection.writeFile(FileConstant.FILE_NAME_TCP_HB);
 
 	}
+
 	/**
 	 * 设置故障点前传输时间
 	 * 
 	 * @param errt
 	 */
 	public static void setSmsErrt(int errt) {
-		
+
 		Constant.Tcp_Error_Before_Second = errt;
-		
+
 		byte[] errtBytes = String.valueOf(errt).getBytes();
-		
+
 		for (int i = 0; i < errtBytes.length; i++) {
-			
+
 			Constant.File_Buffer[i] = errtBytes[i];
 		}
-		
+
 		FileConnection.writeFile(FileConstant.FILE_NAME_TCP_ERROR_BEFORE);
-		
+
 	}
-	
+
 	/**
 	 * 设置故障点后传输时间
 	 * 
 	 * @param debt
 	 */
 	public static void setSmsDebt(int debt) {
-		
+
 		Constant.Tcp_Error_After_Second = debt;
-		
+
 		byte[] debtBytes = String.valueOf(debt).getBytes();
-		
+
 		for (int i = 0; i < debtBytes.length; i++) {
-			
+
 			Constant.File_Buffer[i] = debtBytes[i];
 		}
-		
+
 		FileConnection.writeFile(FileConstant.FILE_NAME_TCP_ERROR_AFTER);
-		
+
 	}
-	
+
 	/**
 	 * 厂家参数改变前传输结束时间
 	 * 
 	 * @param healt
 	 */
 	public static void setSmsHealt(int healt) {
-		
+
 		Constant.Tcp_Change_Before_Second = healt;
-		
+
 		byte[] healtBytes = String.valueOf(healt).getBytes();
-		
+
 		for (int i = 0; i < healtBytes.length; i++) {
-			
+
 			Constant.File_Buffer[i] = healtBytes[i];
 		}
-		
+
 		FileConnection.writeFile(FileConstant.FILE_NAME_TCP_CHANGE_BEFORE);
-		
+
 	}
-	
+
+	/**
+	 * 按键调试周期
+	 * 
+	 * @param butt
+	 */
+	public static void setSmsButt(int butt) {
+
+		Constant.Tcp_Pushkey_Second = butt;
+
+		byte[] buttBytes = String.valueOf(butt).getBytes();
+
+		for (int i = 0; i < buttBytes.length; i++) {
+
+			Constant.File_Buffer[i] = buttBytes[i];
+		}
+
+		FileConnection.writeFile(FileConstant.FILE_NAME_TCP_PUSHKEY);
+
+	}
+
 	/**
 	 * 信号信息周期
 	 * 
 	 * @param sig
 	 */
 	public static void setSmsSig(int sig) {
-		
+
 		Constant.Tcp_Sig_Second = sig;
-		
+
 		byte[] sigBytes = String.valueOf(sig).getBytes();
-		
+
 		for (int i = 0; i < sigBytes.length; i++) {
-			
+
 			Constant.File_Buffer[i] = sigBytes[i];
 		}
-		
+
 		FileConnection.writeFile(FileConstant.FILE_NAME_TCP_SIG);
-		
+
 	}
-	
+
 	/**
 	 * 打卡周期
 	 * 
 	 * @param checkPeriod
 	 */
 	public static void setSmsCheckPeriod(int checkPeriod) {
-		
+
 		Constant.Tcp_Check_Period = checkPeriod;
-		
+
 		byte[] checkPeriodBytes = String.valueOf(checkPeriod).getBytes();
-		
+
 		for (int i = 0; i < checkPeriodBytes.length; i++) {
-			
+
 			Constant.File_Buffer[i] = checkPeriodBytes[i];
 		}
-		
+
 		FileConnection.writeFile(FileConstant.FILE_NAME_TCP_CHECK_PERIOD);
-		
+
 	}
-	
+
 	/**
 	 * 打卡时长
 	 * 
 	 * @param checkTime
 	 */
 	public static void setSmsCheckTime(int checkTime) {
-		
+
 		Constant.Tcp_Check_Time = checkTime;
-		
+
 		byte[] checkTimeBytes = String.valueOf(checkTime).getBytes();
-		
+
 		for (int i = 0; i < checkTimeBytes.length; i++) {
-			
+
 			Constant.File_Buffer[i] = checkTimeBytes[i];
 		}
-		
+
 		FileConnection.writeFile(FileConstant.FILE_NAME_TCP_CHECK_TIME);
-		
+
 	}
 
 	/**

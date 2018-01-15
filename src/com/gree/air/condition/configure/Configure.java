@@ -34,6 +34,8 @@ public class Configure {
 		
 		getTcpChangeBefore();
 		
+		getTcpPushkey();
+		
 		getTcpSig();
 		
 		getTcpCheckPeriod();
@@ -179,6 +181,25 @@ public class Configure {
 			if (Utils.isNotEmpty(changeBefore)) {
 				
 				Constant.Tcp_Change_Before_Second = Integer.parseInt(changeBefore);
+			}
+		}
+		
+	}
+	
+	/**
+	 * 按键调试周期
+	 */
+	private static void getTcpPushkey() {
+		
+		FileConnection.readFile(FileConstant.FILE_NAME_TCP_PUSHKEY);
+		
+		if (Constant.File_Buffer_Length > 0) {
+			
+			String pushkey = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
+			
+			if (Utils.isNotEmpty(pushkey)) {
+				
+				Constant.Tcp_Pushkey_Second = Integer.parseInt(pushkey);
 			}
 		}
 		

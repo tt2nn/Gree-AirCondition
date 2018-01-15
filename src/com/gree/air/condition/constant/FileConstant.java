@@ -18,6 +18,8 @@ public class FileConstant {
 	public static final String FILE_NAME_TCP_ERROR_AFTER = "TcpErrorAfter";
 	// 厂家参数改变前传输结束时间
 	public static final String FILE_NAME_TCP_CHANGE_BEFORE = "TcpChangeBefore";
+	// 按键调试周期
+	public static final String FILE_NAME_TCP_PUSHKEY = "TcpPushkey";
 	// 信号信息周期
 	public static final String FILE_NAME_TCP_SIG = "TcpSig";
 	// 打卡周期
