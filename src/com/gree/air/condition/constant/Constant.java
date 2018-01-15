@@ -86,6 +86,9 @@ public class Constant {
 	public static String Sms_Admin_List = "18023036958 13128553002 1069800006512610 18926932781 15992681809";
 	// 手机短信
 	public static String Sms_Pwd = "123456";
+	//域名IP、port
+	public static String Tcp_Serv = "192.13.182.157:7005";
+	
 	// 记录GPRS模块是否被选中
 	public static boolean Gprs_Choosed = false;
 

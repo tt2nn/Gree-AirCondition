@@ -2,6 +2,7 @@ package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
+import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -32,21 +33,18 @@ public class ServModel {
 	 * 服务器 查询 GPRS 域名、IP，端口 解析短信
 	 * 
 	 */
-	public static void servQueryReceive() {
+	private static void servQueryReceive() {
 
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
-
+		servQuerySend();
 	}
 
 	/**
 	 * 服务器 查询 GPRS 域名、IP，端口 回复服务器短信
 	 * 
 	 */
-	public static void servQuerySend() {
-		String serv = "";
-		String port = "";
+	private static void servQuerySend() {
 
-		String smsValue = serv + SmsConstant.Sms_Split_Value_Symbol + port;
+		String smsValue = Constant.Tcp_Serv.replace(SmsConstant.Tcp_Char_Value_Symbol, SmsConstant.Sms_Char_Value_Symbol);
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Serv, smsValue);
 	}
 
@@ -54,26 +52,20 @@ public class ServModel {
 	 * 服务器 设置 GPRS 域名、IP，端口 解析短信
 	 * 
 	 */
-	public static void servSetReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
+	private static void servSetReceive() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
-		int start = 0;
-		int end = smsValue.indexOf(SmsConstant.Sms_Split_Value_Symbol, start);
-		String serv = smsValue.substring(start, end);
-
-		start = end + 1;
-		end = smsValue.indexOf(SmsConstant.Sms_Split_Value_Symbol, start);
-		String port = smsValue.substring(start, end);
-
+		String address = smsValue.replace(SmsConstant.Sms_Char_Value_Symbol,SmsConstant.Tcp_Char_Value_Symbol);
+		FileModel.setSmsServer(address);
+		
+		servSetSend();
 	}
 
 	/**
 	 * 服务器 设置 GPRS 域名、IP，端口 回复服务器短信
 	 */
-	public static void servSetSend() {
+	private static void servSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Serv);
 

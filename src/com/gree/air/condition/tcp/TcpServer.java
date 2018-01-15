@@ -83,7 +83,7 @@ public class TcpServer implements Runnable {
 
 			try {
 
-				String host = "socket://192.13.182.157:7005";
+				String host = "socket://" + Constant.Tcp_Serv;
 
 				streamConnect = (StreamConnection) Connector.open(host);
 

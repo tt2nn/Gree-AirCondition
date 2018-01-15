@@ -22,6 +22,8 @@ public class Configure {
 		getSmsPassword();
 
 		getTransmType();
+
+		getTcpAddress();
 	}
 
 	/**
@@ -69,6 +71,25 @@ public class Configure {
 
 			Constant.Transfer_Power_Type = Constant.File_Buffer[0];
 
+		}
+
+	}
+
+	/**
+	 * 获取存储的TCP地址
+	 */
+	private static void getTcpAddress() {
+
+		FileConnection.readFile(FileConstant.FILE_NAME_TCP_ADDRESS);
+
+		if (Constant.File_Buffer_Length > 0) {
+
+			String address = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
+
+			if (address != null && !address.equals("")) {
+
+				Constant.Tcp_Serv = address;
+			}
 		}
 
 	}

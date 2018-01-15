@@ -24,6 +24,26 @@ public class FileModel {
 		FileConnection.writeFile(FileConstant.FILE_NAME_SMS_PASSWORD);
 
 	}
+	
+	/**
+	 * 设置域名IP、port
+	 * 
+	 * @param server
+	 */
+	public static void setSmsServer(String server) {
+		
+		Constant.Tcp_Serv = server;
+		
+		byte[] serverBytes = server.getBytes();
+		
+		for (int i = 0; i < serverBytes.length; i++) {
+			
+			Constant.File_Buffer[i] = serverBytes[i];
+		}
+		
+		FileConnection.writeFile(FileConstant.FILE_NAME_TCP_ADDRESS);
+		
+	}
 
 	/**
 	 * 存储实时上报模式

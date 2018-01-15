@@ -55,7 +55,6 @@ public class PwdModel {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 		
-		Constant.Sms_Pwd = smsValue;
 		FileModel.setSmsPassword(smsValue);
 
 		pwdSetSend();
