@@ -2,6 +2,7 @@ package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
+import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -32,22 +33,19 @@ public class HbModel {
 	 * 服务器 查询 GPRS 心跳间隔 解析短信
 	 * 
 	 */
-	public static void hbQueryReceive() {
+	private static void hbQueryReceive() {
 
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
-
+		hbQuerySend();
 	}
 
 	/**
 	 * 服务器 查询 GPRS 心跳间隔 回复服务器短信
 	 * 
 	 */
-	public static void hbQuerySend() {
-		int second = 0;
-		String value1 = "heart";
-		String value2 = "0";
-		String smsValue = value1 + SmsConstant.Sms_Split_Value_Symbol + value2 + SmsConstant.Sms_Split_Value_Symbol
-				+ second;
+	private static void hbQuerySend() {
+
+		String value1 = "heart,0,";
+		String smsValue = value1 + Constant.Tcp_Hb;
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Hb, smsValue);
 	}
@@ -56,9 +54,7 @@ public class HbModel {
 	 * 服务器 设置 GPRS 心跳间隔 解析短信
 	 * 
 	 */
-	public static void hbSetReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
+	private static void hbSetReceive() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
@@ -67,12 +63,15 @@ public class HbModel {
 		int end = smsValue.length();
 		String second = smsValue.substring(start, end);
 
+		FileModel.setSmsHb(Integer.parseInt(second));
+
+		hbSetSend();
 	}
 
 	/**
 	 * 服务器 设置 GPRS 心跳间隔 回复服务器短信
 	 */
-	public static void hbSetSend() {
+	private static void hbSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Hb);
 

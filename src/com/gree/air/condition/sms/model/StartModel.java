@@ -1,5 +1,6 @@
 package com.gree.air.condition.sms.model;
 
+import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
@@ -25,15 +26,16 @@ public class StartModel {
 	 * 解析 开始GPRS连接服务器短信
 	 * 
 	 */
-	public static void startReceive() {
+	private static void startReceive() {
 
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
+		ControlCenter.alwaysTransmit();
+		startSend();
 	}
 
 	/**
 	 * 开始GPRS连接服务器 回复短信
 	 */
-	public static void startSend() {
+	private static void startSend() {
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Start, "ok");
 

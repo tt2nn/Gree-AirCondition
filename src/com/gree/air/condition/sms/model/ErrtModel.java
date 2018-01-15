@@ -2,6 +2,7 @@ package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
+import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -32,9 +33,9 @@ public class ErrtModel {
 	 * 服务器 查询 GPRS 故障点前传输时间 解析短信
 	 * 
 	 */
-	public static void errtQueryReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
+	private static void errtQueryReceive() {
+		
+		errtQuerySend();
 
 	}
 
@@ -42,10 +43,9 @@ public class ErrtModel {
 	 * 服务器 查询 GPRS 故障点前传输时间 回复服务器短信
 	 * 
 	 */
-	public static void errtQuerySend() {
+	private static void errtQuerySend() {
 
-		int minute = 0;
-		String smsValue = minute + "";
+		String smsValue = Constant.Tcp_Error_Before_Second/60 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Errt, smsValue);
 	}
@@ -54,20 +54,18 @@ public class ErrtModel {
 	 * 服务器 设置 GPRS 故障点前传输时间 解析短信
 	 * 
 	 */
-	public static void errtSetReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
+	private static void errtSetReceive() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
-		String min = smsValue;
-
+		FileModel.setSmsErrt(Integer.parseInt(smsValue)*60);
+		errtSetSend();
 	}
 
 	/**
 	 * 服务器 设置 GPRS 故障点前传输时间 回复服务器短信
 	 */
-	public static void errtSetSend() {
+	private static void errtSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Errt);
 

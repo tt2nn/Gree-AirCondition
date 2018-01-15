@@ -2,6 +2,7 @@ package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
+import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -32,19 +33,18 @@ public class HealtModel {
 	 * 服务器 查询 GPRS 厂家参数改变前传输结束时间 解析短信
 	 * 
 	 */
-	public static void healtQueryReceive() {
+	private static void healtQueryReceive() {
 
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
-
+		healtQuerySend();
 	}
 
 	/**
 	 * 服务器 查询 GPRS 厂家参数改变前传输结束时间 回复服务器短信
 	 * 
 	 */
-	public static void healtQuerySend() {
-		int minute = 0;
-		String smsValue = minute + "";
+	private static void healtQuerySend() {
+
+		String smsValue = Constant.Tcp_Change_Before_Second / 60 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Healt, smsValue);
 	}
@@ -53,20 +53,18 @@ public class HealtModel {
 	 * 服务器 设置 GPRS 厂家参数改变前传输结束时间 解析短信
 	 * 
 	 */
-	public static void healtSetReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
+	private static void healtSetReceive() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
-		String min = smsValue;
-
+		FileModel.setSmsHealt(Integer.parseInt(smsValue) * 60);
+		healtSetSend();
 	}
 
 	/**
 	 * 服务器 设置 GPRS 厂家参数改变前传输结束时间 回复服务器短信
 	 */
-	public static void healtSetSend() {
+	private static void healtSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Healt);
 

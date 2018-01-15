@@ -57,7 +57,7 @@ public class ServModel {
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
 		String address = smsValue.replace(SmsConstant.Sms_Char_Value_Symbol,SmsConstant.Tcp_Char_Value_Symbol);
-		FileModel.setSmsServer(address);
+		FileModel.setSmsServ(address);
 		
 		servSetSend();
 	}

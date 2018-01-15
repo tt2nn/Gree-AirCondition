@@ -2,6 +2,7 @@ package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
+import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -32,20 +33,17 @@ public class DebtModel {
 	 * 服务器 查询 GPRS 故障点后传输时间 解析短信
 	 * 
 	 */
-	public static void debtQueryReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
-
+	private static void debtQueryReceive() {
+		debtQuerySend();
 	}
 
 	/**
 	 * 服务器 查询 GPRS 故障点后传输时间 回复服务器短信
 	 * 
 	 */
-	public static void debtQuerySend() {
+	private static void debtQuerySend() {
 
-		int minute = 0;
-		String smsValue = minute + "";
+		String smsValue = Constant.Tcp_Error_After_Second/60 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Debt, smsValue);
 	}
@@ -54,20 +52,18 @@ public class DebtModel {
 	 * 服务器 设置 GPRS 故障点后传输时间 解析短信
 	 * 
 	 */
-	public static void debtSetReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
+	private static void debtSetReceive() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
-
-		String min = smsValue;
-
+		
+		FileModel.setSmsDebt(Integer.parseInt(smsValue)*60);
+		debtSetSend();
 	}
 
 	/**
 	 * 服务器 设置 GPRS 故障点后传输时间 回复服务器短信
 	 */
-	public static void debtSetSend() {
+	private static void debtSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Debt);
 

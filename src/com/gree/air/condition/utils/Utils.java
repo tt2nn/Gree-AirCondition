@@ -189,4 +189,20 @@ public class Utils {
 		return value * 1000;
 	}
 
+	/**
+	 * 判断字符串不为空
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static boolean isNotEmpty(String string) {
+
+		if (string != null && !string.equals("")) {
+			return true;
+
+		}
+		return false;
+
+	}
+
 }

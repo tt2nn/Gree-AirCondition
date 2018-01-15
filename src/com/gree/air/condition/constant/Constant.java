@@ -88,6 +88,20 @@ public class Constant {
 	public static String Sms_Pwd = "123456";
 	//域名IP、port
 	public static String Tcp_Serv = "192.13.182.157:7005";
+	//心跳间隔
+	public static int Tcp_Hb = 300;
+	//故障点前传输时间
+	public static int Tcp_Error_Before_Second = 1800;
+	//故障点后传输时间
+	public static int Tcp_Error_After_Second = 300;
+	//厂家参数改变前传输结束时间
+	public static int Tcp_Change_Before_Second = 60;
+	//信号信息周期
+	public static int Tcp_Sig_Second = 600;
+	//打卡周期
+	public static int Tcp_Check_Period = 3600;
+	//打卡时长
+	public static int Tcp_Check_Time = 60;
 	
 	// 记录GPRS模块是否被选中
 	public static boolean Gprs_Choosed = false;
