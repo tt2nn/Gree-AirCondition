@@ -2,6 +2,7 @@ package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
+import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -32,39 +33,39 @@ public class PwdModel {
 	 * 服务器 查询 GPRS 短信密码 解析短信
 	 * 
 	 */
-	public static void pwdQueryReceive() {
+	private static void pwdQueryReceive() {
 
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
-
+		pwdQuerySend();
 	}
 
 	/**
 	 * 服务器 查询 GPRS 短信密码 回复服务器短信
 	 * 
 	 */
-	public static void pwdQuerySend() {
-		String pwd = "";
-		SmsModel.buildMessage(SmsConstant.Sms_Type_Pwd, pwd);
+	private static void pwdQuerySend() {
+
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Pwd, Constant.Sms_Pwd);
 	}
 
 	/**
 	 * 服务器 设置 GPRS 短信密码 解析短信
 	 * 
 	 */
-	public static void pwdSetReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
+	private static void pwdSetReceive() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
+		
+		Constant.Sms_Pwd = smsValue;
+		FileModel.setSmsPassword(smsValue);
 
-		String pwd = smsValue;
+		pwdSetSend();
 
 	}
 
 	/**
 	 * 服务器 设置 GPRS 短信密码 回复服务器短信
 	 */
-	public static void pwdSetSend() {
+	private static void pwdSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Pwd);
 
