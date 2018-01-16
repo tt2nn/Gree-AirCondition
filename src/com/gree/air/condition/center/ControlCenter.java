@@ -6,7 +6,7 @@ import com.gree.air.condition.tcp.TcpServer;
 import com.gree.air.condition.tcp.model.LoginModel;
 import com.gree.air.condition.tcp.model.ParamModel;
 import com.gree.air.condition.tcp.model.TimeModel;
-import com.gree.air.condition.tcp.model.TransmModel;
+import com.gree.air.condition.tcp.model.TransmitModel;
 
 /**
  * 工作中心
@@ -17,6 +17,8 @@ import com.gree.air.condition.tcp.model.TransmModel;
 public class ControlCenter {
 
 	public static boolean waittingHeart = false;
+
+	public static long Transmit_Check_Time = 0L;
 
 	/**
 	 * 判断App是否可以工作
@@ -88,7 +90,7 @@ public class ControlCenter {
 		}
 
 		waittingHeart = false;
-		TransmModel.start();
+		TransmitModel.start();
 	}
 
 	/**
@@ -107,7 +109,7 @@ public class ControlCenter {
 	 */
 	public static void transmitData(int length, long time) {
 
-		TransmModel.dataTransm(length, time);
+		TransmitModel.dataTransm(length, time);
 	}
 
 	/**
@@ -156,13 +158,38 @@ public class ControlCenter {
 
 		DataCenter.powerTransmit();
 	}
-	
-	public static void startCheck() {
-		
+
+	/**
+	 * 启动打卡上报
+	 */
+	public static void startCheckTransmit() {
+
+		DataCenter.registerCheckTransmit();
 	}
-	
-	public static void checkTransmit() {
-		
+
+	/**
+	 * 周期打卡上报
+	 */
+	public static void periodCheckTransmit() {
+
+		Transmit_Check_Time = Constant.System_Time;
+
+		DataCenter.checkTransmit();
+	}
+
+	/**
+	 * 判断是否进行打卡上报
+	 * 
+	 * @return
+	 */
+	public static boolean isCheckTransmit() {
+
+		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHECK) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

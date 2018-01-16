@@ -4,7 +4,7 @@ import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.tcp.model.LoginModel;
 import com.gree.air.condition.tcp.model.ParamModel;
 import com.gree.air.condition.tcp.model.TimeModel;
-import com.gree.air.condition.tcp.model.TransmModel;
+import com.gree.air.condition.tcp.model.TransmitModel;
 import com.gree.air.condition.utils.CRC;
 import com.gree.air.condition.utils.Utils;
 
@@ -49,19 +49,19 @@ public class TcpModel {
 
 		case (byte) 0x91: // 开始传输 响应
 
-			TransmModel.startResponse();
+			TransmitModel.startResponse();
 
 			break;
 
 		case (byte) 0x92: // 停止发送数据 请求
 
-			TransmModel.stopResponse();
+			TransmitModel.stopResponse();
 
 			break;
 
 		case (byte) 0x93: // 进行实时监控 请求
 
-			TransmModel.monitorResponse();
+			TransmitModel.monitorResponse();
 			
 			break;
 
@@ -79,7 +79,7 @@ public class TcpModel {
 
 		case (byte) 0x96: // 服务器发送机组数据至GPRS模块 请求
 
-			TransmModel.dataTransmResponse();
+			TransmitModel.dataTransmResponse();
 
 			break;
 

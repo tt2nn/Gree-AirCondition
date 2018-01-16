@@ -40,6 +40,7 @@ public class Timer implements Runnable {
 						ControlCenter.packageData();
 
 					} else {
+
 						packageNum++;
 					}
 
@@ -47,6 +48,12 @@ public class Timer implements Runnable {
 					if (Constant.System_Time - Constant.Heart_Beat_Time > Constant.Tcp_Heart_Beat_Period) {
 
 						ControlCenter.heartBeat();
+					}
+
+					// 周期性打卡上报
+					if (Constant.System_Time - ControlCenter.Transmit_Check_Time > Constant.Transmit_Check_Period) {
+
+						ControlCenter.periodCheckTransmit();
 					}
 				}
 

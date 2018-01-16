@@ -14,7 +14,7 @@ import com.gree.air.condition.utils.Utils;
  * @author lihaotian
  *
  */
-public class TransmModel {
+public class TransmitModel {
 
 	private static Date date = new Date();
 	private static Calendar calendar = Calendar.getInstance();
@@ -105,6 +105,8 @@ public class TransmModel {
 
 		case Constant.TRANSMIT_TYPE_CHECK:
 
+			ControlCenter.startCheckTransmit();
+			
 			break;
 		}
 	}

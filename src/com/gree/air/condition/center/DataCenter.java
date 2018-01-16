@@ -427,7 +427,7 @@ public class DataCenter implements Runnable {
 				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT) {
 
 			pauseUploadData();
-
+			
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_CHECK;
 			Transm_Level = TRANSMIT_LEVEL_CHECK;
 		}
@@ -449,7 +449,7 @@ public class DataCenter implements Runnable {
 
 		ControlCenter.requestStartUpload();
 	}
-
+	
 	/**
 	 * 设置上传标志位
 	 * 
