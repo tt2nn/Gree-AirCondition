@@ -86,25 +86,25 @@ public class Constant {
 	public static String Sms_Admin_List = "18023036958 13128553002 1069800006512610 18926932781 15992681809";
 	// 手机短信
 	public static String Sms_Pwd = "123456";
-	//域名IP、port
+	// 域名IP、port
 	public static String Tcp_Serv = "192.13.182.157:7005";
-	//心跳间隔
-	public static int Tcp_Heart_Beat_Period = 300000;
-	//故障点前传输时间
-	public static int Transfer_Error_Start_Time = 1800000;
-	//故障点后传输时间
-	public static int Transfer_Error_End_Time = 300000;
-	//厂家参数改变前传输结束时间
-	public static int Transfer_Change_End_Time = 60000;
-	//按键调试周期
-	public static int Transfer_Pushkey_End_Time = 14400000;
-	//信号信息周期
-	public static int Tcp_Sig_Period = 600000;
-	//打卡周期
-	public static int Tcp_Check_Period = 3600000;
-	//打卡时长
-	public static int Tcp_Check_End_Time = 60000;
-	
+	// 心跳间隔
+	public static int Tcp_Heart_Beat_Period = 300;
+	// 故障点前传输时间
+	public static int Transfer_Error_Start_Time = 1800;
+	// 故障点后传输时间
+	public static int Transfer_Error_End_Time = 300;
+	// 厂家参数改变前传输结束时间
+	public static int Transfer_Change_End_Time = 60;
+	// 按键调试周期
+	public static int Transfer_Pushkey_End_Time = 14400;
+	// 信号信息周期
+	public static int Tcp_Sig_Period = 600;
+	// 打卡周期
+	public static int Tcp_Check_Period = 3600;
+	// 打卡时长
+	public static int Tcp_Check_End_Time = 60;
+
 	// 记录GPRS模块是否被选中
 	public static boolean Gprs_Choosed = false;
 

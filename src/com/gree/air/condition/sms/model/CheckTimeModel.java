@@ -12,7 +12,7 @@ import com.gree.air.condition.sms.SmsModel;
  *
  */
 public class CheckTimeModel {
-	
+
 	/**
 	 * 解析收到的短信
 	 */
@@ -40,7 +40,7 @@ public class CheckTimeModel {
 	 */
 	private static void checkTimeQuerySend() {
 
-		String smsValue = Constant.Tcp_Check_Period / 1000 + "";
+		String smsValue = Constant.Tcp_Check_Period + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Check_Time, smsValue);
 	}
@@ -52,8 +52,8 @@ public class CheckTimeModel {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
-		FileModel.setSmsCheckTime(Integer.parseInt(smsValue) * 1000);
-		
+		FileModel.setSmsCheckTime(Integer.parseInt(smsValue));
+
 		checkTimeSetSend();
 	}
 

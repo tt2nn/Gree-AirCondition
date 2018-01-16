@@ -191,7 +191,7 @@ public class DataCenter implements Runnable {
 				}
 
 				// 每10分钟需要上传GPRS信号
-				if (Constant.System_Time - Upload_Data_Interval_Time >= Constant.Tcp_Sig_Period) {
+				if (Constant.System_Time - Upload_Data_Interval_Time >= Constant.Tcp_Sig_Period * 1000) {
 
 					Upload_Data_Interval_Time = Constant.System_Time;
 					ControlCenter.sendGprsSignal();

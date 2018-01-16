@@ -40,7 +40,7 @@ public class CheckPeriodModel {
 	 */
 	private static void checkPeriodQuerySend() {
 
-		String smsValue = Constant.Tcp_Check_Period / 60000 + "";
+		String smsValue = Constant.Tcp_Check_Period / 60 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Check_Period, smsValue);
 	}
@@ -52,7 +52,7 @@ public class CheckPeriodModel {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
-		FileModel.setSmsCheckPeriod(Integer.parseInt(smsValue) * 60000);
+		FileModel.setSmsCheckPeriod(Integer.parseInt(smsValue) * 60);
 
 		checkPeriodSetSend();
 	}

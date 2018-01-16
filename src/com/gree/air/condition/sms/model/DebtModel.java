@@ -43,7 +43,7 @@ public class DebtModel {
 	 */
 	private static void debtQuerySend() {
 
-		String smsValue = Constant.Transfer_Error_End_Time/60000 + "";
+		String smsValue = Constant.Transfer_Error_End_Time / 60 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Debt, smsValue);
 	}
@@ -55,9 +55,9 @@ public class DebtModel {
 	private static void debtSetReceive() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
-		
-		FileModel.setSmsDebt(Integer.parseInt(smsValue)*60000);
-		
+
+		FileModel.setSmsDebt(Integer.parseInt(smsValue) * 60);
+
 		debtSetSend();
 	}
 

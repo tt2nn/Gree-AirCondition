@@ -45,7 +45,7 @@ public class HbModel {
 	private static void hbQuerySend() {
 
 		String value1 = "heart,0,";
-		String smsValue = value1 + Constant.Tcp_Heart_Beat_Period / 1000;
+		String smsValue = value1 + Constant.Tcp_Heart_Beat_Period;
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Hb, smsValue);
 	}
@@ -63,7 +63,7 @@ public class HbModel {
 		int end = smsValue.length();
 		String second = smsValue.substring(start, end);
 
-		FileModel.setSmsHb(Integer.parseInt(second) * 1000);
+		FileModel.setSmsHb(Integer.parseInt(second));
 
 		hbSetSend();
 	}
