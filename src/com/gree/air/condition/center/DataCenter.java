@@ -288,12 +288,12 @@ public class DataCenter implements Runnable {
 		pauseUploadData();
 
 		// 重置发送游标，上报故障点前30分钟到后5分钟数据
-		Data_Buffer_Out_Mark = Data_Buffer_Mark - (30 * 60 / 3);
+		Data_Buffer_Out_Mark = Data_Buffer_Mark - (Constant.Transfer_Error_Start_Time / 3);
 		if (Data_Buffer_Out_Mark < 0) {
 
 			Data_Buffer_Out_Mark = Data_Buffer_Out_Mark + BUFFER_MARK_SIZE;
 		}
-		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (5 * 60 / 3);
+		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transfer_Error_End_Time / 3);
 
 		if (Can_Upload_Data) {
 
@@ -320,8 +320,8 @@ public class DataCenter implements Runnable {
 
 			Data_Buffer_Out_Mark = Data_Buffer_Out_Mark + BUFFER_MARK_SIZE;
 		}
-		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (60 / 3);
 
+		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transfer_Change_End_Time / 3);
 		if (Can_Upload_Data) {
 
 			Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
@@ -341,7 +341,7 @@ public class DataCenter implements Runnable {
 
 		pauseUploadData();
 
-		// 重置发送游标，上报变化点前5分钟到后1分钟数据
+		// 重置发送游标
 		Data_Buffer_Out_Mark = Data_Buffer_Mark;
 		Data_Buffer_Out_End_Mark = -1;
 
@@ -387,6 +387,14 @@ public class DataCenter implements Runnable {
 			Constant.Stop_Time = 0L;
 
 			pauseUploadData();
+
+			// 重置发送游标，选举上报持续发送5分钟数据
+			Data_Buffer_Out_Mark = Data_Buffer_Mark;
+			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (5 * 60 / 3);
+			if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
+
+				Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
+			}
 
 			Constant.Transm_Type = Constant.TRANSM_TYPE_POWER;
 			Transm_Level = TRANSM_TYPE_POWER_LEVEL;
