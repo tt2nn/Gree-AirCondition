@@ -72,7 +72,7 @@ public class FileModel {
 	 */
 	public static void setSmsErrt(int errt) {
 
-		Constant.Transfer_Error_Start_Time = errt;
+		Constant.Transmit_Error_Start_Time = errt;
 
 		byte[] errtBytes = String.valueOf(errt).getBytes();
 
@@ -81,7 +81,7 @@ public class FileModel {
 			Constant.File_Buffer[i] = errtBytes[i];
 		}
 
-		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSFER_ERROR_START_TIME);
+		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSMIT_ERROR_START_TIME);
 
 	}
 
@@ -92,7 +92,7 @@ public class FileModel {
 	 */
 	public static void setSmsDebt(int debt) {
 
-		Constant.Transfer_Error_End_Time = debt;
+		Constant.Transmit_Error_End_Time = debt;
 
 		byte[] debtBytes = String.valueOf(debt).getBytes();
 
@@ -101,7 +101,7 @@ public class FileModel {
 			Constant.File_Buffer[i] = debtBytes[i];
 		}
 
-		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSFER_ERROR_END_TIME);
+		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSMIT_ERROR_END_TIME);
 
 	}
 
@@ -112,7 +112,7 @@ public class FileModel {
 	 */
 	public static void setSmsHealt(int healt) {
 
-		Constant.Transfer_Change_End_Time = healt;
+		Constant.Transmit_Change_End_Time = healt;
 
 		byte[] healtBytes = String.valueOf(healt).getBytes();
 
@@ -121,7 +121,7 @@ public class FileModel {
 			Constant.File_Buffer[i] = healtBytes[i];
 		}
 
-		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSFER_CHANGE_END_TIME);
+		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSMIT_CHANGE_END_TIME);
 
 	}
 
@@ -132,7 +132,7 @@ public class FileModel {
 	 */
 	public static void setSmsButt(int butt) {
 
-		Constant.Transfer_Pushkey_End_Time = butt;
+		Constant.Transmit_Pushkey_End_Time = butt;
 
 		byte[] buttBytes = String.valueOf(butt).getBytes();
 
@@ -141,7 +141,7 @@ public class FileModel {
 			Constant.File_Buffer[i] = buttBytes[i];
 		}
 
-		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSFER_PUSHKEY_END_TIME);
+		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSMIT_PUSHKEY_END_TIME);
 
 	}
 
@@ -172,7 +172,7 @@ public class FileModel {
 	 */
 	public static void setSmsCheckPeriod(int checkPeriod) {
 
-		Constant.Tcp_Check_Period = checkPeriod;
+		Constant.Transmit_Check_Period = checkPeriod;
 
 		byte[] checkPeriodBytes = String.valueOf(checkPeriod).getBytes();
 
@@ -181,7 +181,7 @@ public class FileModel {
 			Constant.File_Buffer[i] = checkPeriodBytes[i];
 		}
 
-		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSFER_CHECK_PERIOD);
+		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSMIT_CHECK_PERIOD);
 
 	}
 
@@ -192,7 +192,7 @@ public class FileModel {
 	 */
 	public static void setSmsCheckTime(int checkTime) {
 
-		Constant.Tcp_Check_End_Time = checkTime;
+		Constant.Transmit_Check_End_Time = checkTime;
 
 		byte[] checkTimeBytes = String.valueOf(checkTime).getBytes();
 
@@ -201,7 +201,7 @@ public class FileModel {
 			Constant.File_Buffer[i] = checkTimeBytes[i];
 		}
 
-		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSFER_CHECK_END_TIME);
+		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSMIT_CHECK_END_TIME);
 
 	}
 
@@ -210,7 +210,7 @@ public class FileModel {
 	 */
 	public static void setAlwaysTransm() {
 
-		Constant.File_Buffer[0] = Constant.TRANSM_TYPE_ALWAYS;
+		Constant.File_Buffer[0] = Constant.TRANSMIT_TYPE_ALWAYS;
 
 		FileConnection.writeFile(FileConstant.FILE_NAME_DATA_TRANSM);
 
@@ -221,7 +221,7 @@ public class FileModel {
 	 */
 	public static void setStopTransm() {
 
-		Constant.File_Buffer[0] = Constant.TRANSM_TYPE_STOP;
+		Constant.File_Buffer[0] = Constant.TRANSMIT_TYPE_STOP;
 
 		FileConnection.writeFile(FileConstant.FILE_NAME_DATA_TRANSM);
 

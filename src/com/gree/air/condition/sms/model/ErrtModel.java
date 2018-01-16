@@ -45,7 +45,7 @@ public class ErrtModel {
 	 */
 	private static void errtQuerySend() {
 
-		String smsValue = Constant.Transfer_Error_Start_Time / 60 + "";
+		String smsValue = Constant.Transmit_Error_Start_Time / 60 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Errt, smsValue);
 	}

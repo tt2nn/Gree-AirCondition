@@ -37,7 +37,8 @@ public class TimeModel {
 		int sec = Constant.Tcp_In_Buffer[24] & 0xFF;
 
 		Constant.System_Time = Utils.getTime(year, month, date, hour, min, sec);
-		
+		Constant.Heart_Beat_Time = Constant.System_Time;
+
 		System.out.println("-----------------------" + Constant.System_Time);
 
 		if (ControlCenter.waittingHeart) {

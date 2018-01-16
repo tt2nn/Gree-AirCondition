@@ -14,7 +14,7 @@ import com.gree.air.condition.utils.Utils;
  * @author lihaotian
  *
  */
-public class TransmModel {
+public class TransmitModel {
 
 	private static Date date = new Date();
 	private static Calendar calendar = Calendar.getInstance();
@@ -26,7 +26,7 @@ public class TransmModel {
 
 		Constant.Tcp_Out_Buffer[18] = (byte) 0x91;
 
-		Constant.Tcp_Out_Buffer[19] = Constant.Transm_Type;
+		Constant.Tcp_Out_Buffer[19] = Constant.Transmit_Type;
 
 		// 获取年月日时分秒
 		date.setTime(Constant.System_Time);
@@ -99,12 +99,14 @@ public class TransmModel {
 
 			break;
 
-		case Constant.TRANSM_TYPE_BOOT:
+		case Constant.TRANSMIT_TYPE_BOOT:
 
 			break;
 
-		case Constant.TRANSM_TYPE_CHECK:
+		case Constant.TRANSMIT_TYPE_CHECK:
 
+			ControlCenter.startCheckTransmit();
+			
 			break;
 		}
 	}

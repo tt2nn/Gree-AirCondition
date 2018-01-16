@@ -43,7 +43,7 @@ public class DebtModel {
 	 */
 	private static void debtQuerySend() {
 
-		String smsValue = Constant.Transfer_Error_End_Time / 60 + "";
+		String smsValue = Constant.Transmit_Error_End_Time / 60 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Debt, smsValue);
 	}

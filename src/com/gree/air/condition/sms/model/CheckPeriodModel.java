@@ -40,7 +40,7 @@ public class CheckPeriodModel {
 	 */
 	private static void checkPeriodQuerySend() {
 
-		String smsValue = Constant.Tcp_Check_Period / 60 + "";
+		String smsValue = Constant.Transmit_Check_Period / 60 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Check_Period, smsValue);
 	}
