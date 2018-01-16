@@ -27,19 +27,19 @@ public class Configure {
 		getTcpAddress();
 
 		getTcpHb();
-		
+
 		getTcpErrorBefore();
-		
+
 		getTcpErrorAfter();
-		
+
 		getTcpChangeBefore();
-		
+
 		getTcpPushkey();
-		
+
 		getTcpSig();
-		
+
 		getTcpCheckPeriod();
-		
+
 		getTcpCheckTime();
 	}
 
@@ -115,7 +115,7 @@ public class Configure {
 	 */
 	private static void getTcpHb() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TCP_HB);
+		FileConnection.readFile(FileConstant.FILE_NAME_TCP_HEART_BEAT_PERIOD);
 
 		if (Constant.File_Buffer_Length > 0) {
 
@@ -123,142 +123,143 @@ public class Configure {
 
 			if (Utils.isNotEmpty(second)) {
 
-				Constant.Tcp_Hb = Integer.parseInt(second);
+				Constant.Tcp_Heart_Beat_Period = Integer.parseInt(second);
 			}
 		}
 
 	}
-	
+
 	/**
 	 * 获取存储的故障点前传输时间
 	 */
 	private static void getTcpErrorBefore() {
-		
-		FileConnection.readFile(FileConstant.FILE_NAME_TCP_ERROR_BEFORE);
-		
+
+		FileConnection.readFile(FileConstant.FILE_NAME_TRANSFER_ERROR_START_TIME);
+
 		if (Constant.File_Buffer_Length > 0) {
-			
+
 			String errorBefore = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-			
+
 			if (Utils.isNotEmpty(errorBefore)) {
-				
-				Constant.Tcp_Error_Before_Second = Integer.parseInt(errorBefore);
+
+				Constant.Transfer_Error_Start_Time = Integer.parseInt(errorBefore);
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * 获取存储的故障点后传输时间
 	 */
 	private static void getTcpErrorAfter() {
-		
-		FileConnection.readFile(FileConstant.FILE_NAME_TCP_ERROR_AFTER);
-		
+
+		FileConnection.readFile(FileConstant.FILE_NAME_TRANSFER_ERROR_END_TIME);
+
 		if (Constant.File_Buffer_Length > 0) {
-			
+
 			String errorAfter = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-			
+
 			if (Utils.isNotEmpty(errorAfter)) {
-				
-				Constant.Tcp_Error_After_Second = Integer.parseInt(errorAfter);
+
+				Constant.Transfer_Error_End_Time = Integer.parseInt(errorAfter);
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * 厂家参数改变前传输结束时间
 	 */
 	private static void getTcpChangeBefore() {
-		
-		FileConnection.readFile(FileConstant.FILE_NAME_TCP_CHANGE_BEFORE);
-		
+
+		FileConnection.readFile(FileConstant.FILE_NAME_TRANSFER_CHANGE_END_TIME);
+
 		if (Constant.File_Buffer_Length > 0) {
-			
+
 			String changeBefore = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-			
+
 			if (Utils.isNotEmpty(changeBefore)) {
-				
-				Constant.Tcp_Change_Before_Second = Integer.parseInt(changeBefore);
+
+				Constant.Transfer_Change_End_Time = Integer.parseInt(changeBefore);
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * 按键调试周期
 	 */
 	private static void getTcpPushkey() {
-		
-		FileConnection.readFile(FileConstant.FILE_NAME_TCP_PUSHKEY);
-		
+
+		FileConnection.readFile(FileConstant.FILE_NAME_TRANSFER_PUSHKEY_END_TIME);
+
 		if (Constant.File_Buffer_Length > 0) {
-			
+
 			String pushkey = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-			
+
 			if (Utils.isNotEmpty(pushkey)) {
-				
-				Constant.Tcp_Pushkey_Second = Integer.parseInt(pushkey);
+
+				Constant.Transfer_Pushkey_End_Time = Integer.parseInt(pushkey);
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * 信号信息周期
 	 */
 	private static void getTcpSig() {
-		
-		FileConnection.readFile(FileConstant.FILE_NAME_TCP_SIG);
-		
+
+		FileConnection.readFile(FileConstant.FILE_NAME_TCP_SIG_PERIOD);
+
 		if (Constant.File_Buffer_Length > 0) {
-			
+
 			String sig = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-			
+
 			if (Utils.isNotEmpty(sig)) {
-				
-				Constant.Tcp_Sig_Second = Integer.parseInt(sig);
+
+				Constant.Tcp_Sig_Period = Integer.parseInt(sig);
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * 打卡周期
 	 */
 	private static void getTcpCheckPeriod() {
-		
-		FileConnection.readFile(FileConstant.FILE_NAME_TCP_CHECK_PERIOD);
-		
+
+		FileConnection.readFile(FileConstant.FILE_NAME_TRANSFER_CHECK_PERIOD);
+
 		if (Constant.File_Buffer_Length > 0) {
-			
+
 			String checkPeriod = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-			
+
 			if (Utils.isNotEmpty(checkPeriod)) {
-				
+
 				Constant.Tcp_Check_Period = Integer.parseInt(checkPeriod);
 			}
 		}
-		
+
 	}
+
 	/**
 	 * 打卡时长
 	 */
 	private static void getTcpCheckTime() {
-		
-		FileConnection.readFile(FileConstant.FILE_NAME_TCP_CHECK_TIME);
-		
+
+		FileConnection.readFile(FileConstant.FILE_NAME_TRANSFER_CHECK_END_TIME);
+
 		if (Constant.File_Buffer_Length > 0) {
-			
+
 			String checkTime = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-			
+
 			if (Utils.isNotEmpty(checkTime)) {
-				
-				Constant.Tcp_Check_Time= Integer.parseInt(checkTime);
+
+				Constant.Tcp_Check_End_Time = Integer.parseInt(checkTime);
 			}
 		}
-		
+
 	}
 
 }

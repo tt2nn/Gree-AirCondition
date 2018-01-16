@@ -43,7 +43,7 @@ public class ButtModel {
 	 */
 	private static void buttQuerySend() {
 
-		String smsValue = Constant.Tcp_Pushkey_Second / 60 + "";
+		String smsValue = Constant.Transfer_Pushkey_End_Time / 60000 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Butt, smsValue);
 	}
@@ -56,7 +56,7 @@ public class ButtModel {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
-		FileModel.setSmsButt(Integer.parseInt(smsValue) * 60);
+		FileModel.setSmsButt(Integer.parseInt(smsValue) * 60000);
 		
 		buttSetSend();
 	}

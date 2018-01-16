@@ -44,7 +44,7 @@ public class HealtModel {
 	 */
 	private static void healtQuerySend() {
 
-		String smsValue = Constant.Tcp_Change_Before_Second / 60 + "";
+		String smsValue = Constant.Transfer_Change_End_Time / 60000 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Healt, smsValue);
 	}
@@ -57,7 +57,7 @@ public class HealtModel {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
-		FileModel.setSmsHealt(Integer.parseInt(smsValue) * 60);
+		FileModel.setSmsHealt(Integer.parseInt(smsValue) * 60000);
 		
 		healtSetSend();
 	}

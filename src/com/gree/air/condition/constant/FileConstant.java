@@ -11,19 +11,19 @@ public class FileConstant {
 	// 模块TCP连接地址
 	public static final String FILE_NAME_TCP_ADDRESS = "TcpAddress";
 	// 心跳时间
-	public static final String FILE_NAME_TCP_HB = "TcpHb";
+	public static final String FILE_NAME_TCP_HEART_BEAT_PERIOD = "TcpHeartBeatPeriod";
 	// 故障点前传输时间
-	public static final String FILE_NAME_TCP_ERROR_BEFORE = "TcpErrorBefore";
+	public static final String FILE_NAME_TRANSFER_ERROR_START_TIME = "TransferErrorStartTime";
 	// 故障点后传输时间
-	public static final String FILE_NAME_TCP_ERROR_AFTER = "TcpErrorAfter";
+	public static final String FILE_NAME_TRANSFER_ERROR_END_TIME = "TransferErrorEndTime";
 	// 厂家参数改变前传输结束时间
-	public static final String FILE_NAME_TCP_CHANGE_BEFORE = "TcpChangeBefore";
+	public static final String FILE_NAME_TRANSFER_CHANGE_END_TIME = "TransferChangeEndTime";
 	// 按键调试周期
-	public static final String FILE_NAME_TCP_PUSHKEY = "TcpPushkey";
+	public static final String FILE_NAME_TRANSFER_PUSHKEY_END_TIME = "TransferPushkeyEndTime";
 	// 信号信息周期
-	public static final String FILE_NAME_TCP_SIG = "TcpSig";
+	public static final String FILE_NAME_TCP_SIG_PERIOD = "TcpSigPeriod";
 	// 打卡周期
-	public static final String FILE_NAME_TCP_CHECK_PERIOD = "TcpCheckPeriod";
+	public static final String FILE_NAME_TRANSFER_CHECK_PERIOD = "TransferCheckPeriod";
 	// 打卡时长
-	public static final String FILE_NAME_TCP_CHECK_TIME = "TcpCheckTime";
+	public static final String FILE_NAME_TRANSFER_CHECK_END_TIME = "TransferCheckEndTime";
 }

@@ -45,7 +45,7 @@ public class ErrtModel {
 	 */
 	private static void errtQuerySend() {
 
-		String smsValue = Constant.Tcp_Error_Before_Second/60 + "";
+		String smsValue = Constant.Transfer_Error_Start_Time/60000 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Errt, smsValue);
 	}
@@ -58,7 +58,7 @@ public class ErrtModel {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
-		FileModel.setSmsErrt(Integer.parseInt(smsValue)*60);
+		FileModel.setSmsErrt(Integer.parseInt(smsValue)*60000);
 		
 		errtSetSend();
 	}

@@ -89,21 +89,21 @@ public class Constant {
 	//域名IP、port
 	public static String Tcp_Serv = "192.13.182.157:7005";
 	//心跳间隔
-	public static int Tcp_Hb = 300;
+	public static int Tcp_Heart_Beat_Period = 300000;
 	//故障点前传输时间
-	public static int Tcp_Error_Before_Second = 1800;
+	public static int Transfer_Error_Start_Time = 1800000;
 	//故障点后传输时间
-	public static int Tcp_Error_After_Second = 300;
+	public static int Transfer_Error_End_Time = 300000;
 	//厂家参数改变前传输结束时间
-	public static int Tcp_Change_Before_Second = 60;
+	public static int Transfer_Change_End_Time = 60000;
 	//按键调试周期
-	public static int Tcp_Pushkey_Second = 14400;
+	public static int Transfer_Pushkey_End_Time = 14400000;
 	//信号信息周期
-	public static int Tcp_Sig_Second = 600;
+	public static int Tcp_Sig_Period = 600000;
 	//打卡周期
-	public static int Tcp_Check_Period = 3600;
+	public static int Tcp_Check_Period = 3600000;
 	//打卡时长
-	public static int Tcp_Check_Time = 60;
+	public static int Tcp_Check_End_Time = 60000;
 	
 	// 记录GPRS模块是否被选中
 	public static boolean Gprs_Choosed = false;
