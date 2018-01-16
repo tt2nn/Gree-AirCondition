@@ -34,17 +34,16 @@ public class ApnModel {
 	 * 
 	 * @param sms
 	 */
-	public static void apnQueryReceive() {
+	private static void apnQueryReceive() {
 
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
-
+		apnQuerySend();
 	}
 
 	/**
 	 * 服务器 查询 GPRS 接入点 回复服务器短信
 	 * 
 	 */
-	public static void apnQuerySend() {
+	private static void apnQuerySend() {
 
 		String apn = "";
 		String userName = "";
@@ -60,9 +59,7 @@ public class ApnModel {
 	 * 
 	 * @param sms
 	 */
-	public static void apnSetReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
+	private static void apnSetReceive() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
@@ -78,12 +75,13 @@ public class ApnModel {
 		end = smsValue.length();
 		String password = smsValue.substring(start, end);
 
+		apnSetSend();
 	}
 
 	/**
 	 * 服务器 设置 GPRS 接入点 回复服务器短信
 	 */
-	public static void apnSetSend() {
+	private static void apnSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Apn);
 

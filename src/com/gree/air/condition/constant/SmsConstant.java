@@ -16,6 +16,11 @@ public class SmsConstant {
 	public static final String Sms_Type_Debt = "*debt*";
 	public static final String Sms_Type_Healt = "*healt*";
 	public static final String Sms_Type_Butt = "*butt*";
+	public static final String Sms_Type_SIG = "*sig*";
+	public static final String Sms_Type_Run_Start = "*runstart*";
+	public static final String Sms_Type_Check_Start = "*checkstart*";
+	public static final String Sms_Type_Check_Period = "*checkperiod*";
+	public static final String Sms_Type_Check_Time = "*checktime*";
 
 	public static final String Sms_Query_Symbol = "*?*";
 	public static final String Sms_Split_Key_Symbol = "*";

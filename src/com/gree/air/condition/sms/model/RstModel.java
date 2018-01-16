@@ -1,6 +1,5 @@
 package com.gree.air.condition.sms.model;
 
-import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
@@ -25,15 +24,15 @@ public class RstModel {
 	 * 解析 复位DTU 短信
 	 * 
 	 */
-	public static void rstReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
+	private static void rstReceive() {
+		
+		rstSend();
 	}
 
 	/**
 	 * 复位DTU 回复短信
 	 */
-	public static void rstSend() {
+	private static void rstSend() {
 
 		String smsValue = "ok";
 

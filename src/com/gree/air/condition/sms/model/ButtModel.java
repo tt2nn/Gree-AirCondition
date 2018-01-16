@@ -33,7 +33,7 @@ public class ButtModel {
 	 * 服务器 查询 GPRS 按键调试周期 解析短信
 	 * 
 	 */
-	public static void buttQueryReceive() {
+	private static void buttQueryReceive() {
 		buttQuerySend();
 	}
 
@@ -41,7 +41,7 @@ public class ButtModel {
 	 * 服务器 查询 GPRS 按键调试周期 回复服务器短信
 	 * 
 	 */
-	public static void buttQuerySend() {
+	private static void buttQuerySend() {
 
 		String smsValue = Constant.Tcp_Pushkey_Second / 60 + "";
 
@@ -52,18 +52,19 @@ public class ButtModel {
 	 * 服务器 设置 GPRS 按键调试周期 解析短信
 	 * 
 	 */
-	public static void buttSetReceive() {
+	private static void buttSetReceive() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
 		FileModel.setSmsButt(Integer.parseInt(smsValue) * 60);
+		
 		buttSetSend();
 	}
 
 	/**
 	 * 服务器 设置 GPRS 按键调试周期 回复服务器短信
 	 */
-	public static void buttSetSend() {
+	private static void buttSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Butt);
 

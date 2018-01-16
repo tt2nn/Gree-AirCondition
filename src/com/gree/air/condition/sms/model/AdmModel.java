@@ -14,7 +14,6 @@ public class AdmModel {
 
 	/**
 	 * 解析收到的短信
-	 * 
 	 */
 	public static void smsAnalyze() {
 
@@ -30,19 +29,15 @@ public class AdmModel {
 
 	/**
 	 * 服务器 查询 GPRS 管理员号码 解析短信
-	 * 
 	 */
-	public static void admQueryReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
-
+	private static void admQueryReceive() {
+		admQuerySend();
 	}
 
 	/**
 	 * 服务器 查询 GPRS 管理员号码 回复服务器短信
-	 * 
 	 */
-	public static void admQuerySend() {
+	private static void admQuerySend() {
 		String value1 = "1";
 		String admPhone = "";
 		String smsValue = value1 + SmsConstant.Sms_Split_Value_Symbol + admPhone;
@@ -52,11 +47,8 @@ public class AdmModel {
 
 	/**
 	 * 服务器 设置 GPRS 管理员号码 解析短信
-	 * 
 	 */
-	public static void admSetReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
+	private static void admSetReceive() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
@@ -68,12 +60,13 @@ public class AdmModel {
 		end = smsValue.length();
 		String phone = smsValue.substring(start, end);
 
+		admSetSend();
 	}
 
 	/**
 	 * 服务器 设置 GPRS 管理员号码 回复服务器短信
 	 */
-	public static void admSetSend() {
+	private static void admSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Adm);
 

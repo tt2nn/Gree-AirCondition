@@ -57,6 +57,7 @@ public class DebtModel {
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 		
 		FileModel.setSmsDebt(Integer.parseInt(smsValue)*60);
+		
 		debtSetSend();
 	}
 

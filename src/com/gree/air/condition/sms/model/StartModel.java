@@ -1,7 +1,6 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.center.ControlCenter;
-import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 

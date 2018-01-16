@@ -58,6 +58,7 @@ public class HealtModel {
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
 		FileModel.setSmsHealt(Integer.parseInt(smsValue) * 60);
+		
 		healtSetSend();
 	}
 

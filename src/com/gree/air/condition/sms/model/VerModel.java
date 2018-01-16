@@ -1,6 +1,5 @@
 package com.gree.air.condition.sms.model;
 
-import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
@@ -25,16 +24,16 @@ public class VerModel {
 	 * 查询DTU版本 解析短信
 	 * 
 	 */
-	public static void verQueryReceive() {
-
-		String smsPwd = SmsModel.smsGetPwd(Constant.Sms_Receive);
+	private static void verQueryReceive() {
+		
+		verQuerySend();
 	}
 
 	/**
 	 * 查询DTU版本 回复短信
 	 * 
 	 */
-	public static void verQuerySend() {
+	private static void verQuerySend() {
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Ver, "");
 	}

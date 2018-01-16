@@ -1,12 +1,11 @@
 package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.center.ControlCenter;
-import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
- * 服务器下发短信 GPRS模块端口连接
+ * 服务器下发短信 GPRS模块断开连接
  * 
  * @author lihaotian
  *

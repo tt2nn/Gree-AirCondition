@@ -59,6 +59,7 @@ public class ErrtModel {
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
 		FileModel.setSmsErrt(Integer.parseInt(smsValue)*60);
+		
 		errtSetSend();
 	}
 
