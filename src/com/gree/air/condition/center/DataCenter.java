@@ -17,7 +17,7 @@ public class DataCenter implements Runnable {
 
 	// 传输级别
 	private static final int TRANSM_TYPE_STOP_LEVEL = 0;
-	private static final int TRANSM_TYPE_CLOCK_LEVEL = 1;
+	private static final int TRANSM_TYPE_CHECK_LEVEL = 1;
 	private static final int TRANSM_TYPE_BOOT_CLOSE_LEVEL = 2;
 	private static final int TRANSM_TYPE_POWER_LEVEL = 3;
 	private static final int TRANSM_TYPE_CHOOSE_LEVEL = 4;

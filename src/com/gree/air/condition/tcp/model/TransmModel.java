@@ -103,7 +103,7 @@ public class TransmModel {
 
 			break;
 
-		case Constant.TRANSM_TYPE_CLOCK:
+		case Constant.TRANSM_TYPE_CHECK:
 
 			break;
 		}
