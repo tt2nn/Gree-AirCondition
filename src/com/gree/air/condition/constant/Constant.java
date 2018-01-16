@@ -34,30 +34,30 @@ public class Constant {
 	public static byte[] Data_Cache_Buffer = new byte[2048];
 
 	// 实时监控上报
-	public static final byte TRANSM_TYPE_ALWAYS = (byte) 0x00;
+	public static final byte TRANSMIT_TYPE_ALWAYS = (byte) 0x00;
 	// 调试上报
-	public static final byte TRANSM_TYPE_DEBUG = (byte) 0x01;
+	public static final byte TRANSMIT_TYPE_DEBUG = (byte) 0x01;
 	// 按键上报
-	public static final byte TRANSM_TYPE_PUSHKEY = (byte) 0x02;
+	public static final byte TRANSMIT_TYPE_PUSHKEY = (byte) 0x02;
 	// 故障上报
-	public static final byte TRANSM_TYPE_ERROR = (byte) 0x03;
+	public static final byte TRANSMIT_TYPE_ERROR = (byte) 0x03;
 	// 亚健康（异常）上报
-	public static final byte TRANSM_TYPE_WARNING = (byte) 0x04;
+	public static final byte TRANSMIT_TYPE_WARNING = (byte) 0x04;
 	// 厂家参数变化上报
-	public static final byte TRANSM_TYPE_CHANGE = (byte) 0x05;
+	public static final byte TRANSMIT_TYPE_CHANGE = (byte) 0x05;
 	// 选举上报
-	public static final byte TRANSM_TYPE_CHOOSE = (byte) 0x07;
+	public static final byte TRANSMIT_TYPE_CHOOSE = (byte) 0x07;
 	// 上电上报
-	public static final byte TRANSM_TYPE_POWER = (byte) 0x08;
+	public static final byte TRANSMIT_TYPE_POWER = (byte) 0x08;
 	// 打卡上报
-	public static final byte TRANSM_TYPE_CHECK = (byte) 0x09;
+	public static final byte TRANSMIT_TYPE_CHECK = (byte) 0x09;
 	// 开机上报
-	public static final byte TRANSM_TYPE_BOOT = (byte) 0X0A;
+	public static final byte TRANSMIT_TYPE_BOOT = (byte) 0X0A;
 	// 停止上报
-	public static final byte TRANSM_TYPE_STOP = (byte) 0xFF;
+	public static final byte TRANSMIT_TYPE_STOP = (byte) 0xFF;
 	// 缓存 上报数据状态 默认无
-	public static byte Transm_Type = TRANSM_TYPE_STOP;
-	public static byte Transm_Type_Cache = TRANSM_TYPE_STOP;
+	public static byte Transmit_Type = TRANSMIT_TYPE_STOP;
+	public static byte Transmit_Type_Cache = TRANSMIT_TYPE_STOP;
 
 	// =============== about sms constant =====================
 
@@ -91,24 +91,24 @@ public class Constant {
 	// 心跳间隔
 	public static int Tcp_Heart_Beat_Period = 300;
 	// 故障点前传输时间
-	public static int Transfer_Error_Start_Time = 1800;
+	public static int Transmit_Error_Start_Time = 1800;
 	// 故障点后传输时间
-	public static int Transfer_Error_End_Time = 300;
+	public static int Transmit_Error_End_Time = 300;
 	// 厂家参数改变前传输结束时间
-	public static int Transfer_Change_End_Time = 60;
+	public static int Transmit_Change_End_Time = 60;
 	// 按键调试周期
-	public static int Transfer_Pushkey_End_Time = 14400;
+	public static int Transmit_Pushkey_End_Time = 14400;
 	// 信号信息周期
 	public static int Tcp_Sig_Period = 600;
 	// 打卡周期
-	public static int Tcp_Check_Period = 3600;
+	public static int Transmit_Check_Period = 3600;
 	// 打卡时长
-	public static int Tcp_Check_End_Time = 60;
+	public static int Transmit_Check_End_Time = 60;
 
 	// 记录GPRS模块是否被选中
 	public static boolean Gprs_Choosed = false;
 
-	public static byte Transfer_Power_Type = TRANSM_TYPE_STOP;
+	public static byte Transmit_Power_Type = TRANSMIT_TYPE_STOP;
 
 	// ================== about gprs info =================================
 	// 模块Imei
@@ -118,5 +118,9 @@ public class Constant {
 	public static byte[] Gprs_Mac = { (byte) 0x61, (byte) 0x39, (byte) 0x00, (byte) 0x30, (byte) 0x08, (byte) 0x39,
 			(byte) 0x46 };
 	public static byte[] Server_Mac = new byte[7];
+	
+	// ================= about interim params =======================
+	
+	public static long Heart_Beat_Time = 0L;
 
 }

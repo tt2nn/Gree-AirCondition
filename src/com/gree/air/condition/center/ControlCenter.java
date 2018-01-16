@@ -33,6 +33,22 @@ public class ControlCenter {
 		return false;
 	}
 
+	/**
+	 * 缓存机组数据
+	 */
+	public static void cacheData() {
+
+		DataCenter.saveDataBuffer();
+	}
+
+	/**
+	 * 打包机组数据
+	 */
+	public static void packageData() {
+
+		DataCenter.packageData();
+	}
+
 	/* =========== TCP 通信相关 ============== */
 
 	/**
@@ -139,6 +155,14 @@ public class ControlCenter {
 	public static void powerCall() {
 
 		DataCenter.powerTransmit();
+	}
+	
+	public static void startCheck() {
+		
+	}
+	
+	public static void checkTransmit() {
+		
 	}
 
 	/**

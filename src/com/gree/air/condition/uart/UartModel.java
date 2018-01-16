@@ -1,6 +1,6 @@
 package com.gree.air.condition.uart;
 
-import com.gree.air.condition.center.DataCenter;
+import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.uart.model.MbReadBitModel;
 import com.gree.air.condition.uart.model.MbReadWordModel;
@@ -32,7 +32,7 @@ public class UartModel {
 
 			// A5 A7 B6 B4 是一个机组帧
 
-			DataCenter.writeDataBuffer();
+			ControlCenter.cacheData();
 
 			return;
 
@@ -113,8 +113,7 @@ public class UartModel {
 		}
 
 		// 如果GPRS被选中则缓存机组数据
-
-		DataCenter.writeDataBuffer();
+		ControlCenter.cacheData();
 	}
 
 	/**

@@ -86,7 +86,7 @@ public class Configure {
 
 		if (Constant.File_Buffer_Length > 0) {
 
-			Constant.Transfer_Power_Type = Constant.File_Buffer[0];
+			Constant.Transmit_Power_Type = Constant.File_Buffer[0];
 
 		}
 
@@ -134,7 +134,7 @@ public class Configure {
 	 */
 	private static void getTcpErrorBefore() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TRANSFER_ERROR_START_TIME);
+		FileConnection.readFile(FileConstant.FILE_NAME_TRANSMIT_ERROR_START_TIME);
 
 		if (Constant.File_Buffer_Length > 0) {
 
@@ -142,7 +142,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(errorBefore)) {
 
-				Constant.Transfer_Error_Start_Time = Integer.parseInt(errorBefore);
+				Constant.Transmit_Error_Start_Time = Integer.parseInt(errorBefore);
 			}
 		}
 
@@ -153,7 +153,7 @@ public class Configure {
 	 */
 	private static void getTcpErrorAfter() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TRANSFER_ERROR_END_TIME);
+		FileConnection.readFile(FileConstant.FILE_NAME_TRANSMIT_ERROR_END_TIME);
 
 		if (Constant.File_Buffer_Length > 0) {
 
@@ -161,7 +161,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(errorAfter)) {
 
-				Constant.Transfer_Error_End_Time = Integer.parseInt(errorAfter);
+				Constant.Transmit_Error_End_Time = Integer.parseInt(errorAfter);
 			}
 		}
 
@@ -172,7 +172,7 @@ public class Configure {
 	 */
 	private static void getTcpChangeBefore() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TRANSFER_CHANGE_END_TIME);
+		FileConnection.readFile(FileConstant.FILE_NAME_TRANSMIT_CHANGE_END_TIME);
 
 		if (Constant.File_Buffer_Length > 0) {
 
@@ -180,7 +180,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(changeBefore)) {
 
-				Constant.Transfer_Change_End_Time = Integer.parseInt(changeBefore);
+				Constant.Transmit_Change_End_Time = Integer.parseInt(changeBefore);
 			}
 		}
 
@@ -191,7 +191,7 @@ public class Configure {
 	 */
 	private static void getTcpPushkey() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TRANSFER_PUSHKEY_END_TIME);
+		FileConnection.readFile(FileConstant.FILE_NAME_TRANSMIT_PUSHKEY_END_TIME);
 
 		if (Constant.File_Buffer_Length > 0) {
 
@@ -199,7 +199,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(pushkey)) {
 
-				Constant.Transfer_Pushkey_End_Time = Integer.parseInt(pushkey);
+				Constant.Transmit_Pushkey_End_Time = Integer.parseInt(pushkey);
 			}
 		}
 
@@ -229,7 +229,7 @@ public class Configure {
 	 */
 	private static void getTcpCheckPeriod() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TRANSFER_CHECK_PERIOD);
+		FileConnection.readFile(FileConstant.FILE_NAME_TRANSMIT_CHECK_PERIOD);
 
 		if (Constant.File_Buffer_Length > 0) {
 
@@ -237,7 +237,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(checkPeriod)) {
 
-				Constant.Tcp_Check_Period = Integer.parseInt(checkPeriod);
+				Constant.Transmit_Check_Period = Integer.parseInt(checkPeriod);
 			}
 		}
 
@@ -248,7 +248,7 @@ public class Configure {
 	 */
 	private static void getTcpCheckTime() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TRANSFER_CHECK_END_TIME);
+		FileConnection.readFile(FileConstant.FILE_NAME_TRANSMIT_CHECK_END_TIME);
 
 		if (Constant.File_Buffer_Length > 0) {
 
@@ -256,7 +256,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(checkTime)) {
 
-				Constant.Tcp_Check_End_Time = Integer.parseInt(checkTime);
+				Constant.Transmit_Check_End_Time = Integer.parseInt(checkTime);
 			}
 		}
 

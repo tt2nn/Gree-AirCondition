@@ -44,7 +44,7 @@ public class HealtModel {
 	 */
 	private static void healtQuerySend() {
 
-		String smsValue = Constant.Transfer_Change_End_Time / 60 + "";
+		String smsValue = Constant.Transmit_Change_End_Time / 60 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Healt, smsValue);
 	}

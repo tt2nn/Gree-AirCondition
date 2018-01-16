@@ -43,7 +43,7 @@ public class ButtModel {
 	 */
 	private static void buttQuerySend() {
 
-		String smsValue = Constant.Transfer_Pushkey_End_Time / 60 + "";
+		String smsValue = Constant.Transmit_Pushkey_End_Time / 60 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Butt, smsValue);
 	}

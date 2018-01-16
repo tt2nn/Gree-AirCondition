@@ -10,6 +10,8 @@ import com.gree.air.condition.constant.Constant;
  */
 public class Timer implements Runnable {
 
+	private int packageNum = 1;
+
 	/**
 	 * 启动Timer
 	 */
@@ -28,16 +30,27 @@ public class Timer implements Runnable {
 
 				Thread.sleep(1000);
 				Constant.System_Time = Constant.System_Time + 1000;
-				
-				Thread.sleep(1000);
-				Constant.System_Time = Constant.System_Time + 1000;
-				
-				Thread.sleep(1000);
-				Constant.System_Time = Constant.System_Time + 1000;
-				DataCenter.writeSpi();
+
+				if (ControlCenter.canWorking()) {
+
+					// 每三秒打包一次数据
+					if (packageNum == 3) {
+
+						packageNum = 1;
+						ControlCenter.packageData();
+
+					} else {
+						packageNum++;
+					}
+
+					// 周期性心跳
+					if (Constant.System_Time - Constant.Heart_Beat_Time > Constant.Tcp_Heart_Beat_Period) {
+
+						ControlCenter.heartBeat();
+					}
+				}
 
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
