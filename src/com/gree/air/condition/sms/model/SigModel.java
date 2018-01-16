@@ -44,7 +44,7 @@ public class SigModel {
 	 */
 	private static void sigQuerySend() {
 
-		String smsValue = Constant.Tcp_Sig_Second / 60 + "";
+		String smsValue = Constant.Tcp_Sig_Period / 60000 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_SIG, smsValue);
 	}
@@ -58,7 +58,7 @@ public class SigModel {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
-		FileModel.setSmsSig(Integer.parseInt(smsValue) * 60);
+		FileModel.setSmsSig(Integer.parseInt(smsValue) * 60000);
 		sigSetSend();
 	}
 
