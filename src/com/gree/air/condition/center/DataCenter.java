@@ -15,7 +15,7 @@ import com.gree.air.condition.utils.Utils;
  */
 public class DataCenter implements Runnable {
 
-	// 传输级别
+	// 上报优先级 开机实时-实时-工程调试-故障-厂家参数-按键触发-亚健康-选举-上电-开机周期-打卡
 	private static final int TRANSMIT_LEVEL_STOP = 0;
 	private static final int TRANSMIT_LEVEL_CHECK = 1;
 	private static final int TRANSMIT_LEVEL_BOOT_CLOSE = 2;
@@ -34,8 +34,6 @@ public class DataCenter implements Runnable {
 	public static boolean Transmit_Cache_Warning = false;
 	public static boolean Transmit_Cache_Check = false;
 	public static boolean Transmit_Cache_Boot = false;
-
-	// 上报优先级 实时监控-工程调试-故障-厂家参数-按键触发-亚健康-选举-上电
 
 	// 数据使用游标 由 0-2047
 	private static int Data_Buffer_Mark = 0;
@@ -178,14 +176,22 @@ public class DataCenter implements Runnable {
 
 				if (Data_Buffer_Out_Mark == Data_Buffer_Out_End_Mark) {
 
-					destoryUploadData();
+					if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT || Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHECK) {
+						
+						pauseUploadData();
+						
+					}else {
+						
+						stopUploadData();
+					}
+					
 					continue;
 				}
 
 				// 判断服务器是否正常
 				if (!TcpServer.isServerNormal()) {
 
-					Thread.sleep(1000);
+					Thread.sleep(2000);
 					continue;
 				}
 
@@ -353,7 +359,6 @@ public class DataCenter implements Runnable {
 
 			// 重置发送游标
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
-			Data_Buffer_Out_End_Mark = -1;
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_WARNING;
 			Transmit_Level = TRANSMIT_LEVEL_WARNING;
@@ -393,35 +398,23 @@ public class DataCenter implements Runnable {
 	 */
 	public static void powerTransmit() {
 
-		if (Transmit_Level < TRANSMIT_LEVEL_POWER) {
+		Constant.Stop_Time = 0L;
 
-			Constant.Stop_Time = 0L;
+		stopUploadData();
 
-			stopUploadData();
+		// 重置发送游标，选举上报持续发送5分钟数据
+		Data_Buffer_Out_Mark = Data_Buffer_Mark;
+		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (5 * 60 / 3);
+		if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
 
-			// 重置发送游标，选举上报持续发送5分钟数据
-			Data_Buffer_Out_Mark = Data_Buffer_Mark;
-			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (5 * 60 / 3);
-			if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
-
-				Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
-			}
-
-			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_POWER;
-			Transmit_Level = TRANSMIT_LEVEL_POWER;
-
-			ControlCenter.requestStartUpload();
-
-			// 判断缓存的上传类型
-			switch (Constant.Transmit_Power_Type) {
-
-			case Constant.TRANSMIT_TYPE_ALWAYS:
-
-				chooseTransmit();
-
-				break;
-			}
+			Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
 		}
+
+		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_POWER;
+		Transmit_Level = TRANSMIT_LEVEL_POWER;
+
+		ControlCenter.requestStartUpload();
+
 	}
 
 	/**
@@ -485,7 +478,7 @@ public class DataCenter implements Runnable {
 			return;
 		}
 
-		// 如果没有进行上报 需要注册打卡上报
+		// 如果没有进行上报 需要缓存上报类型
 		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP) {
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_BOOT;
