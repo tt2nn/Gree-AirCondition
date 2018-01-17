@@ -27,7 +27,7 @@ public class ControlCenter {
 	// 开机标志位
 	private static int Transmit_Mark_Boot = 0;
 
-	public static long Transmit_Check_Time = 0L;
+	public static long Transmit_Period_Time = 0L;
 
 	/**
 	 * 判断App是否可以工作
@@ -169,6 +169,24 @@ public class ControlCenter {
 	}
 
 	/**
+	 * 启动开机上报
+	 */
+	public static void startBootTransmit() {
+
+		DataCenter.registerBootTransmit();
+	}
+
+	/**
+	 * 周期性开机上报
+	 */
+	public static void periodBootTransmit() {
+
+		Transmit_Period_Time = Constant.System_Time;
+		DataCenter.bootTransmit();
+
+	}
+
+	/**
 	 * 启动打卡上报
 	 */
 	public static void startCheckTransmit() {
@@ -181,7 +199,7 @@ public class ControlCenter {
 	 */
 	public static void periodCheckTransmit() {
 
-		Transmit_Check_Time = Constant.System_Time;
+		Transmit_Period_Time = Constant.System_Time;
 
 		DataCenter.checkTransmit();
 	}

@@ -50,9 +50,10 @@ public class Timer implements Runnable {
 						ControlCenter.heartBeat();
 					}
 
-					// 周期性打卡上报
-					if (Constant.System_Time - ControlCenter.Transmit_Check_Time > Constant.Transmit_Check_Period) {
+					// 周期性开机或者打开上报
+					if (Constant.System_Time - ControlCenter.Transmit_Period_Time > Constant.Transmit_Check_Period) {
 
+						ControlCenter.periodBootTransmit();
 						ControlCenter.periodCheckTransmit();
 					}
 				}

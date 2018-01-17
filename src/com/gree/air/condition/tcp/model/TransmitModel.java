@@ -101,6 +101,8 @@ public class TransmitModel {
 
 		case Constant.TRANSMIT_TYPE_BOOT:
 
+			ControlCenter.startBootTransmit();
+			
 			break;
 
 		case Constant.TRANSMIT_TYPE_CHECK:

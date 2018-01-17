@@ -1,9 +1,12 @@
 package com.gree.air.condition.sms.model;
 
+import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
+
 /**
- *   打卡上报
+ * 打卡上报
+ * 
  * @author zhangzhuang
  *
  */
@@ -23,6 +26,7 @@ public class CheckStartModel {
 	 */
 	private static void checkStartReceive() {
 
+		ControlCenter.startCheckTransmit();
 		checkStartSend();
 	}
 

@@ -1,5 +1,6 @@
 package com.gree.air.condition.sms.model;
 
+import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
@@ -25,6 +26,7 @@ public class RunStartModel {
 	 */
 	private static void runStartReceive() {
 
+		ControlCenter.startBootTransmit();
 		runStartSend();
 	}
 
