@@ -26,17 +26,16 @@ public class DataCenter implements Runnable {
 	private static final int TRANSMIT_LEVEL_CHANGE = 7;
 	private static final int TRANSMIT_LEVEL_ERROR = 8;
 	private static final int TRANSMIT_LEVEL_DEBUG = 9;
-	private static final int TRANSMIT_LEVEL_BOOT_OPEN = 10;
 	private static final int TRANSMIT_LEVEL_ALWAYS = 10;
-	private static int Transm_Level = TRANSMIT_LEVEL_STOP;
+	private static final int TRANSMIT_LEVEL_BOOT_OPEN = 11;
+	private static int Transmit_Level = TRANSMIT_LEVEL_STOP;
+
+	// 缓存数据传输模式
+	public static boolean Transmit_Cache_Warning = false;
+	public static boolean Transmit_Cache_Check = false;
+	public static boolean Transmit_Cache_Boot = false;
 
 	// 上报优先级 实时监控-工程调试-故障-厂家参数-按键触发-亚健康-选举-上电
-	// 故障标志位
-	private static int Transmit_Error_Mark = 0;
-	// 异常标志位
-	private static int Transmit_Warning_Mark = 0;
-	// 参数变化标志位
-	private static int Transmit_Change_Mark = 0;
 
 	// 数据使用游标 由 0-2047
 	private static int Data_Buffer_Mark = 0;
@@ -179,7 +178,7 @@ public class DataCenter implements Runnable {
 
 				if (Data_Buffer_Out_Mark == Data_Buffer_Out_End_Mark) {
 
-					stopUploadData();
+					destoryUploadData();
 					continue;
 				}
 
@@ -263,18 +262,19 @@ public class DataCenter implements Runnable {
 	 */
 	public static void alwaysTransmit() {
 
-		if (Transm_Level < TRANSMIT_LEVEL_ALWAYS) {
-
-			pauseUploadData();
-
-			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_ALWAYS;
-			Transm_Level = TRANSMIT_LEVEL_ALWAYS;
+		if (Transmit_Level < TRANSMIT_LEVEL_ALWAYS || Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT) {
 
 			// 重置静默时间
 			Constant.Stop_Time = 0;
 
+			stopUploadData();
+
+			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_ALWAYS;
+			Transmit_Level = TRANSMIT_LEVEL_ALWAYS;
+
 			FileModel.setAlwaysTransm();
 
+			Data_Buffer_Out_End_Mark = Data_Buffer_Mark;
 			ControlCenter.requestStartUpload();
 
 		}
@@ -285,25 +285,28 @@ public class DataCenter implements Runnable {
 	 */
 	public static void errorTransmit() {
 
-		pauseUploadData();
+		if (Transmit_Level < TRANSMIT_LEVEL_ERROR && Constant.System_Time > Constant.Stop_Time) {
 
-		// 重置发送游标，上报故障点前30分钟到后5分钟数据
-		Data_Buffer_Out_Mark = Data_Buffer_Mark - (Constant.Transmit_Error_Start_Time / 3);
-		if (Data_Buffer_Out_Mark < 0) {
+			stopUploadData();
 
-			Data_Buffer_Out_Mark = Data_Buffer_Out_Mark + BUFFER_MARK_SIZE;
+			// 重置发送游标，上报故障点前30分钟到后5分钟数据
+			Data_Buffer_Out_Mark = Data_Buffer_Mark - (Constant.Transmit_Error_Start_Time / 3);
+			if (Data_Buffer_Out_Mark < 0) {
+
+				Data_Buffer_Out_Mark = Data_Buffer_Out_Mark + BUFFER_MARK_SIZE;
+			}
+			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Error_End_Time / 3);
+
+			if (Can_Upload_Data) {
+
+				Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
+			}
+
+			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_ERROR;
+			Transmit_Level = TRANSMIT_LEVEL_ERROR;
+
+			ControlCenter.requestStartUpload();
 		}
-		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Error_End_Time / 3);
-
-		if (Can_Upload_Data) {
-
-			Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
-		}
-
-		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_ERROR;
-		Transm_Level = TRANSMIT_LEVEL_ERROR;
-
-		ControlCenter.requestStartUpload();
 
 	}
 
@@ -312,25 +315,28 @@ public class DataCenter implements Runnable {
 	 */
 	public static void changeTransmit() {
 
-		pauseUploadData();
+		if (Transmit_Level < TRANSMIT_LEVEL_CHANGE && Constant.System_Time > Constant.Stop_Time) {
 
-		// 重置发送游标，上报变化点前5分钟到后1分钟数据
-		Data_Buffer_Out_Mark = Data_Buffer_Mark - (5 * 60 / 3);
-		if (Data_Buffer_Out_Mark < 0) {
+			stopUploadData();
 
-			Data_Buffer_Out_Mark = Data_Buffer_Out_Mark + BUFFER_MARK_SIZE;
+			// 重置发送游标，上报变化点前5分钟到后1分钟数据
+			Data_Buffer_Out_Mark = Data_Buffer_Mark - (5 * 60 / 3);
+			if (Data_Buffer_Out_Mark < 0) {
+
+				Data_Buffer_Out_Mark = Data_Buffer_Out_Mark + BUFFER_MARK_SIZE;
+			}
+
+			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Change_End_Time / 3);
+			if (Can_Upload_Data) {
+
+				Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
+			}
+
+			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_CHANGE;
+			Transmit_Level = TRANSMIT_LEVEL_CHANGE;
+
+			ControlCenter.requestStartUpload();
 		}
-
-		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Change_End_Time / 3);
-		if (Can_Upload_Data) {
-
-			Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
-		}
-
-		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_CHANGE;
-		Transm_Level = TRANSMIT_LEVEL_CHANGE;
-
-		ControlCenter.requestStartUpload();
 
 	}
 
@@ -339,16 +345,21 @@ public class DataCenter implements Runnable {
 	 */
 	public static void warningTransmit() {
 
-		pauseUploadData();
+		if (Transmit_Level < TRANSMIT_LEVEL_CHANGE && Constant.System_Time > Constant.Stop_Time) {
 
-		// 重置发送游标
-		Data_Buffer_Out_Mark = Data_Buffer_Mark;
-		Data_Buffer_Out_End_Mark = -1;
+			stopUploadData();
 
-		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_WARNING;
-		Transm_Level = TRANSMIT_LEVEL_WARNING;
+			Transmit_Cache_Warning = true;
 
-		ControlCenter.requestStartUpload();
+			// 重置发送游标
+			Data_Buffer_Out_Mark = Data_Buffer_Mark;
+			Data_Buffer_Out_End_Mark = -1;
+
+			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_WARNING;
+			Transmit_Level = TRANSMIT_LEVEL_WARNING;
+
+			ControlCenter.requestStartUpload();
+		}
 
 	}
 
@@ -357,9 +368,9 @@ public class DataCenter implements Runnable {
 	 */
 	public static void chooseTransmit() {
 
-		if (Transm_Level < TRANSMIT_LEVEL_CHOOSE && Constant.System_Time > Constant.Stop_Time) {
+		if (Transmit_Level < TRANSMIT_LEVEL_CHOOSE && Constant.System_Time > Constant.Stop_Time) {
 
-			pauseUploadData();
+			stopUploadData();
 
 			// 重置发送游标，选举上报持续发送5分钟数据
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
@@ -370,7 +381,7 @@ public class DataCenter implements Runnable {
 			}
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_CHOOSE;
-			Transm_Level = TRANSMIT_LEVEL_CHOOSE;
+			Transmit_Level = TRANSMIT_LEVEL_CHOOSE;
 
 			ControlCenter.requestStartUpload();
 
@@ -382,11 +393,11 @@ public class DataCenter implements Runnable {
 	 */
 	public static void powerTransmit() {
 
-		if (Transm_Level < TRANSMIT_LEVEL_POWER) {
+		if (Transmit_Level < TRANSMIT_LEVEL_POWER) {
 
 			Constant.Stop_Time = 0L;
 
-			pauseUploadData();
+			stopUploadData();
 
 			// 重置发送游标，选举上报持续发送5分钟数据
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
@@ -397,7 +408,7 @@ public class DataCenter implements Runnable {
 			}
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_POWER;
-			Transm_Level = TRANSMIT_LEVEL_POWER;
+			Transmit_Level = TRANSMIT_LEVEL_POWER;
 
 			ControlCenter.requestStartUpload();
 
@@ -414,30 +425,72 @@ public class DataCenter implements Runnable {
 	}
 
 	/**
-	 * 注册打卡上报
+	 * 注册开机上报
 	 */
-	public static void registerCheckTransmit() {
+	public static void registerBootTransmit() {
 
 		if (Constant.System_Time < Constant.Stop_Time) {
 
 			return;
 		}
 
-		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP || Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS
-				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT) {
+		if (ControlCenter.getTransmit_Mark_Boot() == 0 && (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP
+				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS
+				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT)) {
 
-			pauseUploadData();
-			
-			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_CHECK;
-			Transm_Level = TRANSMIT_LEVEL_CHECK;
+			stopUploadData();
+
+			Transmit_Cache_Boot = true;
+			Transmit_Cache_Check = false;
+
+			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_BOOT;
+			Transmit_Level = TRANSMIT_LEVEL_BOOT_CLOSE;
+
+		} else {
+
+			stopUploadData();
+
+			Transmit_Cache_Boot = true;
+			Transmit_Cache_Check = false;
+
+			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_BOOT;
+			Transmit_Level = TRANSMIT_LEVEL_BOOT_OPEN;
+
+			Data_Buffer_Out_End_Mark = Data_Buffer_Mark;
+			ControlCenter.requestStartUpload();
 		}
 
 	}
 
 	/**
-	 * 进行打卡上报
+	 * 开机上报
 	 */
-	public static void checkTransmit() {
+	public static void bootTransmit() {
+
+		// 判断静默时间
+		if (Constant.System_Time < Constant.Stop_Time) {
+
+			return;
+		}
+
+		// 判断上报优先级
+		if (Transmit_Level > TRANSMIT_LEVEL_BOOT_CLOSE) {
+
+			return;
+		}
+
+		// 判断缓存上报状态
+		if (!Transmit_Cache_Boot || Transmit_Cache_Warning) {
+
+			return;
+		}
+
+		// 如果没有进行上报 需要注册打卡上报
+		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP) {
+
+			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_BOOT;
+			Transmit_Level = TRANSMIT_LEVEL_BOOT_CLOSE;
+		}
 
 		// 重置发送游标
 		Data_Buffer_Out_Mark = Data_Buffer_Mark;
@@ -449,120 +502,116 @@ public class DataCenter implements Runnable {
 
 		ControlCenter.requestStartUpload();
 	}
-	
+
 	/**
-	 * 设置上传标志位
-	 * 
-	 * @param error
-	 *            故障标志位
-	 * @param warning
-	 *            亚健康标志位
-	 * @param change
-	 *            参数变化标志位
+	 * 注册打卡上报
 	 */
-	public static void setUploadMarker(int error, int warning, int change) {
+	public static void registerCheckTransmit() {
 
-		// 故障标志位由1-0，记录。
-		if (Transmit_Error_Mark == 1 && error == 0) {
-
-			Transmit_Error_Mark = 0;
-		}
-
-		// 厂家参数变化标志位1-0，记录。
-		if (Transmit_Change_Mark == 1 && change == 0) {
-
-			Transmit_Change_Mark = 0;
-
-		}
-
-		// 亚健康标志位1-0，记录。
-		if (Transmit_Warning_Mark == 1 && warning == 0) {
-
-			Transmit_Warning_Mark = 0;
-			Constant.Transmit_Type_Cache = Constant.TRANSMIT_TYPE_STOP;
-
-			// 如果正在亚健康上报，停止上报。
-
-			if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_WARNING) {
-
-				DataCenter.stopUploadData();
-				return;
-			}
-
-		}
-
-		// 判断静默时间
-		if (Constant.System_Time <= Constant.Stop_Time) {
-
-			Transmit_Error_Mark = error;
-			Transmit_Change_Mark = change;
-			Transmit_Warning_Mark = warning;
+		if (Constant.System_Time < Constant.Stop_Time) {
 
 			return;
 		}
 
-		// 如果现在的 上传级别 小于 故障上传 则 判断故障上传
-		if (Transm_Level < TRANSMIT_LEVEL_ERROR) {
+		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP
+				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS
+				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT) {
 
-			if (Transmit_Error_Mark == 0 && error == 1) {
+			stopUploadData();
 
-				// 如果标志位 由 0 变为1；启动故障上报
-				Transmit_Error_Mark = 1;
-				errorTransmit();
+			Transmit_Cache_Boot = false;
+			Transmit_Cache_Check = true;
 
-				return;
-			}
-
-			// 如果现在的 上传级别 小于 参数变化上传 则判断参数变化上传
-			if (Transm_Level < TRANSMIT_LEVEL_CHANGE) {
-
-				if (Transmit_Change_Mark == 0 && change == 1) {
-
-					// 如果标志位由0-1，启动厂家参数变化上传
-					Transmit_Change_Mark = 1;
-					changeTransmit();
-
-					return;
-
-				}
-
-				// 如果上报级别小于 异常上报，则判断异常上报标志位
-				if (Transm_Level < TRANSMIT_LEVEL_WARNING && Transmit_Warning_Mark == 0 && warning == 1) {
-
-					// 如果标志位0-1 启动亚健康（异常）上报
-					Transmit_Warning_Mark = 1;
-					warningTransmit();
-
-					return;
-
-				}
-			}
+			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_CHECK;
+			Transmit_Level = TRANSMIT_LEVEL_CHECK;
 		}
 
 	}
 
 	/**
-	 * 暂停数据传输
+	 * 进行打卡上报
+	 */
+	public static void checkTransmit() {
+
+		// 判断静默时间
+		if (Constant.System_Time < Constant.Stop_Time) {
+
+			return;
+		}
+
+		// 判断上报优先级
+		if (Transmit_Level > TRANSMIT_LEVEL_CHECK) {
+
+			return;
+		}
+
+		// 判断缓存上报状态
+		if (Transmit_Cache_Boot || Transmit_Cache_Warning || !Transmit_Cache_Check) {
+
+			return;
+		}
+
+		// 如果没有进行上报 需要注册打卡上报
+		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP) {
+
+			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_CHECK;
+			Transmit_Level = TRANSMIT_LEVEL_CHECK;
+		}
+
+		// 重置发送游标
+		Data_Buffer_Out_Mark = Data_Buffer_Mark;
+		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Check_End_Time / 3);
+		if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
+
+			Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
+		}
+
+		ControlCenter.requestStartUpload();
+	}
+
+	/**
+	 * 暂停数据上报
 	 */
 	public static void pauseUploadData() {
 
 		Can_Upload_Data = false;
 		Data_Buffer_Out_End_Mark = -1;
 
-		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
-		Transm_Level = TRANSMIT_LEVEL_STOP;
+		ControlCenter.stopTcpServer();
 
-		FileModel.setStopTransm();
 	}
 
 	/**
-	 * 停止上传数据
+	 * 停止数据上报
 	 */
 	public static void stopUploadData() {
 
-		pauseUploadData();
+		Can_Upload_Data = false;
+		Data_Buffer_Out_End_Mark = -1;
 
-		Constant.Transmit_Type_Cache = Constant.TRANSMIT_TYPE_STOP;
+		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
+		Transmit_Level = TRANSMIT_LEVEL_STOP;
+
+		ControlCenter.stopTcpServer();
+
+	}
+
+	/**
+	 * 销毁数据上报
+	 */
+	public static void destoryUploadData() {
+
+		Can_Upload_Data = false;
+		Data_Buffer_Out_End_Mark = -1;
+
+		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
+		Transmit_Level = TRANSMIT_LEVEL_STOP;
+
+		Transmit_Cache_Boot = false;
+		Transmit_Cache_Check = false;
+		Transmit_Cache_Warning = false;
+
+		FileModel.setStopTransm();
 
 		ControlCenter.stopTcpServer();
 	}

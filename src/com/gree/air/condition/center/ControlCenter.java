@@ -18,6 +18,15 @@ public class ControlCenter {
 
 	public static boolean waittingHeart = false;
 
+	// 故障标志位
+	private static int Transmit_Mark_Error = 0;
+	// 异常标志位
+	private static int Transmit_Mark_Warning = 0;
+	// 参数变化标志位
+	private static int Transmit_Mark_Change = 0;
+	// 开机标志位
+	private static int Transmit_Mark_Boot = 0;
+
 	public static long Transmit_Check_Time = 0L;
 
 	/**
@@ -129,7 +138,7 @@ public class ControlCenter {
 
 		Constant.Gprs_Choosed = false;
 		FileModel.setNotChoosed();
-		DataCenter.stopUploadData();
+		DataCenter.destoryUploadData();
 
 	}
 
@@ -205,7 +214,65 @@ public class ControlCenter {
 	 */
 	public static void stopUploadData() {
 
-		DataCenter.stopUploadData();
+		DataCenter.destoryUploadData();
+	}
+
+	/**
+	 * 设置标志位
+	 * 
+	 * @param error
+	 * @param warning
+	 * @param change
+	 * @param boot
+	 */
+	public static void setMarker(int error, int warning, int change, int boot) {
+
+		if (DataCenter.Transmit_Cache_Boot && Transmit_Mark_Boot == 0 && boot == 1) {
+
+			// 开机上报时，开机标志位为1，启动开机实时上报
+			DataCenter.registerBootTransmit();
+
+		} else if (Transmit_Mark_Error == 0 && error == 1) {
+
+			// 故障标志位由0-1，启动故障上报
+			DataCenter.errorTransmit();
+
+		} else if (Transmit_Mark_Change == 0 && change == 1) {
+
+			// 厂家参数变化标志位由0-1，启动参数变化上报
+			DataCenter.changeTransmit();
+
+		} else if (Transmit_Mark_Warning == 0 && warning == 1) {
+
+			// 亚健康标志位由0-1，启动亚健康上报
+			DataCenter.warningTransmit();
+
+		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_WARNING && warning == 0) {
+
+			// 亚健康标志位由0-1，停止亚健康上报
+			DataCenter.Transmit_Cache_Warning = false;
+			DataCenter.stopUploadData();
+
+		} else if (DataCenter.Transmit_Cache_Warning && warning == 1) {
+
+			// 缓存上报模式为亚健康上报，标志位为1，继续亚健康上报
+			DataCenter.warningTransmit();
+
+		} else if (DataCenter.Transmit_Cache_Boot && Transmit_Mark_Boot == 1 && boot == 0) {
+
+			// 开机上报时，开机标志位为0，启动开机周期上报
+			DataCenter.registerBootTransmit();
+		}
+
+		Transmit_Mark_Error = error;
+		Transmit_Mark_Warning = warning;
+		Transmit_Mark_Change = change;
+		Transmit_Mark_Boot = boot;
+
+	}
+
+	public static int getTransmit_Mark_Boot() {
+		return Transmit_Mark_Boot;
 	}
 
 }

@@ -85,7 +85,7 @@ public class TimeModel {
 		if (Constant.System_Time < Constant.Stop_Time) {
 			// 如果当前时间 小于静默时间 则 停止传输
 
-			DataCenter.stopUploadData();
+			DataCenter.destoryUploadData();
 		}
 
 		stopTime();

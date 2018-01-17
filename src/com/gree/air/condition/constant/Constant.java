@@ -57,7 +57,6 @@ public class Constant {
 	public static final byte TRANSMIT_TYPE_STOP = (byte) 0xFF;
 	// 缓存 上报数据状态 默认无
 	public static byte Transmit_Type = TRANSMIT_TYPE_STOP;
-	public static byte Transmit_Type_Cache = TRANSMIT_TYPE_STOP;
 
 	// =============== about sms constant =====================
 
