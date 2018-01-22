@@ -34,7 +34,7 @@ public class LoginModel {
 		Constant.Tcp_Out_Buffer[22] = (byte) 0x00;
 
 		// IMEI
-		byte[] imeiBytes = Constant.Gprs_Imei.getBytes();
+		byte[] imeiBytes = Constant.device.getImei().getBytes();
 		for (int i = 23; i < 38; i++) {
 
 			// Constant.Tcp_Out_Buffer[i] = (byte) 0x00;

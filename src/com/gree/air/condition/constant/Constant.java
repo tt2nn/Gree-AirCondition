@@ -1,5 +1,7 @@
 package com.gree.air.condition.constant;
 
+import com.gree.air.condition.entity.Device;
+
 /**
  * 常量类
  * 
@@ -110,16 +112,15 @@ public class Constant {
 	public static byte Transmit_Power_Type = TRANSMIT_TYPE_STOP;
 
 	// ================== about gprs info =================================
-	// 模块Imei
-	public static String Gprs_Imei = "861390030083946";
+
+	public static Device device = new Device();
 
 	// Mac地址
-	public static byte[] Gprs_Mac = { (byte) 0x61, (byte) 0x39, (byte) 0x00, (byte) 0x30, (byte) 0x08, (byte) 0x39,
-			(byte) 0x46 };
+	public static byte[] Gprs_Mac = new byte[7];
 	public static byte[] Server_Mac = new byte[7];
-	
+
 	// ================= about interim params =======================
-	
+
 	public static long Heart_Beat_Time = 0L;
 
 }

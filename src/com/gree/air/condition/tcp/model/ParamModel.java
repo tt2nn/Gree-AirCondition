@@ -107,7 +107,7 @@ public class ParamModel {
 		Constant.Tcp_Out_Buffer[19] = (byte) 0x02;
 
 		// 模块序列号
-		byte[] imeiBytes = Constant.Gprs_Imei.getBytes();
+		byte[] imeiBytes = Constant.device.getImei().getBytes();
 		for (int i = 20; i < 20 + imeiBytes.length; i++) {
 
 			Constant.Tcp_Out_Buffer[i] = imeiBytes[i - 20];
