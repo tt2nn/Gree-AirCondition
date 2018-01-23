@@ -26,4 +26,6 @@ public class FileConstant {
 	public static final String FILE_NAME_TRANSMIT_CHECK_PERIOD = "TransmitCheckPeriod";
 	// 打卡时长
 	public static final String FILE_NAME_TRANSMIT_CHECK_END_TIME = "TransmitCheckEndTime";
+	// spi写入的页码
+	public static final String FILE_NAME_SPI_WRITE_PAGE = "File_Name_Spi_Write_Page";
 }

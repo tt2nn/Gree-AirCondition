@@ -247,4 +247,17 @@ public class FileModel {
 
 		FileConnection.writeFile(FileConstant.FILE_NAME_GPRS_CHOOSED);
 	}
+
+	/**
+	 * 存储spi写入的页码
+	 * 
+	 * @param page
+	 */
+	public static void setSpiPage(int page) {
+
+		Constant.File_Buffer[0] = (byte) page;
+
+		FileConnection.writeFile(FileConstant.FILE_NAME_SPI_WRITE_PAGE);
+
+	}
 }

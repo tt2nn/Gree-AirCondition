@@ -32,6 +32,8 @@ public class Run {
 
 		try {
 
+			Thread.sleep(30 * 1000);
+
 			while (!DeviceConfigure.deviceInit()) {
 
 				Thread.sleep(10 * 1000);

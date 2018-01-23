@@ -7,6 +7,7 @@ import com.gree.air.condition.tcp.model.LoginModel;
 import com.gree.air.condition.tcp.model.ParamModel;
 import com.gree.air.condition.tcp.model.TimeModel;
 import com.gree.air.condition.tcp.model.TransmitModel;
+import com.gree.air.condition.uart.model.DoChoose;
 
 /**
  * 工作中心
@@ -74,6 +75,8 @@ public class ControlCenter {
 	 * 心跳
 	 */
 	public static void heartBeat() {
+
+		Constant.Heart_Beat_Time += 10 * 1000;
 
 		if (!TcpServer.isServerWorking()) {
 
@@ -165,6 +168,7 @@ public class ControlCenter {
 	 */
 	public static void powerCall() {
 
+		DoChoose.choosed();
 		DataCenter.powerTransmit();
 	}
 

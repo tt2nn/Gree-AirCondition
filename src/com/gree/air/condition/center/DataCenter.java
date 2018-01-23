@@ -56,7 +56,7 @@ public class DataCenter implements Runnable {
 	// lzo 压缩
 	private static LzoCompressor1x_1 lzo = new LzoCompressor1x_1();
 	private static lzo_uintp lzo_uintp = new lzo_uintp();
-	private static byte[] Lzo_Buffer = new byte[2048];
+	private static byte[] Lzo_Buffer = new byte[1792];
 
 	/**
 	 * 将机组数据写入4k缓存数据中
@@ -86,7 +86,7 @@ public class DataCenter implements Runnable {
 	}
 
 	/**
-	 * 将缓存数据写入SPI
+	 * 将缓存数据打包
 	 */
 	public static void packageData() {
 
@@ -133,7 +133,7 @@ public class DataCenter implements Runnable {
 			Write_Data_Buffer_Poi = 0;
 		}
 	}
-
+	
 	/**
 	 * 开始上传数据
 	 */

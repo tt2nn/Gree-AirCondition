@@ -45,13 +45,14 @@ public class Timer implements Runnable {
 					}
 
 					// 周期性心跳
-					if (Constant.System_Time - Constant.Heart_Beat_Time > Constant.Tcp_Heart_Beat_Period) {
+					if (Constant.System_Time - Constant.Heart_Beat_Time > Constant.Tcp_Heart_Beat_Period * 1000) {
 
 						ControlCenter.heartBeat();
 					}
 
 					// 周期性开机或者打卡上报
-					if (Constant.System_Time - ControlCenter.Transmit_Period_Time > Constant.Transmit_Check_Period) {
+					if (Constant.System_Time - ControlCenter.Transmit_Period_Time > Constant.Transmit_Check_Period
+							* 1000) {
 
 						ControlCenter.periodBootTransmit();
 						ControlCenter.periodCheckTransmit();

@@ -32,7 +32,7 @@ public class DoChoose {
 		if (chooseNum == 0) { // 当计数为0的时候，可以执行选举
 
 			chooseNum = -1;
-			chooseResp = true;
+			choosed();
 			return true;
 		}
 
@@ -42,6 +42,11 @@ public class DoChoose {
 		}
 
 		return false;
+	}
+
+	public static void choosed() {
+
+		chooseResp = true;
 	}
 
 	public static boolean isChooseResp() {
