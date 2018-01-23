@@ -68,7 +68,7 @@ public class FileConnection {
 			openFile(fileName);
 
 			inputStream = fileConn.openInputStream();
-
+			
 			Constant.File_Buffer_Length = inputStream.read(Constant.File_Buffer, 0, Constant.File_Buffer.length);
 
 			closeFile();

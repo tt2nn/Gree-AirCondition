@@ -32,7 +32,7 @@ public class Run {
 
 		try {
 
-			while (DeviceConfigure.deviceInit()) {
+			while (!DeviceConfigure.deviceInit()) {
 
 				Thread.sleep(10 * 1000);
 			}
