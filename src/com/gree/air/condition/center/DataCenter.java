@@ -301,7 +301,7 @@ public class DataCenter implements Runnable {
 			}
 			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Error_End_Time / 3);
 
-			if (Can_Upload_Data) {
+			if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
 
 				Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
 			}
@@ -331,7 +331,7 @@ public class DataCenter implements Runnable {
 			}
 
 			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Change_End_Time / 3);
-			if (Can_Upload_Data) {
+			if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
 
 				Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
 			}
@@ -342,6 +342,31 @@ public class DataCenter implements Runnable {
 			ControlCenter.requestStartUpload();
 		}
 
+	}
+	
+	/**
+	 * 按键上报
+	 */
+	public static void pushKeyTransmit() {
+		
+		if (Transmit_Level < TRANSMIT_LEVEL_PUSHKEY && Constant.System_Time > Constant.Stop_Time) {
+			
+			stopUploadData();
+			
+			Data_Buffer_Out_Mark = Data_Buffer_Mark;
+			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Pushkey_End_Time / 3);
+			if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
+				
+				Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
+			}
+			
+			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_PUSHKEY;
+			Transmit_Level = TRANSMIT_LEVEL_PUSHKEY;
+			
+			ControlCenter.requestStartUpload();
+			
+		}
+		
 	}
 
 	/**

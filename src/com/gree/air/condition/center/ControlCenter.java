@@ -171,6 +171,15 @@ public class ControlCenter {
 		DoChoose.choosed();
 		DataCenter.powerTransmit();
 	}
+	
+	/**
+	 * 按键上报
+	 */
+	public static void pushKeyTransmit() {
+		
+		DataCenter.pushKeyTransmit();
+		
+	}
 
 	/**
 	 * 启动开机上报
