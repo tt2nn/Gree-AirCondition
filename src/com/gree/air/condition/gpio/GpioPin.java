@@ -8,6 +8,8 @@ import org.joshvm.j2me.dio.gpio.GPIOPinConfig;
 import org.joshvm.j2me.dio.gpio.PinEvent;
 import org.joshvm.j2me.dio.gpio.PinListener;
 
+import com.gree.air.condition.center.Timer;
+
 /**
  * 控制灯 <br>
  * 响应按键 <br>
@@ -41,7 +43,16 @@ public class GpioPin {
 
 			keyTransmit.setInputListener(new PinListener() {
 				public void valueChanged(PinEvent event) {
-					System.out.println("value changed:" + (event.getValue() ? "on" : "off"));
+
+					if (event.getValue()) {
+
+						Timer.pushUp();
+
+					} else {
+
+						Timer.pushDown();
+					}
+
 				}
 			});
 
@@ -80,48 +91,32 @@ public class GpioPin {
 	 * 异常灯亮
 	 */
 	public static void errorLight() {
-		try {
-			pinoutError.setValue(true);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		lightOpen(pinoutError);
 	}
 
 	/**
 	 * 异常灯暗
 	 */
 	public static void errorDark() {
-		try {
-			pinoutError.setValue(false);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		lightClose(pinoutError);
 	}
 
 	/**
 	 * 通讯灯亮
 	 */
 	public static void communicationLight() {
-		try {
-			pinoutCommunication.setValue(true);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		lightOpen(pinoutCommunication);
 	}
 
 	/**
 	 * 通讯灯暗
 	 */
 	public static void communicationDark() {
-		try {
-			pinoutCommunication.setValue(false);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		lightClose(pinoutCommunication);
 	}
 
 	/**
@@ -130,13 +125,7 @@ public class GpioPin {
 	 */
 	public static void signalHighLight() {
 
-		try {
-			pinoutHight.setValue(true);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		lightOpen(pinoutHight);
 	}
 
 	/**
@@ -145,13 +134,7 @@ public class GpioPin {
 	 */
 	public static void signalHighDark() {
 
-		try {
-			pinoutHight.setValue(false);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		lightClose(pinoutHight);
 	}
 
 	/**
@@ -160,13 +143,7 @@ public class GpioPin {
 	 */
 	public static void signalMindleLight() {
 
-		try {
-			pinoutMiddle.setValue(true);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		lightOpen(pinoutMiddle);
 	}
 
 	/**
@@ -175,13 +152,7 @@ public class GpioPin {
 	 */
 	public static void signalMindleDark() {
 
-		try {
-			pinoutMiddle.setValue(false);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		lightClose(pinoutMiddle);
 	}
 
 	/**
@@ -190,12 +161,7 @@ public class GpioPin {
 	 */
 	public static void signalLowLight() {
 
-		try {
-			pinoutLow.setValue(true);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		lightOpen(pinoutLow);
 
 	}
 
@@ -205,13 +171,62 @@ public class GpioPin {
 	 */
 	public static void signalLowDark() {
 
+		lightClose(pinoutLow);
+	}
+
+	/**
+	 * 关闭所有的信号灯
+	 */
+	public static void signalAllDark() {
+
+		lightClose(pinoutHight);
+		lightClose(pinoutMiddle);
+		lightClose(pinoutLow);
+
+	}
+
+	/**
+	 * 关闭所有的灯
+	 */
+	public static void closeAllLight() {
+
+		lightClose(pinoutError);
+		lightClose(pinoutCommunication);
+		signalAllDark();
+	}
+
+	/**
+	 * 开灯
+	 * 
+	 * @param light
+	 */
+	private static void lightOpen(GPIOPin light) {
+
 		try {
-			pinoutLow.setValue(false);
+
+			light.setValue(true);
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
+	}
 
+	/**
+	 * 关灯
+	 * 
+	 * @param light
+	 */
+	private static void lightClose(GPIOPin light) {
+
+		try {
+
+			light.setValue(false);
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
 	}
 
 }
