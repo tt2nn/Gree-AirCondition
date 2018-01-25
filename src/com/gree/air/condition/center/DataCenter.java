@@ -4,6 +4,7 @@ import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.lzo.LzoCompressor1x_1;
 import com.gree.air.condition.lzo.lzo_uintp;
+import com.gree.air.condition.spi.SpiTool;
 import com.gree.air.condition.tcp.TcpServer;
 import com.gree.air.condition.utils.Utils;
 
@@ -121,19 +122,18 @@ public class DataCenter implements Runnable {
 				Constant.Data_Buffer[i + 4] = time[i];
 			}
 
-			if (Data_Buffer_Mark == BUFFER_MARK_SIZE - 1) {
+			Data_Buffer_Mark++;
+			if (Data_Buffer_Mark == BUFFER_MARK_SIZE) {
 
 				Data_Buffer_Mark = 0;
-
-			} else {
-
-				Data_Buffer_Mark++;
 			}
+
+			SpiTool.writeData();
 
 			Write_Data_Buffer_Poi = 0;
 		}
 	}
-	
+
 	/**
 	 * 开始上传数据
 	 */
@@ -176,15 +176,16 @@ public class DataCenter implements Runnable {
 
 				if (Data_Buffer_Out_Mark == Data_Buffer_Out_End_Mark) {
 
-					if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT || Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHECK) {
-						
+					if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT
+							|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHECK) {
+
 						pauseUploadData();
-						
-					}else {
-						
+
+					} else {
+
 						stopUploadData();
 					}
-					
+
 					continue;
 				}
 
@@ -216,9 +217,7 @@ public class DataCenter implements Runnable {
 				// 缓存数据符合取值要求
 				synchronized (lock) {
 
-					System.out.println(Data_Buffer_Mark + "==============" + Data_Buffer_Out_Mark);
-
-					if (Data_Buffer_Mark != Data_Buffer_Out_Mark) {
+					if (SpiTool.readData(Data_Buffer_Out_Mark * 2 * 1024)) {
 
 						length = Utils.bytesToInt(Constant.Data_Buffer, 2, 3);
 
@@ -239,13 +238,12 @@ public class DataCenter implements Runnable {
 
 					ControlCenter.transmitData(length, time);
 
-					if (Data_Buffer_Out_Mark == BUFFER_MARK_SIZE - 1) {
+					Data_Buffer_Out_Mark++;
+
+					if (Data_Buffer_Out_Mark == BUFFER_MARK_SIZE) {
 
 						Data_Buffer_Out_Mark = 0;
 
-					} else {
-
-						Data_Buffer_Out_Mark++;
 					}
 
 					Thread.sleep(500);

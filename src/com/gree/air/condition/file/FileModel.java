@@ -249,15 +249,20 @@ public class FileModel {
 	}
 
 	/**
-	 * 存储spi写入的页码
+	 * 存储spi写入的地址
 	 * 
 	 * @param page
 	 */
-	public static void setSpiPage(int page) {
+	public static void setSpiAddress(int address) {
 
-		Constant.File_Buffer[0] = (byte) page;
+		byte[] res = (address + "").getBytes();
+		
+		for (int i = 0; i < res.length; i++) {
+			
+			Constant.File_Buffer[i] = res[i];
+		}
 
-		FileConnection.writeFile(FileConstant.FILE_NAME_SPI_WRITE_PAGE);
+		FileConnection.writeFile(FileConstant.FILE_NAME_SPI_WRITE_ADDRESS);
 
 	}
 }

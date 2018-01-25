@@ -10,6 +10,14 @@ public class SPIFlashDeviceDescriptor implements FlashROMDeviceDescriptor {
 	protected int CSActiveLevel;
 	protected String driverName;
 
+	public static final int LITTLE_ENDIAN = 0;
+	public static final int BIG_ENDIAN = 1;
+	public static final int MIXED_ENDIAN = 2;
+
+	public static final int CS_ACTIVE_HIGH = 0;
+	public static final int CS_ACTIVE_LOW = 1;
+	public static final int CS_NOT_CONTROLLED = 2;
+
 	public SPIFlashDeviceDescriptor(String classNameOfFlashROMDriver, int SPIControllerNumber, int CSAddress,
 			int clockFrequency, int clockMode, int wordLength, int bitOrdering, int csActiveLevel) {
 		this.SPIControllerNumber = SPIControllerNumber;

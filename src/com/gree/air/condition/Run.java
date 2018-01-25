@@ -7,6 +7,7 @@ import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.entity.Apn;
 import com.gree.air.condition.sms.SmsServer;
+import com.gree.air.condition.spi.SpiTool;
 import com.gree.air.condition.uart.UartServer;
 
 /**
@@ -29,6 +30,7 @@ public class Run {
 
 		DeviceConfigure.deviceInit();
 		DeviceConfigure.setApn(new Apn());
+		SpiTool.init(2048);
 
 		try {
 

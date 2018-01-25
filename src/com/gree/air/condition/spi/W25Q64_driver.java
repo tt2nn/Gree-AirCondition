@@ -1,10 +1,14 @@
 package com.gree.air.condition.spi;
 
-import org.joshvm.j2me.dio.Device;
-import org.joshvm.j2me.dio.spibus.SPIDeviceConfig;
+import java.io.IOException;
 
+import org.joshvm.j2me.dio.DeviceException;
+
+import com.gree.air.condition.spi.jedi.DriverException;
 import com.gree.air.condition.spi.jedi.SPIFlash;
 import com.gree.air.condition.spi.jedi.SPIFlashDeviceDescriptor;
+import com.gree.air.condition.spi.jedi.UnalignedAddressException;
+import com.gree.air.condition.spi.jedi.UnsupportedPageSizeException;
 import com.joshvm.util.ByteBuffer;
 
 public class W25Q64_driver extends SPIFlash {
@@ -13,6 +17,7 @@ public class W25Q64_driver extends SPIFlash {
 	private static final int INSTRUCTION_ERASE_BLOCK_64K = 0xD8;
 	private static final int INSTRUCTION_ERASE_CHIP = 0x60;
 	private static final int INSTRUCTION_WRITE_ENABLE = 0x06;
+	private static final int INSTRUCTION_PROGRAM_PAGE = 0x02;
 	private static final int INSTRUCTION_READ_DATA = 0x03;
 	private static final int INSTRUCTION_READ_STATUS_1 = 0x05;
 	private static final int INSTRUCTION_READ_STATUS_2 = 0x35;
@@ -25,12 +30,28 @@ public class W25Q64_driver extends SPIFlash {
 
 	private static final int DEFAULT_CLOCK_FREQUENCY = 20 * 1024 * 1024;
 
+	private void SPI_writeAndRead(ByteBuffer writebuf, int skip, ByteBuffer readbuf)
+			throws IOException, DriverException {
+		try {
+			spi.writeAndRead(writebuf, skip, readbuf);
+		} catch (DeviceException e) {
+			throw new DriverException(e.toString());
+		}
+	}
+
+	private void SPI_write(ByteBuffer writebuf) throws IOException, DriverException {
+		try {
+			spi.write(writebuf);
+		} catch (DeviceException e) {
+			throw new DriverException(e.toString());
+		}
+	}
+
 	public int getPageSize() {
 		return PAGE_SIZE;
 	}
 
-	public byte[] readManufacturInfo() throws Exception {
-
+	public byte[] readManufacturInfo() throws IOException, DriverException {
 		byte[] command = new byte[4];
 		command[0] = (byte) INSTRUCTION_READ_DEVICE_INFO;
 		command[1] = (byte) 0;
@@ -39,14 +60,14 @@ public class W25Q64_driver extends SPIFlash {
 		ByteBuffer command_buf = new ByteBuffer(command);
 
 		ByteBuffer result_buf = ByteBuffer.allocate(2);
-		spi.writeAndRead(command_buf, 4, result_buf);
+		SPI_writeAndRead(command_buf, 4, result_buf);
 		result_buf.rewind();
 		byte[] result = new byte[1];
 		result[0] = result_buf.get();
 		return result;
 	}
 
-	public byte[] readDeviceInfo() throws Exception {
+	public byte[] readDeviceInfo() throws IOException, DriverException {
 		byte[] command = new byte[4];
 		command[0] = (byte) INSTRUCTION_READ_DEVICE_INFO;
 		command[1] = (byte) 0;
@@ -55,14 +76,14 @@ public class W25Q64_driver extends SPIFlash {
 		ByteBuffer command_buf = new ByteBuffer(command);
 
 		ByteBuffer result_buf = ByteBuffer.allocate(2);
-		spi.writeAndRead(command_buf, 4, result_buf);
+		SPI_writeAndRead(command_buf, 4, result_buf);
 		result_buf.rewind();
 		byte[] result = new byte[1];
 		result[0] = result_buf.get();
 		return result;
 	}
 
-	public byte readStatusByte(int offset) throws Exception {
+	public byte readStatusByte(int offset) throws IOException, DriverException {
 		byte[] command = new byte[1];
 		switch (offset) {
 		case 0:
@@ -75,20 +96,20 @@ public class W25Q64_driver extends SPIFlash {
 			command[0] = (byte) INSTRUCTION_READ_STATUS_3;
 			break;
 		default:
-			throw new Exception();
+			throw new IllegalArgumentException("Invalid offset of reading Status Register");
 		}
 		ByteBuffer command_buf = new ByteBuffer(command);
 		ByteBuffer result_buf = ByteBuffer.allocate(1);
-		spi.writeAndRead(command_buf, 1, result_buf);
+		SPI_writeAndRead(command_buf, 1, result_buf);
 		result_buf.rewind();
 		return result_buf.get();
 	}
 
-	public byte readStatusByte() throws Exception {
+	protected byte readStatusByte() throws IOException, DriverException {
 		return readStatusByte(0);
 	}
 
-	public byte[] readStatusBytes() throws Exception {
+	public byte[] readStatusBytes() throws IOException, DriverException {
 		byte[] result = new byte[3];
 		result[0] = readStatusByte(0);
 		result[1] = readStatusByte(1);
@@ -96,45 +117,55 @@ public class W25Q64_driver extends SPIFlash {
 		return result;
 	}
 
-	public void writeEnable() throws Exception {
+	public void writeEnable() throws IOException, DriverException {
 		byte[] command = new byte[1];
 		command[0] = (byte) INSTRUCTION_WRITE_ENABLE;
 		ByteBuffer command_buf = new ByteBuffer(command);
-		spi.write(command_buf);
+		SPI_write(command_buf);
 	}
 
-	public void chipErase() throws Exception {
+	public void chipErase() throws IOException, DriverException {
 		writeEnable();
 		byte[] command = new byte[1];
 		command[0] = (byte) INSTRUCTION_ERASE_CHIP;
 		ByteBuffer command_buf = new ByteBuffer(command);
-		spi.write(command_buf);
+		SPI_write(command_buf);
 		waitWIPClear();
 	}
 
-	public void pageProgram(int address, byte[] data) throws Exception {
-		if (data.length != 256) {
-			System.out.println("Can not program: Page size must be 256!");
-			return;
+	public void pageProgram(int address, byte[] data)
+			throws IOException, DriverException, UnsupportedPageSizeException {
+		pageProgram(address, data, 0, data.length);
+	}
+
+	public void pageProgram(int address, byte[] data, int offset, int size)
+			throws IOException, DriverException, UnsupportedPageSizeException {
+		if (size != PAGE_SIZE) {
+			throw new UnsupportedPageSizeException("The size of data must be " + PAGE_SIZE);
+		}
+
+		if ((offset + size > data.length) || (offset < 0) || (size <= 0)) {
+			throw new IllegalArgumentException();
 		}
 
 		writeEnable();
 
 		byte[] command = new byte[4];
 		address = address & 0x00ffffff;
-		command[0] = (byte) 0x02;
+		command[0] = (byte) INSTRUCTION_PROGRAM_PAGE;
 		command[1] = (byte) ((address >> 16) & 0xff);
 		command[2] = (byte) ((address >> 8) & 0xff);
 		command[3] = (byte) (address & 0xff);
-		ByteBuffer command_buf = ByteBuffer.allocate(4 + data.length);
+		ByteBuffer command_buf = ByteBuffer.allocate(4 + size);
+		ByteBuffer data_buf = new ByteBuffer(data, offset, 0, size);
 		command_buf.put(command);
-		command_buf.put(data);
+		command_buf.put(data_buf);
 		command_buf.flip();
-		spi.write(command_buf);
+		SPI_write(command_buf);
 		waitWIPClear();
 	}
 
-	public ByteBuffer read(int address, int size) throws Exception {
+	public byte[] read(int address, int size) throws IOException, DriverException {
 		byte[] command = new byte[4];
 		address = address & 0x00ffffff;
 		command[0] = (byte) INSTRUCTION_READ_DATA;
@@ -144,11 +175,11 @@ public class W25Q64_driver extends SPIFlash {
 		ByteBuffer command_buf = new ByteBuffer(command);
 
 		ByteBuffer result_buf = ByteBuffer.allocate(size);
-		spi.writeAndRead(command_buf, 4, result_buf);
-		return result_buf;
+		SPI_writeAndRead(command_buf, 4, result_buf);
+		return result_buf.array();
 	}
 
-	public void erase(int address, int size) throws Exception {
+	public void erase(int address, int size) throws IOException, UnalignedAddressException, DriverException {
 		switch (size) {
 		case PAGE_SIZE:
 			eraseSector(address);
@@ -160,24 +191,27 @@ public class W25Q64_driver extends SPIFlash {
 			erase64KBlock(address);
 			break;
 		default:
-			// TODO: Create specific exception for this
-			throw new Exception();
+			throw new UnalignedAddressException("Invalid address: " + address);
 		}
 	}
 
-	private void eraseSector(int address) throws Exception {
+	public long getTotalSize() {
+		return 8 * 1024L * 1024L;
+	}
+
+	private void eraseSector(int address) throws IOException, DriverException {
 		eraseCommonInternal(address, (byte) INSTRUCTION_ERASE_SECTOR);
 	}
 
-	private void erase32KBlock(int address) throws Exception {
+	private void erase32KBlock(int address) throws IOException, DriverException {
 		eraseCommonInternal(address, (byte) INSTRUCTION_ERASE_BLOCK_32K);
 	}
 
-	private void erase64KBlock(int address) throws Exception {
+	private void erase64KBlock(int address) throws IOException, DriverException {
 		eraseCommonInternal(address, (byte) INSTRUCTION_ERASE_BLOCK_64K);
 	}
 
-	private void eraseCommonInternal(int address, byte inst) throws Exception {
+	private void eraseCommonInternal(int address, byte inst) throws IOException, DriverException {
 		writeEnable();
 
 		byte[] command = new byte[4];
@@ -188,19 +222,22 @@ public class W25Q64_driver extends SPIFlash {
 		command[3] = (byte) (address & 0xff);
 		ByteBuffer command_buf = new ByteBuffer(command);
 
-		spi.write(command_buf);
+		SPI_write(command_buf);
 		waitWIPClear(0);
 	}
 
-	public void waitWIPClear() throws Exception {
+	public void waitWIPClear() throws IOException, DriverException {
 		waitWIPClear(0);
 	}
 
-	private void waitWIPClear(int interval) throws Exception {
+	private void waitWIPClear(int interval) throws IOException, DriverException {
 		byte byteStatus;
 		do {
 			byteStatus = readStatusByte();
-			Thread.sleep(interval);
+			try {
+				Thread.sleep(interval);
+			} catch (InterruptedException e) {
+			}
 		} while ((byteStatus & 0x01) == 0x01);
 	}
 
@@ -213,6 +250,6 @@ public class W25Q64_driver extends SPIFlash {
 		return new SPIFlashDeviceDescriptor("com.joshvm.JEDI.FlashROM.W25Q64.W25Q64_driver", SPIContollerNumber,
 				CSAddress, clockFrequency, 0, /* Clock mode 0 */
 				8, /* Word length 8 */
-				Device.BIG_ENDIAN, SPIDeviceConfig.CS_ACTIVE_LOW);
+				SPIFlashDeviceDescriptor.BIG_ENDIAN, SPIFlashDeviceDescriptor.CS_ACTIVE_LOW);
 	}
 }

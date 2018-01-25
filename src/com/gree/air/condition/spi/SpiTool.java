@@ -6,7 +6,6 @@ import com.gree.air.condition.file.FileConnection;
 import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.spi.jedi.FlashROM;
 import com.gree.air.condition.spi.jedi.FlashROMDeviceFactory;
-import com.joshvm.util.ByteBuffer;
 
 public class SpiTool {
 
@@ -17,12 +16,8 @@ public class SpiTool {
 	private static FlashROM flashROM;
 	private static int Page_Size; // Page size which get from specific ROM device
 
-	private static ByteBuffer readBuffer;
-
-	private static byte[] Byte_Array = new byte[256];
 	private static int Write_Address;
-	private static int Write_Page = -1;
-	private static final int SPI_PAGE_SIZE = 256;
+	private static final int ROM_SIZE = 8 * 1024 * 1024;
 
 	/**
 	 * 初始化
@@ -39,7 +34,6 @@ public class SpiTool {
 
 			RW_Size = rwSize;
 
-			getSpiWritePage();
 			getSpiWriteAddress();
 
 			/**
@@ -69,30 +63,22 @@ public class SpiTool {
 
 			if (res == 0) {
 
-				Write_Page++;
+				if (Write_Address == ROM_SIZE) {
 
-				if (Write_Page == SPI_PAGE_SIZE) {
-
-					Write_Page = 0;
 					Write_Address = 0;
 				}
-
-				FileModel.setSpiPage(Write_Page);
 
 				erase(Write_Address);
 			}
 
 			for (int i = 0; i < 7; i++) {
 
-				for (int j = 0; j < Byte_Array.length; j++) {
-
-					Byte_Array[j] = Constant.Data_Buffer[i * Page_Size + j];
-				}
-
-				flashROM.pageProgram(Write_Address, Byte_Array);
+				flashROM.pageProgram(Write_Address, Constant.Data_Buffer, Page_Size * i, Page_Size);
 				Write_Address += Page_Size;
-
 			}
+
+			Write_Address += Page_Size;
+			FileModel.setSpiAddress(Write_Address);
 
 		} catch (Exception e) {
 
@@ -101,51 +87,42 @@ public class SpiTool {
 
 	}
 
-	public static void readData(int readAddress) {
+	/**
+	 * 读数据
+	 * 
+	 * @param readAddress
+	 * @return 是否读取到数据
+	 */
+	public static boolean readData(int readAddress) {
+
+		if (readAddress == Write_Address) {
+
+			return false;
+		}
 
 		try {
 
-			readBuffer = flashROM.read(readAddress, RW_Size);
-			Constant.Data_SPI_Buffer = readBuffer.array();
+			Constant.Data_SPI_Buffer = flashROM.read(readAddress, RW_Size);
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		}
 
+		return true;
 	}
 
 	/**
-	 * 获取存储的页码
-	 */
-	private static void getSpiWritePage() {
-
-		FileConnection.readFile(FileConstant.FILE_NAME_SPI_WRITE_PAGE);
-
-		if (Constant.File_Buffer_Length > 0) {
-
-			Write_Page = Constant.File_Buffer[0] & 0xff;
-		}
-	}
-
-	/**
-	 * 获取当前写到的位置
+	 * 获取写到的address
 	 */
 	private static void getSpiWriteAddress() {
 
-		try {
+		FileConnection.readFile(FileConstant.FILE_NAME_SPI_WRITE_ADDRESS);
 
-			int ads = Write_Page * ERASE_SIZE * 1024;
+		if (Constant.File_Buffer_Length > 0) {
 
-			readBuffer = flashROM.read(ads, ERASE_SIZE * 1024);
-
-			Write_Address += readBuffer.remaining();
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
+			Write_Address = Integer.parseInt(new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length));
 		}
-
 	}
 
 	/**
@@ -178,72 +155,6 @@ public class SpiTool {
 
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * 写入
-	 * 
-	 * @param address
-	 * @param data
-	 */
-	private static void write(int address, byte[] data) {
-
-		try {
-
-			int originalAddr = address;
-			int pageSize = data.length / Page_Size;
-
-			for (int i = 0; i < pageSize; i++) {
-
-				flashROM.pageProgram(originalAddr, data);
-
-				originalAddr += Page_Size;
-			}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 读取
-	 * 
-	 * @param address
-	 */
-	private static void read(int address) {
-
-		try {
-
-			readBuffer = flashROM.read(address, RW_Size);
-			readBuffer.flip();
-
-			/**
-			 * Verify
-			 */
-			/*
-			 * if (readBuffer.remaining() != rw_size) {
-			 * System.out.println("Read bytes number wrong."); return; }
-			 * 
-			 * int wrongByteNum = 0; for (int j = 0; j < rw_size; j++) { int k = ((int)
-			 * readBuffer.get() & 0xff); if (k != (j & 0xff)) { //
-			 * System.out.println("Wrong data read at "+j+" : "+k); wrongByteNum++; } }
-			 * 
-			 * if (wrongByteNum == 0) { System.out.println("Verify OK."); } else {
-			 * System.out.println(wrongByteNum + " bytes wrong."); }
-			 * 
-			 * // System.out.println("Erase chip time (milliseconds):"+(time0-time));
-			 * System.out.println("Erase " + erase_size + "bytes time (milliseconds):" +
-			 * (time2 - time1)); System.out.println("Write " + rw_size +
-			 * "bytes time (milliseconds):" + (time4 - time3)); System.out.println("Read " +
-			 * rw_size + "bytes time (milliseconds):" + (time6 - time5));
-			 */
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
 	}
 
 }

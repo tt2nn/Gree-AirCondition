@@ -30,18 +30,6 @@ public class GpioPin {
 				}
 			});
 
-//			for (;;) {
-//				// val = !val;
-//				// pinout.setValue(val);
-//				// pinled.setValue(val);
-//				if (pinin.getValue()) {
-//					System.out.println("on");
-//				} else {
-//					System.out.println("off");
-//				}
-//				Thread.sleep(1000);
-//			}
-			
 		} catch (Exception e) {
 			
 			e.printStackTrace();

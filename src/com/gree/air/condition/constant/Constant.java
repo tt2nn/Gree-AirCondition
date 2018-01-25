@@ -37,7 +37,7 @@ public class Constant {
 	public static byte[] Data_Cache_Buffer = new byte[2048];
 
 	public static byte[] Data_Buffer = new byte[1792];
-	public static byte[] Data_SPI_Buffer = new byte[1792];
+	public static byte[] Data_SPI_Buffer = new byte[2048];
 
 	// 实时监控上报
 	public static final byte TRANSMIT_TYPE_ALWAYS = (byte) 0x00;
