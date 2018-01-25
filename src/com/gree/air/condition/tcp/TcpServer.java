@@ -101,25 +101,32 @@ public class TcpServer implements Runnable {
 
 			} finally {
 
-				System.out.println("=================== tcp server error =========================");
+				if (serverWorking) {
 
-				try {
+					System.out.println("=================== tcp server error =========================");
 
-					closeStream();
+					try {
 
-					Thread.sleep(3000);
+						closeStream();
 
-					if (Server_ReConnect_Num == 5) {
+						Thread.sleep(3000);
 
-						stopServer();
-					} else {
+						if (Server_ReConnect_Num == 5) {
 
-						Server_ReConnect_Num++;
+							stopServer();
+
+						} else {
+
+							Server_ReConnect_Num++;
+						}
+
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
+				} else {
 
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println("=================== tcp server close =========================");
 				}
 			}
 		}
