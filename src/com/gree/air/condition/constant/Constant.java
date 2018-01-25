@@ -10,6 +10,8 @@ import com.gree.air.condition.entity.Device;
  */
 public class Constant {
 
+	public static final String APP_VERSION = "v0.0.0";
+
 	// =================== about uart constant ===================
 	// 记录收Buffer的长度
 	public static int Uart_In_Buffer_Length = 0;
@@ -33,7 +35,7 @@ public class Constant {
 
 	// 用于存储服务器的机组数据
 	public static byte[] Data_Cache_Buffer = new byte[2048];
-	
+
 	public static byte[] Data_Buffer = new byte[1792];
 	public static byte[] Data_SPI_Buffer = new byte[1792];
 

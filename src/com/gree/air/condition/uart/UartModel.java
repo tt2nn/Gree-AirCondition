@@ -2,6 +2,7 @@ package com.gree.air.condition.uart;
 
 import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.uart.model.FrockCheckModel;
 import com.gree.air.condition.uart.model.MbReadBitModel;
 import com.gree.air.condition.uart.model.MbReadWordModel;
 import com.gree.air.condition.uart.model.MbWriteModel;
@@ -17,7 +18,8 @@ import com.gree.air.condition.utils.Utils;
  */
 public class UartModel {
 
-	// private static long time;
+	private static final byte[] FROCK_BYTES = { (byte) 0x55, (byte) 0xAA, (byte) 0x55, (byte) 0xAA, (byte) 15,
+			(byte) 00, (byte) 00, (byte) 5D, (byte) 36 };
 
 	/**
 	 * 判断串口通信协议类型（7E7E / modbus）
@@ -37,6 +39,22 @@ public class UartModel {
 			return;
 
 		}
+
+		// 判断是否是工装测试
+		boolean isFrock = true;
+		for (int i = 0; i < FROCK_BYTES.length; i++) {
+
+			if (Constant.Uart_In_Buffer[i] != FROCK_BYTES[i]) {
+
+				isFrock = false;
+				break;
+			}
+		}
+		if (isFrock) {
+			
+			FrockCheckModel.frockCheck();
+		}
+		
 
 		// 如果是 A5A7 开头 则是 7E7E协议
 		if (Constant.Uart_In_Buffer[0] == (byte) 0xA5 && Constant.Uart_In_Buffer[1] == (byte) 0xA7) {

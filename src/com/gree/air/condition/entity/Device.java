@@ -2,11 +2,30 @@ package com.gree.air.condition.entity;
 
 public class Device {
 
+	/**
+	 * 硬件序列号
+	 */
 	private String imei;
+	/**
+	 * 卡的序列号
+	 */
 	private String imsi;
+	/**
+	 * 制卡商序列号
+	 */
 	private String iccid;
+	/**
+	 * 1.联通<br>
+	 * 0.移动<br>
+	 */
 	private int mnc;
+	/**
+	 * mcc 460 中国
+	 */
 	private int mcc;
+	/**
+	 * 基站信息
+	 */
 	private int lac;
 
 	public String getImei() {

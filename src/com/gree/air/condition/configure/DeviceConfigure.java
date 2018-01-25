@@ -42,7 +42,6 @@ public class DeviceConfigure {
 
 					return true;
 				}
-
 			}
 
 		} catch (IOException e) {
