@@ -12,6 +12,9 @@ public class Timer implements Runnable {
 
 	private int packageNum = 1;
 
+	private static boolean listensePush;
+	private static long Push_Time;
+
 	/**
 	 * 启动Timer
 	 */
@@ -57,6 +60,22 @@ public class Timer implements Runnable {
 						ControlCenter.periodBootTransmit();
 						ControlCenter.periodCheckTransmit();
 					}
+
+					// 判断进行按键上报
+					if (Constant.System_Time - Push_Time > 3 * 1000 && listensePush
+							&& Constant.Transmit_Type != Constant.TRANSMIT_TYPE_PUSHKEY) {
+
+						listensePush = false;
+						ControlCenter.pushKeyTransmit();
+					}
+
+					// 判断停止按键上报
+					if (Constant.System_Time - Push_Time > 5 * 1000 && listensePush
+							&& Constant.Transmit_Type == Constant.TRANSMIT_TYPE_PUSHKEY) {
+
+						listensePush = false;
+						ControlCenter.stopUploadData();
+					}
 				}
 
 			} catch (InterruptedException e) {
@@ -64,6 +83,23 @@ public class Timer implements Runnable {
 			}
 		}
 
+	}
+
+	/**
+	 * 按下
+	 */
+	public static void pushDown() {
+
+		Push_Time = Constant.System_Time;
+		listensePush = true;
+	}
+
+	/**
+	 * 抬起
+	 */
+	public static void pushUp() {
+
+		listensePush = false;
 	}
 
 }
