@@ -123,7 +123,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(second)) {
 
-				Constant.Tcp_Heart_Beat_Period = Integer.parseInt(second);
+				Constant.Tcp_Heart_Beat_Period = Utils.stringToInt(second);
 			}
 		}
 
@@ -142,7 +142,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(errorBefore)) {
 
-				Constant.Transmit_Error_Start_Time = Integer.parseInt(errorBefore);
+				Constant.Transmit_Error_Start_Time = Utils.stringToInt(errorBefore);
 			}
 		}
 
@@ -161,7 +161,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(errorAfter)) {
 
-				Constant.Transmit_Error_End_Time = Integer.parseInt(errorAfter);
+				Constant.Transmit_Error_End_Time = Utils.stringToInt(errorAfter);
 			}
 		}
 
@@ -180,7 +180,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(changeBefore)) {
 
-				Constant.Transmit_Change_End_Time = Integer.parseInt(changeBefore);
+				Constant.Transmit_Change_End_Time = Utils.stringToInt(changeBefore);
 			}
 		}
 
@@ -199,7 +199,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(pushkey)) {
 
-				Constant.Transmit_Pushkey_End_Time = Integer.parseInt(pushkey);
+				Constant.Transmit_Pushkey_End_Time = Utils.stringToInt(pushkey);
 			}
 		}
 
@@ -218,7 +218,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(sig)) {
 
-				Constant.Tcp_Sig_Period = Integer.parseInt(sig);
+				Constant.Tcp_Sig_Period = Utils.stringToInt(sig);
 			}
 		}
 
@@ -237,7 +237,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(checkPeriod)) {
 
-				Constant.Transmit_Check_Period = Integer.parseInt(checkPeriod);
+				Constant.Transmit_Check_Period = Utils.stringToInt(checkPeriod);
 			}
 		}
 
@@ -256,7 +256,7 @@ public class Configure {
 
 			if (Utils.isNotEmpty(checkTime)) {
 
-				Constant.Transmit_Check_End_Time = Integer.parseInt(checkTime);
+				Constant.Transmit_Check_End_Time = Utils.stringToInt(checkTime);
 			}
 		}
 

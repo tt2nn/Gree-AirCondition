@@ -5,13 +5,18 @@ import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.model.AdmModel;
 import com.gree.air.condition.sms.model.ApnModel;
 import com.gree.air.condition.sms.model.ButtModel;
+import com.gree.air.condition.sms.model.CheckPeriodModel;
+import com.gree.air.condition.sms.model.CheckStartModel;
+import com.gree.air.condition.sms.model.CheckTimeModel;
 import com.gree.air.condition.sms.model.DebtModel;
 import com.gree.air.condition.sms.model.ErrtModel;
 import com.gree.air.condition.sms.model.HbModel;
 import com.gree.air.condition.sms.model.HealtModel;
 import com.gree.air.condition.sms.model.PwdModel;
 import com.gree.air.condition.sms.model.RstModel;
+import com.gree.air.condition.sms.model.RunStartModel;
 import com.gree.air.condition.sms.model.ServModel;
+import com.gree.air.condition.sms.model.SigModel;
 import com.gree.air.condition.sms.model.StartModel;
 import com.gree.air.condition.sms.model.StopModel;
 import com.gree.air.condition.sms.model.UsronModel;
@@ -96,8 +101,45 @@ public class SmsModel {
 			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Butt) != -1) { // 按键调试周期
 
 				ButtModel.smsAnalyze();
+
+			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_SIG) != -1) { // 信号上报周期
+
+				SigModel.smsAnalyze();
+
+			} else if (checkSmsType(SmsConstant.Sms_Type_Run_Start)) { // 开机上报
+
+				RunStartModel.smsAnalyze();
+
+			} else if (checkSmsType(SmsConstant.Sms_Type_Check_Start)) { // 打卡上报
+
+				CheckStartModel.smsAnalyze();
+
+			} else if (checkSmsType(SmsConstant.Sms_Type_Check_Period)) { // 打卡间隔
+
+				CheckPeriodModel.smsAnalyze();
+
+			} else if (checkSmsType(SmsConstant.Sms_Type_Check_Time)) { // 打卡时长
+
+				CheckTimeModel.smsAnalyze();
+
 			}
 		}
+	}
+
+	/**
+	 * 判断短信是否符合类型
+	 * 
+	 * @param type
+	 * @return
+	 */
+	private static boolean checkSmsType(String type) {
+
+		if (Constant.Sms_Receive.indexOf(type) != -1) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

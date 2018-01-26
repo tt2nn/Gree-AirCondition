@@ -72,7 +72,7 @@ public class DataCenter implements Runnable {
 
 		if (Constant.File_Buffer_Length > 0) {
 
-			spiAddress = Integer.parseInt(new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length));
+			spiAddress = Utils.stringToInt(new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length));
 		}
 
 		Data_Buffer_Mark = spiAddress / 2048;
@@ -297,7 +297,7 @@ public class DataCenter implements Runnable {
 
 			FileModel.setAlwaysTransm();
 
-			Data_Buffer_Out_End_Mark = Data_Buffer_Mark;
+			Data_Buffer_Out_Mark = Data_Buffer_Mark;
 			ControlCenter.requestStartUpload();
 
 		}

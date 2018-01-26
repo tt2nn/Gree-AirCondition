@@ -6,6 +6,7 @@ import com.gree.air.condition.file.FileConnection;
 import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.spi.jedi.FlashROM;
 import com.gree.air.condition.spi.jedi.FlashROMDeviceFactory;
+import com.gree.air.condition.utils.Utils;
 
 public class SpiTool {
 
@@ -121,7 +122,7 @@ public class SpiTool {
 
 		if (Constant.File_Buffer_Length > 0) {
 
-			Write_Address = Integer.parseInt(new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length));
+			Write_Address = Utils.stringToInt(new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length));
 		}
 	}
 

@@ -33,6 +33,24 @@ public class FileConnection {
 	}
 
 	/**
+	 * 重置file
+	 * 
+	 * @param fileName
+	 * @throws IOException
+	 */
+	private static void resetFile(String fileName) throws IOException {
+
+		fileConn = (javax.microedition.io.file.FileConnection) Connector.open("file:///Phone/" + fileName);
+
+		if (fileConn.exists()) {
+
+			fileConn.delete();
+		}
+
+		fileConn.create();
+	}
+
+	/**
 	 * 读文件
 	 * 
 	 * @param fileName
@@ -68,7 +86,7 @@ public class FileConnection {
 			openFile(fileName);
 
 			inputStream = fileConn.openInputStream();
-			
+
 			Constant.File_Buffer_Length = inputStream.read(Constant.File_Buffer, 0, Constant.File_Buffer.length);
 
 			closeFile();
@@ -88,7 +106,7 @@ public class FileConnection {
 
 		try {
 
-			openFile(fileName);
+			resetFile(fileName);
 
 			outputStream = fileConn.openOutputStream();
 
@@ -112,7 +130,7 @@ public class FileConnection {
 
 		try {
 
-			openFile(fileName);
+			resetFile(fileName);
 
 			outputStream = fileConn.openOutputStream();
 

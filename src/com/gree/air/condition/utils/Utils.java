@@ -204,5 +204,27 @@ public class Utils {
 		return false;
 
 	}
-	
+
+	/**
+	 * String 转 int
+	 * 
+	 * @param src
+	 * @return
+	 */
+	public static int stringToInt(String src) {
+
+		int res = 0;
+
+		try {
+
+			res = Integer.parseInt(src.trim());
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
 }
