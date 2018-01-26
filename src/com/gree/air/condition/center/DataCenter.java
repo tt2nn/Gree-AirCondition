@@ -1,6 +1,8 @@
 package com.gree.air.condition.center;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.FileConstant;
+import com.gree.air.condition.file.FileConnection;
 import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.lzo.LzoCompressor1x_1;
 import com.gree.air.condition.lzo.lzo_uintp;
@@ -58,6 +60,23 @@ public class DataCenter implements Runnable {
 	private static LzoCompressor1x_1 lzo = new LzoCompressor1x_1();
 	private static lzo_uintp lzo_uintp = new lzo_uintp();
 	private static byte[] Lzo_Buffer = new byte[1792];
+
+	/**
+	 * 初始化
+	 */
+	public static void init() {
+
+		FileConnection.readFile(FileConstant.FILE_NAME_SPI_WRITE_ADDRESS);
+
+		int spiAddress = 0;
+
+		if (Constant.File_Buffer_Length > 0) {
+
+			spiAddress = Integer.parseInt(new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length));
+		}
+
+		Data_Buffer_Mark = spiAddress / 2048;
+	}
 
 	/**
 	 * 将机组数据写入4k缓存数据中
@@ -343,30 +362,30 @@ public class DataCenter implements Runnable {
 		}
 
 	}
-	
+
 	/**
 	 * 按键上报
 	 */
 	public static void pushKeyTransmit() {
-		
+
 		if (Transmit_Level < TRANSMIT_LEVEL_PUSHKEY && Constant.System_Time > Constant.Stop_Time) {
-			
+
 			stopUploadData();
-			
+
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
 			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Pushkey_End_Time / 3);
 			if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
-				
+
 				Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
 			}
-			
+
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_PUSHKEY;
 			Transmit_Level = TRANSMIT_LEVEL_PUSHKEY;
-			
+
 			ControlCenter.requestStartUpload();
-			
+
 		}
-		
+
 	}
 
 	/**
