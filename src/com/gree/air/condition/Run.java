@@ -7,6 +7,7 @@ import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.entity.Apn;
 import com.gree.air.condition.gpio.GpioPin;
+import com.gree.air.condition.gpio.GpioTool;
 import com.gree.air.condition.sms.SmsServer;
 import com.gree.air.condition.spi.SpiTool;
 import com.gree.air.condition.uart.UartServer;
@@ -45,7 +46,7 @@ public class Run {
 			}
 
 			DeviceConfigure.deviceInfo();
-			DeviceConfigure.getNetworkSignalLevel();
+			GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
 
 			Constant.System_Time = 60000;
 

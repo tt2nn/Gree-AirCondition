@@ -35,9 +35,10 @@ public class Timer implements Runnable {
 
 				Thread.sleep(1000);
 				Constant.System_Time = Constant.System_Time + 1000;
-				GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
 				
 				if (ControlCenter.canWorking()) {
+					
+					GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
 					
 					// 每三秒打包一次数据
 					if (packageNum == 3) {
