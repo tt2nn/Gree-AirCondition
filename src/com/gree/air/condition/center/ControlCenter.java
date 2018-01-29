@@ -2,6 +2,7 @@ package com.gree.air.condition.center;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.file.FileModel;
+import com.gree.air.condition.gpio.GpioPin;
 import com.gree.air.condition.tcp.TcpServer;
 import com.gree.air.condition.tcp.model.LoginModel;
 import com.gree.air.condition.tcp.model.ParamModel;
@@ -140,6 +141,7 @@ public class ControlCenter {
 	public static void chooseRest() {
 
 		Constant.Gprs_Choosed = false;
+		GpioPin.communicationDark();
 		FileModel.setNotChoosed();
 		DataCenter.destoryUploadData();
 
@@ -151,6 +153,7 @@ public class ControlCenter {
 	public static void chooseGprs() {
 
 		Constant.Gprs_Choosed = true;
+		GpioPin.communicationLight();
 		FileModel.setIsChoosed();
 		DataCenter.chooseTransmit();
 	}
@@ -169,16 +172,17 @@ public class ControlCenter {
 	public static void powerCall() {
 
 		DoChoose.choosed();
+		GpioPin.communicationLight();
 		DataCenter.powerTransmit();
 	}
-	
+
 	/**
 	 * 按键上报
 	 */
 	public static void pushKeyTransmit() {
-		
+
 		DataCenter.pushKeyTransmit();
-		
+
 	}
 
 	/**
@@ -186,6 +190,7 @@ public class ControlCenter {
 	 */
 	public static void startBootTransmit() {
 
+		Transmit_Period_Time = 0L;
 		DataCenter.registerBootTransmit();
 	}
 
@@ -204,6 +209,7 @@ public class ControlCenter {
 	 */
 	public static void startCheckTransmit() {
 
+		Transmit_Period_Time = 0L;
 		DataCenter.registerCheckTransmit();
 	}
 
