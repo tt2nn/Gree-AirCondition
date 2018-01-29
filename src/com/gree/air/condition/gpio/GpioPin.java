@@ -69,17 +69,17 @@ public class GpioPin {
 			/* 信号强 */
 			GPIOPinConfig cfg3 = new GPIOPinConfig(GPIOPinConfig.UNASSIGNED, 7, GPIOPinConfig.DIR_OUTPUT_ONLY,
 					GPIOPinConfig.MODE_OUTPUT_OPEN_DRAIN, GPIOPinConfig.TRIGGER_NONE, false);
-			pinoutCommunication = (GPIOPin) DeviceManager.open(cfg3, DeviceManager.EXCLUSIVE);
+			pinoutHight = (GPIOPin) DeviceManager.open(cfg3, DeviceManager.EXCLUSIVE);
 
 			/* 信号中 */
 			GPIOPinConfig cfg4 = new GPIOPinConfig(GPIOPinConfig.UNASSIGNED, 23, GPIOPinConfig.DIR_OUTPUT_ONLY,
 					GPIOPinConfig.MODE_OUTPUT_OPEN_DRAIN, GPIOPinConfig.TRIGGER_NONE, false);
-			pinoutCommunication = (GPIOPin) DeviceManager.open(cfg4, DeviceManager.EXCLUSIVE);
+			pinoutMiddle = (GPIOPin) DeviceManager.open(cfg4, DeviceManager.EXCLUSIVE);
 
 			/* 信号弱 */
 			GPIOPinConfig cfg5 = new GPIOPinConfig(GPIOPinConfig.UNASSIGNED, 22, GPIOPinConfig.DIR_OUTPUT_ONLY,
 					GPIOPinConfig.MODE_OUTPUT_OPEN_DRAIN, GPIOPinConfig.TRIGGER_NONE, false);
-			pinoutCommunication = (GPIOPin) DeviceManager.open(cfg5, DeviceManager.EXCLUSIVE);
+			pinoutLow = (GPIOPin) DeviceManager.open(cfg5, DeviceManager.EXCLUSIVE);
 
 		} catch (Exception e) {
 

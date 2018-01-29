@@ -34,6 +34,7 @@ public class Run {
 		DeviceConfigure.setApn(new Apn());
 		SpiTool.init(2048);
 		GpioPin.gpioInit();
+		GpioPin.closeAllLight();
 		DataCenter.init();
 
 		try {
