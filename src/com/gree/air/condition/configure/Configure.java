@@ -120,7 +120,7 @@ public class Configure {
 					start = end + 1;
 					end = addressString.length();
 
-					Constant.TcP_Address_Port = addressString.substring(start, end);
+					Constant.Tcp_Address_Port = addressString.substring(start, end);
 
 				}
 

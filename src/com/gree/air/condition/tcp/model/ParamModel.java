@@ -1,5 +1,6 @@
 package com.gree.air.condition.tcp.model;
 
+import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.tcp.TcpModel;
 import com.gree.air.condition.utils.Utils;
@@ -19,12 +20,37 @@ public class ParamModel {
 
 		Constant.Tcp_Out_Buffer[18] = (byte) 0x95;
 
-		String[] s = new String[] { "PWD:123456", "APN:1234" };
 		int poi = 19;
 
-		for (int i = 0; i < s.length; i++) {
+		String apn = "APN:";
+		if (Constant.device.getMcc() == 1) {
 
-			byte[] b = s[i].getBytes();
+			apn += Constant.Apn_Cucc;
+		} else {
+
+			apn += Constant.Apn_Cmcc;
+		}
+
+		String[] res = { "PWD:" + Constant.Sms_Pwd, apn, "APNU:" + Constant.Apn_Name, "APNP:" + Constant.Apn_Pwd,
+				"IP:" + Constant.Tcp_Address_Ip, "PORT:" + Constant.Tcp_Address_Port, "IPR:" + Constant.BAUD_RATE,
+				"WT:" + Constant.Tcp_Heart_Beat_Period, "ADM*1:" + Constant.Sms_Admin_List[0],
+				"ADM*2:" + Constant.Sms_Admin_List[1], "ADM*3:" + Constant.Sms_Admin_List[2],
+				"ADM*4:" + Constant.Sms_Admin_List[3], "ADM*5:" + Constant.Sms_Admin_List[4],
+				"USRON*1:" + Constant.Sms_User_List[0], "USRON*2:" + Constant.Sms_User_List[1],
+				"USRON*3:" + Constant.Sms_User_List[2], "USRON*4:" + Constant.Sms_User_List[3],
+				"USRON*5:" + Constant.Sms_User_List[4], "USRON*6:" + Constant.Sms_User_List[5],
+				"USRON*7:" + Constant.Sms_User_List[6], "USRON*8:" + Constant.Sms_User_List[7],
+				"USRON*9:" + Constant.Sms_User_List[8], "USRON*10:" + Constant.Sms_User_List[9],
+				"ERRT:" + (Constant.Transmit_Error_Start_Time / 60), "DEBT:" + (Constant.Transmit_Error_End_Time / 60),
+				"BUTT:" + (Constant.Transmit_Pushkey_End_Time / 60),
+				"Healt:" + (Constant.Transmit_Change_End_Time / 60),
+				"FTP:" + Constant.Tcp_Address_Ip + ":" + Constant.Tcp_Address_Port,
+				"SIG:" + (Constant.Tcp_Sig_Period / 60), "CHECKPERIOD:" + (Constant.Transmit_Check_Period / 60),
+				"CHECKTIME:" + Constant.Transmit_Check_End_Time };
+
+		for (int i = 0; i < res.length; i++) {
+
+			byte[] b = res[i].getBytes();
 
 			for (int j = 0; j < b.length; j++) {
 
@@ -73,7 +99,7 @@ public class ParamModel {
 	 */
 	public static void updateResponse() {
 
-		byte[][] params = new byte[50][50];
+		byte[][] params = new byte[35][50];
 		int paramsPoi = 0;
 		int poi = 19;
 
@@ -120,7 +146,7 @@ public class ParamModel {
 		// 故障代码
 		Constant.Tcp_Out_Buffer[37] = (byte) 0x00;
 		// 信号强度
-		Constant.Tcp_Out_Buffer[38] = (byte) 12;
+		Constant.Tcp_Out_Buffer[38] = (byte) DeviceConfigure.getNetworkSignalLevel();
 
 		TcpModel.build(21, 39);
 

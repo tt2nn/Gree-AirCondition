@@ -11,6 +11,7 @@ import com.gree.air.condition.entity.Device;
 public class Constant {
 
 	public static final String APP_VERSION = "v0.0.0";
+	public static final int BAUD_RATE = 9600;
 
 	// =================== about uart constant ===================
 	// 记录收Buffer的长度
@@ -98,7 +99,7 @@ public class Constant {
 
 	// 域名IP、port
 	public static String Tcp_Address_Ip = "192.13.182.157";
-	public static String TcP_Address_Port = "7005";
+	public static String Tcp_Address_Port = "7005";
 	// 心跳间隔
 	public static int Tcp_Heart_Beat_Period = 300;
 	// 故障点前传输时间

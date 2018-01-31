@@ -44,7 +44,7 @@ public class ServModel {
 	 */
 	private static void servQuerySend() {
 
-		String smsValue = Constant.Tcp_Address_Ip + SmsConstant.Sms_Split_Value_Symbol + Constant.TcP_Address_Port;
+		String smsValue = Constant.Tcp_Address_Ip + SmsConstant.Sms_Split_Value_Symbol + Constant.Tcp_Address_Port;
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Serv, smsValue);
 	}
 
@@ -66,9 +66,9 @@ public class ServModel {
 			start = end + 1;
 			end = smsValue.length();
 
-			Constant.TcP_Address_Port = smsValue.substring(start, end);
+			Constant.Tcp_Address_Port = smsValue.substring(start, end);
 			
-			FileModel.setSmsServ(Constant.Tcp_Address_Ip, Constant.TcP_Address_Port);
+			FileModel.setSmsServ(Constant.Tcp_Address_Ip, Constant.Tcp_Address_Port);
 
 		}
 

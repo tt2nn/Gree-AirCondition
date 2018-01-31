@@ -34,7 +34,7 @@ public class FileModel {
 	public static void setSmsServ(String ip, String port) {
 
 		Constant.Tcp_Address_Ip = ip;
-		Constant.TcP_Address_Port = port;
+		Constant.Tcp_Address_Port = port;
 
 		byte[] servBytes = (ip + FileConstant.FILE_STRING_SPLIP_SYMBOL + port).getBytes();
 
