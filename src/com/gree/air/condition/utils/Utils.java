@@ -261,5 +261,22 @@ public class Utils {
 
 		return (byte) resIntHex;
 	}
-	
+
+	/**
+	 * String Contains String
+	 * 
+	 * @param res
+	 * @param param
+	 * @return
+	 */
+	public static boolean stringContains(String res, String param) {
+
+		if (res.indexOf(param) != -1) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 }

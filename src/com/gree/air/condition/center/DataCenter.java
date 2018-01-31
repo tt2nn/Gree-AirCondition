@@ -290,7 +290,7 @@ public class DataCenter implements Runnable {
 			// 重置静默时间
 			Constant.Stop_Time = 0;
 
-			stopUploadData();
+			convertUploadData();
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_ALWAYS;
 			Transmit_Level = TRANSMIT_LEVEL_ALWAYS;
@@ -310,7 +310,7 @@ public class DataCenter implements Runnable {
 
 		if (Transmit_Level < TRANSMIT_LEVEL_ERROR && Constant.System_Time > Constant.Stop_Time) {
 
-			stopUploadData();
+			convertUploadData();
 
 			// 重置发送游标，上报故障点前30分钟到后5分钟数据
 			Data_Buffer_Out_Mark = Data_Buffer_Mark - (Constant.Transmit_Error_Start_Time / 3);
@@ -340,7 +340,7 @@ public class DataCenter implements Runnable {
 
 		if (Transmit_Level < TRANSMIT_LEVEL_CHANGE && Constant.System_Time > Constant.Stop_Time) {
 
-			stopUploadData();
+			convertUploadData();
 
 			// 重置发送游标，上报变化点前5分钟到后1分钟数据
 			Data_Buffer_Out_Mark = Data_Buffer_Mark - (5 * 60 / 3);
@@ -370,7 +370,7 @@ public class DataCenter implements Runnable {
 
 		if (Transmit_Level < TRANSMIT_LEVEL_PUSHKEY && Constant.System_Time > Constant.Stop_Time) {
 
-			stopUploadData();
+			convertUploadData();
 
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
 			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Pushkey_End_Time / 3);
@@ -395,7 +395,7 @@ public class DataCenter implements Runnable {
 
 		if (Transmit_Level < TRANSMIT_LEVEL_CHANGE && Constant.System_Time > Constant.Stop_Time) {
 
-			stopUploadData();
+			convertUploadData();
 
 			Transmit_Cache_Warning = true;
 
@@ -417,7 +417,7 @@ public class DataCenter implements Runnable {
 
 		if (Transmit_Level < TRANSMIT_LEVEL_CHOOSE && Constant.System_Time > Constant.Stop_Time) {
 
-			stopUploadData();
+			convertUploadData();
 
 			// 重置发送游标，选举上报持续发送5分钟数据
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
@@ -442,7 +442,7 @@ public class DataCenter implements Runnable {
 
 		Constant.Stop_Time = 0L;
 
-		stopUploadData();
+		convertUploadData();
 
 		// 重置发送游标，选举上报持续发送5分钟数据
 		Data_Buffer_Out_Mark = Data_Buffer_Mark;
@@ -473,7 +473,7 @@ public class DataCenter implements Runnable {
 				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS
 				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT)) {
 
-			stopUploadData();
+			convertUploadData();
 
 			Transmit_Cache_Boot = true;
 			Transmit_Cache_Check = false;
@@ -483,7 +483,7 @@ public class DataCenter implements Runnable {
 
 		} else {
 
-			stopUploadData();
+			convertUploadData();
 
 			Transmit_Cache_Boot = true;
 			Transmit_Cache_Check = false;
@@ -552,7 +552,7 @@ public class DataCenter implements Runnable {
 				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS
 				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT) {
 
-			stopUploadData();
+			convertUploadData();
 
 			Transmit_Cache_Boot = false;
 			Transmit_Cache_Check = true;
@@ -602,6 +602,15 @@ public class DataCenter implements Runnable {
 		}
 
 		ControlCenter.requestStartUpload();
+	}
+
+	/**
+	 * 用于转换数据上报时调用
+	 */
+	public static void convertUploadData() {
+
+		Can_Upload_Data = false;
+		Data_Buffer_Out_End_Mark = -1;
 	}
 
 	/**
