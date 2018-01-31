@@ -80,14 +80,15 @@ public class Constant {
 	public static byte[] Server_Data_Word_Buffer = new byte[1024];
 	public static byte[] Server_Data_Byte_Buffer = new byte[256];
 	// 系统时间
-	public static long System_Time = 0;
+	public static long System_Time = 0L;
+	public static long System_Delta_Time = 0L;
 	// 静默时间戳
 	public static long Stop_Time = 0;
 
 	// =================== about params ===================
 
 	// 普通手机号白名单
-	public static String Sms_User_List = "18926932769 13128540406 13113444079 13128541143 18666911714 07568663110 07568522593 07568668938 07568669703 07568668717";
+	public static String[] Sms_User_List = {"18926932769" , "13128540406" , "13113444079" , "13128541143" , "18666911714 07568663110 07568522593 07568668938 07568669703 07568668717"};
 	// 管理员手机号白名单
 	public static String Sms_Admin_List = "18023036958 13128553002 1069800006512610 18926932781 15992681809";
 	// 手机短信

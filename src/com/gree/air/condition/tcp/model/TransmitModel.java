@@ -91,7 +91,7 @@ public class TransmitModel {
 	 */
 	public static void monitorResponse() {
 
-		switch (Constant.Tcp_Out_Buffer[19]) {
+		switch (Constant.Tcp_In_Buffer[19]) {
 
 		case (byte) 0x01:
 

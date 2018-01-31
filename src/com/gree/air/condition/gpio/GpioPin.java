@@ -8,7 +8,7 @@ import org.joshvm.j2me.dio.gpio.GPIOPinConfig;
 import org.joshvm.j2me.dio.gpio.PinEvent;
 import org.joshvm.j2me.dio.gpio.PinListener;
 
-import com.gree.air.condition.center.Timer;
+import com.gree.air.condition.center.ControlTimer;
 
 /**
  * 控制灯 <br>
@@ -46,11 +46,11 @@ public class GpioPin {
 
 					if (event.getValue()) {
 
-						Timer.pushUp();
+						ControlTimer.pushUp();
 
 					} else {
 
-						Timer.pushDown();
+						ControlTimer.pushDown();
 					}
 
 				}

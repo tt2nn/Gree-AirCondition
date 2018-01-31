@@ -1,5 +1,6 @@
 package com.gree.air.condition;
 
+import com.gree.air.condition.center.ControlTimer;
 import com.gree.air.condition.center.DataCenter;
 import com.gree.air.condition.center.Timer;
 import com.gree.air.condition.configure.Configure;
@@ -30,9 +31,9 @@ public class Run {
 		UartServer.startServer();
 
 		Timer.startTimer();
+		ControlTimer.startTimer();
 
 		DeviceConfigure.deviceInit();
-		DeviceConfigure.setApn(new Apn());
 		SpiTool.init(2048);
 		GpioPin.gpioInit();
 		GpioPin.closeAllLight();
@@ -48,6 +49,9 @@ public class Run {
 			}
 
 			DeviceConfigure.deviceInfo();
+			
+			DeviceConfigure.setApn(new Apn());
+			
 			GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
 
 			Constant.Gprs_Mac[0] = Utils.stringToByte(Constant.device.getImei().substring(1, 3));
@@ -57,7 +61,7 @@ public class Run {
 			Constant.Gprs_Mac[4] = Utils.stringToByte(Constant.device.getImei().substring(9, 11));
 			Constant.Gprs_Mac[5] = Utils.stringToByte(Constant.device.getImei().substring(11, 13));
 			Constant.Gprs_Mac[6] = Utils.stringToByte(Constant.device.getImei().substring(13, 15));
-			
+
 			Constant.System_Time = 60000;
 
 			SmsServer.startServer();

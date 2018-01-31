@@ -234,11 +234,10 @@ public class Utils {
 	 */
 	public static void resetData(byte[] data) {
 
-		for (byte b : data) {
+		for (int i = 0; i < data.length; i++) {
 
-			b = (byte) 0x00;
+			data[i] = (byte) 0x00;
 		}
-
 	}
 
 	/**
