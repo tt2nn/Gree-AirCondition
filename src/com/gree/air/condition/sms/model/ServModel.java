@@ -44,7 +44,7 @@ public class ServModel {
 	 */
 	private static void servQuerySend() {
 
-		String smsValue = Constant.Tcp_Serv.replace(SmsConstant.Tcp_Char_Value_Symbol, SmsConstant.Sms_Char_Value_Symbol);
+		String smsValue = Constant.Tcp_Address_Ip + SmsConstant.Sms_Split_Value_Symbol + Constant.TcP_Address_Port;
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Serv, smsValue);
 	}
 
@@ -56,9 +56,22 @@ public class ServModel {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
-		String address = smsValue.replace(SmsConstant.Sms_Char_Value_Symbol,SmsConstant.Tcp_Char_Value_Symbol);
-		FileModel.setSmsServ(address);
-		
+		int start = 0;
+		int end = smsValue.indexOf(SmsConstant.Sms_Split_Value_Symbol, start);
+
+		if (end < smsValue.length()) {
+
+			Constant.Tcp_Address_Ip = smsValue.substring(start, end);
+
+			start = end + 1;
+			end = smsValue.length();
+
+			Constant.TcP_Address_Port = smsValue.substring(start, end);
+			
+			FileModel.setSmsServ(Constant.Tcp_Address_Ip, Constant.TcP_Address_Port);
+
+		}
+
 		servSetSend();
 	}
 

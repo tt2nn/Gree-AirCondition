@@ -49,9 +49,18 @@ public class Run {
 			}
 
 			DeviceConfigure.deviceInfo();
-			
-			DeviceConfigure.setApn(new Apn());
-			
+
+			Apn apn = new Apn();
+			if (Constant.device.getMnc() == 1) {
+
+				apn.setApnName(Constant.Apn_Cucc);
+
+			} else if (Constant.device.getMnc() == 0) {
+
+				apn.setApnName(Constant.Apn_Cmcc);
+			}
+			DeviceConfigure.setApn(apn);
+
 			GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
 
 			Constant.Gprs_Mac[0] = Utils.stringToByte(Constant.device.getImei().substring(1, 3));

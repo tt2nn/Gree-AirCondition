@@ -88,13 +88,17 @@ public class Constant {
 	// =================== about params ===================
 
 	// 普通手机号白名单
-	public static String[] Sms_User_List = {"18926932769" , "13128540406" , "13113444079" , "13128541143" , "18666911714 07568663110 07568522593 07568668938 07568669703 07568668717"};
+	public static String[] Sms_User_List = { "18926932769", "13128540406", "13113444079", "13128541143", "18666911714",
+			"07568663110", "07568522593", "07568668938", "07568669703", "07568668717" };
 	// 管理员手机号白名单
-	public static String Sms_Admin_List = "18023036958 13128553002 1069800006512610 18926932781 15992681809";
+	public static String[] Sms_Admin_List = { "18023036958 ", "13128553002", "1069800006512610", "18926932781",
+			"15992681809" };
 	// 手机短信
 	public static String Sms_Pwd = "123456";
+
 	// 域名IP、port
-	public static String Tcp_Serv = "192.13.182.157:7005";
+	public static String Tcp_Address_Ip = "192.13.182.157";
+	public static String TcP_Address_Port = "7005";
 	// 心跳间隔
 	public static int Tcp_Heart_Beat_Period = 300;
 	// 故障点前传输时间
@@ -111,6 +115,14 @@ public class Constant {
 	public static int Transmit_Check_Period = 3600;
 	// 打卡时长
 	public static int Transmit_Check_End_Time = 60;
+
+	// APN信息
+	// 联通
+	public static String Apn_Cucc = "greeac.gd";
+	// 移动
+	public static String Apn_Cmcc = "cmiotgree.gd";
+	public static String Apn_Name = "GPRS";
+	public static String Apn_Pwd = "GPRS";
 
 	// 记录GPRS模块是否被选中
 	public static boolean Gprs_Choosed = false;

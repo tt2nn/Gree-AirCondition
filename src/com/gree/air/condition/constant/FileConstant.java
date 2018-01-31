@@ -28,4 +28,10 @@ public class FileConstant {
 	public static final String FILE_NAME_TRANSMIT_CHECK_END_TIME = "TransmitCheckEndTime";
 	// spi写入的页码
 	public static final String FILE_NAME_SPI_WRITE_ADDRESS = "File_Name_Spi_Write_Address";
+	// APN 移动
+	public static final String FILE_NAME_APN_CMCC = "File_Name_Apn_Cmcc";
+	// APN 联通
+	public static final String FILE_NAME_APN_CUCC = "File_Name_Apn_Cucc";
+
+	public static final String FILE_STRING_SPLIP_SYMBOL = ";";
 }

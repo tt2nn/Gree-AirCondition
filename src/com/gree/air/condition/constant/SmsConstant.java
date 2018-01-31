@@ -29,6 +29,4 @@ public class SmsConstant {
 	public static final String Sms_Message_Error = "error";
 	public static final String Sms_Message_Empty = "empty";
 	
-	public static final char Tcp_Char_Value_Symbol = ':';
-	public static final char Sms_Char_Value_Symbol = ',';
 }

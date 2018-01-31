@@ -261,5 +261,5 @@ public class Utils {
 
 		return (byte) resIntHex;
 	}
-
+	
 }

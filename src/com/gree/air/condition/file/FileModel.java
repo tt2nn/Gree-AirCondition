@@ -26,15 +26,17 @@ public class FileModel {
 	}
 
 	/**
-	 * 设置域名IP、port
+	 * 设置域名IP、Port
 	 * 
-	 * @param serv
+	 * @param ip
+	 * @param port
 	 */
-	public static void setSmsServ(String serv) {
+	public static void setSmsServ(String ip, String port) {
 
-		Constant.Tcp_Serv = serv;
+		Constant.Tcp_Address_Ip = ip;
+		Constant.TcP_Address_Port = port;
 
-		byte[] servBytes = serv.getBytes();
+		byte[] servBytes = (ip + FileConstant.FILE_STRING_SPLIP_SYMBOL + port).getBytes();
 
 		for (int i = 0; i < servBytes.length; i++) {
 
@@ -256,13 +258,54 @@ public class FileModel {
 	public static void setSpiAddress(int address) {
 
 		byte[] res = (address + "").getBytes();
-		
+
 		for (int i = 0; i < res.length; i++) {
-			
+
 			Constant.File_Buffer[i] = res[i];
 		}
 
 		FileConnection.writeFile(FileConstant.FILE_NAME_SPI_WRITE_ADDRESS);
+
+	}
+
+	/**
+	 * 设置APN
+	 * 
+	 * @param serv
+	 */
+	public static void setApn(String apn, String name, String pwd) {
+
+		Constant.Apn_Name = name;
+		Constant.Apn_Pwd = pwd;
+
+		if (Constant.device.getMnc() == 1) {
+
+			Constant.Apn_Cucc = apn;
+
+			byte[] res = (Constant.Apn_Cucc + FileConstant.FILE_STRING_SPLIP_SYMBOL + Constant.Apn_Name
+					+ FileConstant.FILE_STRING_SPLIP_SYMBOL + Constant.Apn_Pwd).getBytes();
+
+			for (int i = 0; i < res.length; i++) {
+
+				Constant.File_Buffer[i] = res[i];
+			}
+
+			FileConnection.writeFile(FileConstant.FILE_NAME_APN_CUCC);
+
+		} else {
+
+			Constant.Apn_Cmcc = apn;
+
+			byte[] res = (Constant.Apn_Cmcc + FileConstant.FILE_STRING_SPLIP_SYMBOL + Constant.Apn_Name
+					+ FileConstant.FILE_STRING_SPLIP_SYMBOL + Constant.Apn_Pwd).getBytes();
+
+			for (int i = 0; i < res.length; i++) {
+
+				Constant.File_Buffer[i] = res[i];
+			}
+
+			FileConnection.writeFile(FileConstant.FILE_NAME_APN_CMCC);
+		}
 
 	}
 }

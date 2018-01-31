@@ -41,6 +41,11 @@ public class Configure {
 		getTcpCheckPeriod();
 
 		getTcpCheckTime();
+
+		getApnCucc();
+
+		getApnCmcc();
+
 	}
 
 	/**
@@ -101,11 +106,24 @@ public class Configure {
 
 		if (Constant.File_Buffer_Length > 0) {
 
-			String address = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
+			String addressString = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
 
-			if (Utils.isNotEmpty(address)) {
+			if (Utils.isNotEmpty(addressString)) {
 
-				Constant.Tcp_Serv = address;
+				int start = 0;
+				int end = addressString.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
+
+				if (end < addressString.length()) {
+
+					Constant.Tcp_Address_Ip = addressString.substring(start, end);
+
+					start = end + 1;
+					end = addressString.length();
+
+					Constant.TcP_Address_Port = addressString.substring(start, end);
+
+				}
+
 			}
 		}
 	}
@@ -260,6 +278,54 @@ public class Configure {
 			}
 		}
 
+	}
+
+	/**
+	 * 联通APN
+	 */
+	private static void getApnCucc() {
+
+		FileConnection.readFile(FileConstant.FILE_NAME_APN_CUCC);
+
+		if (Constant.File_Buffer_Length > 0) {
+
+			String fileString = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
+
+			if (Utils.isNotEmpty(fileString)) {
+
+				int start = 0;
+				int end = fileString.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
+				Constant.Apn_Cucc = fileString.substring(start, end);
+
+				start = end + 1;
+				end = fileString.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
+				Constant.Apn_Name = fileString.substring(start, end);
+
+				start = end + 1;
+				end = fileString.length();
+				Constant.Apn_Pwd = fileString.substring(start, end);
+			}
+		}
+	}
+
+	/**
+	 * 移动APN
+	 */
+	private static void getApnCmcc() {
+
+		FileConnection.readFile(FileConstant.FILE_NAME_APN_CMCC);
+
+		if (Constant.File_Buffer_Length > 0) {
+
+			String fileString = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
+
+			if (Utils.isNotEmpty(fileString)) {
+
+				int start = 0;
+				int end = fileString.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
+				Constant.Apn_Cmcc = fileString.substring(start, end);
+			}
+		}
 	}
 
 }
