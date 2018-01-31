@@ -33,7 +33,7 @@ public class MbReadBitModel {
 		// 数据内容
 		for (int i = 5; i < dataLength + 5; i++) {
 
-			Constant.Uart_Out_Buffer[i] = Constant.Server_Data_Buffer[i - 5];
+			Constant.Uart_Out_Buffer[i] = Constant.Server_Data_Byte_Buffer[i - 5];
 		}
 
 		// crc16

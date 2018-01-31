@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import javax.microedition.io.Connector;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.utils.Utils;
 
 public class FileConnection {
 
@@ -63,6 +64,7 @@ public class FileConnection {
 
 			inputStream = fileConn.openInputStream();
 
+			Utils.resetData(Constant.File_Buffer);
 			fileInterface.readFile(inputStream);
 
 			closeFile();
@@ -87,6 +89,7 @@ public class FileConnection {
 
 			inputStream = fileConn.openInputStream();
 
+			Utils.resetData(Constant.File_Buffer);
 			Constant.File_Buffer_Length = inputStream.read(Constant.File_Buffer, 0, Constant.File_Buffer.length);
 
 			closeFile();

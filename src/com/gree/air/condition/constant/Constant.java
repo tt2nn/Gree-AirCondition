@@ -77,7 +77,8 @@ public class Constant {
 	// =============== about cache constant ===================
 
 	// 服务器下发的数据
-	public static byte[] Server_Data_Buffer = new byte[1024];
+	public static byte[] Server_Data_Word_Buffer = new byte[1024];
+	public static byte[] Server_Data_Byte_Buffer = new byte[256];
 	// 系统时间
 	public static long System_Time = 0;
 	// 静默时间戳

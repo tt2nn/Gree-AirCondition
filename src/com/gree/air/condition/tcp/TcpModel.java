@@ -224,7 +224,7 @@ public class TcpModel {
 
 		System.out.println("tcp send transm message ---" + s);
 
-		TcpServer.sendData(crcPosition + 1);
+		TcpServer.sendDataForTransm(crcPosition + 1);
 	}
 
 }

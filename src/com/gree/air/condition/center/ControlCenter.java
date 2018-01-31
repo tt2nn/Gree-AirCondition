@@ -18,7 +18,7 @@ import com.gree.air.condition.uart.model.DoChoose;
  */
 public class ControlCenter {
 
-	public static boolean waittingHeart = false;
+	private static boolean waittingHeart = false;
 
 	// 故障标志位
 	private static int Transmit_Mark_Error = 0;
@@ -86,6 +86,22 @@ public class ControlCenter {
 		}
 
 		TimeModel.heart();
+	}
+
+	/**
+	 * 心跳响应处理
+	 */
+	public static void heartBeatResp() {
+
+		if (waittingHeart) {
+
+			ControlCenter.requestStartUpload();
+
+		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP) {
+
+			ControlCenter.stopTcpServer();
+		}
+
 	}
 
 	/**

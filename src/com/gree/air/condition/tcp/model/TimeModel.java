@@ -41,10 +41,7 @@ public class TimeModel {
 
 		System.out.println("-----------------------" + Constant.System_Time);
 
-		if (ControlCenter.waittingHeart) {
-
-			ControlCenter.requestStartUpload();
-		}
+		ControlCenter.heartBeatResp();
 
 	}
 

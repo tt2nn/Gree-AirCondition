@@ -60,7 +60,7 @@ public class SpiTool {
 		try {
 
 			// 当spi写入新的一页时，需要先擦除下一页
-			int res = Write_Address % (ERASE_SIZE * 1024);
+			int res = Write_Address % ERASE_SIZE;
 
 			if (res == 0) {
 

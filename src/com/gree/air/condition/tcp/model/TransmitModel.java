@@ -163,9 +163,11 @@ public class TransmitModel {
 		if (Constant.Tcp_In_Buffer[25] == (byte) 0x11 || Constant.Tcp_In_Buffer[25] == (byte) 0x21
 				|| Constant.Tcp_In_Buffer[25] == (byte) 0x31) {
 
+			Utils.resetData(Constant.Server_Data_Word_Buffer);
+			
 			for (int i = 0; i < dataLength; i++) {
 
-				Constant.Server_Data_Buffer[i] = Constant.Tcp_In_Buffer[26 + i];
+				Constant.Server_Data_Word_Buffer[i] = Constant.Tcp_In_Buffer[26 + i];
 			}
 
 			return;
@@ -176,7 +178,7 @@ public class TransmitModel {
 
 			for (int i = 214; i < 214 + dataLength; i++) {
 
-				Constant.Server_Data_Buffer[i] = Constant.Tcp_In_Buffer[i - 214 + 26];
+				Constant.Server_Data_Word_Buffer[i] = Constant.Tcp_In_Buffer[i - 214 + 26];
 			}
 
 			return;
@@ -187,16 +189,17 @@ public class TransmitModel {
 
 			for (int i = 254; i < 254 + dataLength; i++) {
 
-				Constant.Server_Data_Buffer[i] = Constant.Tcp_In_Buffer[i - 254 + 26];
+				Constant.Server_Data_Word_Buffer[i] = Constant.Tcp_In_Buffer[i - 254 + 26];
 			}
 
 			return;
 		}
 
+		Utils.resetData(Constant.Server_Data_Byte_Buffer);
 		// modbus开关量、7E7E
 		for (int i = 0; i < dataLength; i++) {
 
-			Constant.Server_Data_Buffer[i] = Constant.Tcp_In_Buffer[i + 25];
+			Constant.Server_Data_Byte_Buffer[i] = Constant.Tcp_In_Buffer[i + 25];
 		}
 
 	}

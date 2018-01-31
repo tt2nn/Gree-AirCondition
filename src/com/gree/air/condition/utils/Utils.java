@@ -227,4 +227,40 @@ public class Utils {
 		return res;
 	}
 
+	/**
+	 * 重置数据数据
+	 * 
+	 * @param data
+	 */
+	public static void resetData(byte[] data) {
+
+		for (byte b : data) {
+
+			b = (byte) 0x00;
+		}
+
+	}
+
+	/**
+	 * String 转 16进制 byte
+	 * 
+	 * @param res
+	 * @return
+	 */
+	public static byte stringToByte(String res) {
+
+		int resIntHex = 0x00;
+
+		try {
+
+			resIntHex = Integer.parseInt(res, 16);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return (byte) resIntHex;
+	}
+
 }

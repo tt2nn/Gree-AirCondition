@@ -61,7 +61,7 @@ public class MbReadWordModel {
 		// 回复读数据内容
 		for (int i = 31; i < dataLength + 5; i++) {
 
-			Constant.Uart_Out_Buffer[i] = Constant.Server_Data_Buffer[i - 31 + readStart];
+			Constant.Uart_Out_Buffer[i] = Constant.Server_Data_Word_Buffer[i - 31 + readStart];
 		}
 
 		// crc16校验

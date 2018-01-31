@@ -62,7 +62,7 @@ public class SeveneModel {
 
 		for (int i = 30; i < 94; i++) {
 
-			Constant.Uart_Out_Buffer[i] = Constant.Server_Data_Buffer[i - 30];
+			Constant.Uart_Out_Buffer[i] = Constant.Server_Data_Byte_Buffer[i - 30];
 		}
 
 		Constant.Uart_Out_Buffer[94] = CRC.crc8(Constant.Uart_Out_Buffer, 2, 94);
