@@ -167,7 +167,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Error_Start_Time) {
 
-								FileModel.setSmsErrt(time);
+								FileModel.setSmsErrt(time * 60);
 							}
 
 						} else if (Utils.stringContains(param, "DEBT")) { // error transmit end time
@@ -175,7 +175,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Error_End_Time) {
 
-								FileModel.setSmsDebt(time);
+								FileModel.setSmsDebt(time * 60);
 							}
 
 						} else if (Utils.stringContains(param, "BUTT")) { // push key transmit end time
@@ -183,15 +183,15 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Pushkey_End_Time) {
 
-								FileModel.setSmsButt(time);
+								FileModel.setSmsButt(time * 60);
 							}
 
-						} else if (Utils.stringContains(param, "Healt")) { // change transmit end time
+						} else if (Utils.stringContains(param, "HEALT")) { // change transmit end time
 
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Change_End_Time) {
 
-								FileModel.setSmsHealt(time);
+								FileModel.setSmsHealt(time * 60);
 							}
 
 						} else if (Utils.stringContains(param, "SIG")) { // signal period time
@@ -199,7 +199,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Tcp_Sig_Period) {
 
-								FileModel.setSmsSig(time);
+								FileModel.setSmsSig(time * 60);
 							}
 
 						} else if (Utils.stringContains(param, "CHECKPERIOD")) { // check transmit period time
@@ -207,7 +207,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Check_Period) {
 
-								FileModel.setSmsCheckPeriod(time);
+								FileModel.setSmsCheckPeriod(time * 60);
 							}
 
 						} else if (Utils.stringContains(param, "CHECKTIME")) { // check transmit end time
