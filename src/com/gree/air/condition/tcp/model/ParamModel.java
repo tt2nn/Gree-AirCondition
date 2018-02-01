@@ -45,10 +45,12 @@ public class ParamModel {
 				"USRON*9:" + Constant.Sms_User_List[8], "USRON*10:" + Constant.Sms_User_List[9],
 				"ERRT:" + (Constant.Transmit_Error_Start_Time / 60), "DEBT:" + (Constant.Transmit_Error_End_Time / 60),
 				"BUTT:" + (Constant.Transmit_Pushkey_End_Time / 60),
-				"Healt:" + (Constant.Transmit_Change_End_Time / 60),
-				"FTP:" + Constant.Tcp_Address_Ip + ":" + Constant.Tcp_Address_Port,
-				"SIG:" + (Constant.Tcp_Sig_Period / 60), "CHECKPERIOD:" + (Constant.Transmit_Check_Period / 60),
-				"CHECKTIME:" + Constant.Transmit_Check_End_Time };
+				"HEALT:" + (Constant.Transmit_Change_End_Time / 60) };
+
+		// "FTP:" + Constant.Tcp_Address_Ip + ":" + Constant.Tcp_Address_Port,
+		// "SIG:" + (Constant.Tcp_Sig_Period / 60),
+		// "CHECKPERIOD:" + (Constant.Transmit_Check_Period / 60),
+		// "CHECKTIME:" + Constant.Transmit_Check_End_Time
 
 		for (int i = 0; i < res.length; i++) {
 
@@ -60,8 +62,11 @@ public class ParamModel {
 				poi++;
 			}
 
-			Constant.Tcp_Out_Buffer[poi] = (byte) 0x00;
-			poi++;
+			if (i < res.length - 1) {
+
+				Constant.Tcp_Out_Buffer[poi] = (byte) 0x00;
+				poi++;
+			}
 		}
 
 		TcpModel.build(poi - 18, poi);
@@ -233,6 +238,7 @@ public class ParamModel {
 			}
 		}
 
+		update();
 	}
 
 	/**
