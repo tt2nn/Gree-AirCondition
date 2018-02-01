@@ -2,7 +2,6 @@ package com.gree.air.condition.tcp.model;
 
 import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
-import com.gree.air.condition.constant.FileConstant;
 import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.tcp.TcpModel;
 import com.gree.air.condition.utils.Utils;
@@ -120,106 +119,110 @@ public class ParamModel {
 		for (int i = 19; i < length; i++) {
 
 			// 查看所有的参数
-			if (Constant.Tcp_In_Buffer[i] == 0x00) {
+			if (Constant.Tcp_In_Buffer[i] == (byte) 0x00) {
 
 				String param = new String(Constant.Tcp_In_Buffer, poi, (i - poi));
-				int start = param.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, 0);
-				String value = param.substring(start, param.length());
+				int start = param.indexOf(":", 0) + 1;
 
-				if (Utils.isNotEmpty(value)) {
+				if (start > 0) {
 
-					if (Utils.stringContains(param, "PWD") && !Constant.Sms_Pwd.equals(value)) { // sms pwd
+					String value = param.substring(start, param.length());
 
-						FileModel.setSmsPassword(value);
+					if (Utils.isNotEmpty(value)) {
 
-					} else if (Utils.stringContains(param, "APN")) { // apn
+						if (Utils.stringContains(param, "PWD") && !Constant.Sms_Pwd.equals(value)) { // sms pwd
 
-						apn = value;
+							FileModel.setSmsPassword(value);
 
-					} else if (Utils.stringContains(param, "APNU")) { // apn name
+						} else if (Utils.stringContains(param, "APN")) { // apn
 
-						apnu = value;
+							apn = value;
 
-					} else if (Utils.stringContains(param, "APNP")) { // apn pwd
+						} else if (Utils.stringContains(param, "APNU")) { // apn name
 
-						apnp = value;
+							apnu = value;
 
-					} else if (Utils.stringContains(param, "IP")) { // tcp ip
+						} else if (Utils.stringContains(param, "APNP")) { // apn pwd
 
-						ip = value;
+							apnp = value;
 
-					} else if (Utils.stringContains(param, "PORT")) { // tcp port
+						} else if (Utils.stringContains(param, "IP")) { // tcp ip
 
-						port = value;
+							ip = value;
 
-					} else if (Utils.stringContains(param, "WT")) { // heart beat period
+						} else if (Utils.stringContains(param, "PORT")) { // tcp port
 
-						int time = Utils.stringToInt(value);
-						if (time != 0 && time != Constant.Tcp_Heart_Beat_Period) {
+							port = value;
 
-							FileModel.setSmsHb(time);
-						}
+						} else if (Utils.stringContains(param, "WT")) { // heart beat period
 
-					} else if (Utils.stringContains(param, "ERRT")) { // error transmit start time
+							int time = Utils.stringToInt(value);
+							if (time != 0 && time != Constant.Tcp_Heart_Beat_Period) {
 
-						int time = Utils.stringToInt(value);
-						if (time != 0 && time != Constant.Transmit_Error_Start_Time) {
+								FileModel.setSmsHb(time);
+							}
 
-							FileModel.setSmsErrt(time);
-						}
+						} else if (Utils.stringContains(param, "ERRT")) { // error transmit start time
 
-					} else if (Utils.stringContains(param, "DEBT")) { // error transmit end time
+							int time = Utils.stringToInt(value);
+							if (time != 0 && time != Constant.Transmit_Error_Start_Time) {
 
-						int time = Utils.stringToInt(value);
-						if (time != 0 && time != Constant.Transmit_Error_End_Time) {
+								FileModel.setSmsErrt(time);
+							}
 
-							FileModel.setSmsDebt(time);
-						}
+						} else if (Utils.stringContains(param, "DEBT")) { // error transmit end time
 
-					} else if (Utils.stringContains(param, "BUTT")) { // push key transmit end time
+							int time = Utils.stringToInt(value);
+							if (time != 0 && time != Constant.Transmit_Error_End_Time) {
 
-						int time = Utils.stringToInt(value);
-						if (time != 0 && time != Constant.Transmit_Pushkey_End_Time) {
+								FileModel.setSmsDebt(time);
+							}
 
-							FileModel.setSmsButt(time);
-						}
+						} else if (Utils.stringContains(param, "BUTT")) { // push key transmit end time
 
-					} else if (Utils.stringContains(param, "Healt")) { // change transmit end time
+							int time = Utils.stringToInt(value);
+							if (time != 0 && time != Constant.Transmit_Pushkey_End_Time) {
 
-						int time = Utils.stringToInt(value);
-						if (time != 0 && time != Constant.Transmit_Change_End_Time) {
+								FileModel.setSmsButt(time);
+							}
 
-							FileModel.setSmsHealt(time);
-						}
+						} else if (Utils.stringContains(param, "Healt")) { // change transmit end time
 
-					} else if (Utils.stringContains(param, "SIG")) { // signal period time
+							int time = Utils.stringToInt(value);
+							if (time != 0 && time != Constant.Transmit_Change_End_Time) {
 
-						int time = Utils.stringToInt(value);
-						if (time != 0 && time != Constant.Tcp_Sig_Period) {
+								FileModel.setSmsHealt(time);
+							}
 
-							FileModel.setSmsSig(time);
-						}
+						} else if (Utils.stringContains(param, "SIG")) { // signal period time
 
-					} else if (Utils.stringContains(param, "CHECKPERIOD")) { // check transmit period time
+							int time = Utils.stringToInt(value);
+							if (time != 0 && time != Constant.Tcp_Sig_Period) {
 
-						int time = Utils.stringToInt(value);
-						if (time != 0 && time != Constant.Transmit_Check_Period) {
+								FileModel.setSmsSig(time);
+							}
 
-							FileModel.setSmsCheckPeriod(time);
-						}
+						} else if (Utils.stringContains(param, "CHECKPERIOD")) { // check transmit period time
 
-					} else if (Utils.stringContains(param, "CHECKTIME")) { // check transmit end time
+							int time = Utils.stringToInt(value);
+							if (time != 0 && time != Constant.Transmit_Check_Period) {
 
-						int time = Utils.stringToInt(value);
-						if (time != 0 && time != Constant.Transmit_Check_End_Time) {
+								FileModel.setSmsCheckPeriod(time);
+							}
 
-							FileModel.setSmsCheckTime(time);
+						} else if (Utils.stringContains(param, "CHECKTIME")) { // check transmit end time
+
+							int time = Utils.stringToInt(value);
+							if (time != 0 && time != Constant.Transmit_Check_End_Time) {
+
+								FileModel.setSmsCheckTime(time);
+							}
 						}
 					}
 				}
-			}
 
-			poi = i;
+				poi = i;
+			}
 
 		}
 
