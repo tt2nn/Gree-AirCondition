@@ -28,8 +28,7 @@ public class Run {
 
 		Configure.init();
 
-		UartServer.startServer();
-
+		// start timer
 		Timer.startTimer();
 		ControlTimer.startTimer();
 
@@ -74,7 +73,7 @@ public class Run {
 			Constant.System_Time = 60000;
 
 			SmsServer.startServer();
-
+			UartServer.startServer();
 			DataCenter.startUploadData();
 
 		} catch (InterruptedException e) {

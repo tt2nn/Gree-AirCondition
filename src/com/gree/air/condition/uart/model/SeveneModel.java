@@ -95,18 +95,17 @@ public class SeveneModel {
 		buildSendBufferHeader();
 		buildSendDataHeader();
 
-		for (int i = 30; i < 94; i++) {
+		for (int i = 29; i < 94; i++) {
 
-			Constant.Uart_Out_Buffer[i] = (byte) 0x00;
+			Constant.Uart_Out_Buffer[i] = Constant.Server_Data_Byte_Buffer[i - 29];
 		}
 
 		Constant.Uart_Out_Buffer[94] = CRC.crc8(Constant.Uart_Out_Buffer, 2, 94);
 
 		UartModel.build(95);
 
-		// DataCenter.setUploadMarker(Utils.byteGetBit(Constant.Uart_In_Buffer[10], 0),
-		// Utils.byteGetBit(Constant.Uart_In_Buffer[10], 3),
-		// Utils.byteGetBit(Constant.Uart_In_Buffer[10], 2));
+		// TODO 添加标记为处理 ControlCenter.setMarker()
+
 	}
 
 	/**
@@ -135,7 +134,6 @@ public class SeveneModel {
 	 * p17 状态标记 <br>
 	 * p18 故障代码 <br>
 	 * p19 信号强度 0-31 99 表示无网络 <br>
-	 * p20 协议版本号
 	 * 
 	 */
 	private static void buildSendDataHeader() {
@@ -143,11 +141,12 @@ public class SeveneModel {
 		// 机组数据从第6位开始
 		Constant.Uart_Out_Buffer[9] = (byte) 0x02;
 
-		byte[] imeiBytes = "8613900300839460".getBytes();
-		for (int i = 10; i < 10 + imeiBytes.length; i++) {
+		byte[] imeiBytes = Constant.device.getImei().getBytes();
+		for (int i = 0; i < imeiBytes.length; i++) {
 
-			Constant.Uart_Out_Buffer[i] = imeiBytes[i - 10];
+			Constant.Uart_Out_Buffer[i + 10] = imeiBytes[i];
 		}
+		Constant.Uart_Out_Buffer[25] = (byte) 0x00;
 
 		// 状态标记
 		Constant.Uart_Out_Buffer[26] = (byte) 0x00;
@@ -157,9 +156,6 @@ public class SeveneModel {
 
 		// 信号强度
 		Constant.Uart_Out_Buffer[28] = (byte) 16;
-
-		// 协议版本
-		Constant.Uart_Out_Buffer[29] = Constant.Uart_In_Buffer[7];
 
 	}
 
