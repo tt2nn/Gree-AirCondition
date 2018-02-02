@@ -204,7 +204,10 @@ public class GpioPin {
 
 		try {
 
-			light.setValue(true);
+			if (light != null) {
+
+				light.setValue(true);
+			}
 
 		} catch (IOException e) {
 
@@ -221,7 +224,10 @@ public class GpioPin {
 
 		try {
 
-			light.setValue(false);
+			if (light != null) {
+
+				light.setValue(false);
+			}
 
 		} catch (IOException e) {
 
