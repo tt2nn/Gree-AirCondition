@@ -2,8 +2,73 @@ package com.gree.air.condition.file;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.FileConstant;
+import com.gree.air.condition.utils.Utils;
 
 public class FileModel {
+
+	/**
+	 * write file with String
+	 * 
+	 * @param FileName
+	 * @param value
+	 */
+	private static synchronized void writeFile(String FileName, String value) {
+
+		byte[] valueBytes = value.getBytes();
+
+		writeFile(FileName, valueBytes);
+
+	}
+
+	/**
+	 * write file with int
+	 * 
+	 * @param FileName
+	 * @param value
+	 */
+	private static void writeFile(String FileName, int value) {
+
+		byte[] valueBytes = Utils.intToBytes(value);
+
+		writeFile(FileName, valueBytes);
+
+	}
+
+	/**
+	 * write file with byte
+	 * 
+	 * @param FileName
+	 * @param value
+	 */
+	private static void writeFile(String FileName, byte value) {
+
+		byte[] valueBytes = { value };
+
+		writeFile(FileName, valueBytes);
+
+	}
+
+	/**
+	 * write file with byte[]
+	 * 
+	 * @param FileName
+	 * @param value
+	 */
+	private static void writeFile(String FileName, byte[] value) {
+
+		byte[] dataLength = Utils.intToBytes(value.length);
+
+		Constant.File_Buffer[0] = dataLength[0];
+		Constant.File_Buffer[1] = dataLength[1];
+
+		for (int i = 0; i < value.length; i++) {
+
+			Constant.File_Buffer[i + 2] = value[i];
+		}
+
+		FileConnection.writeFile(FileName);
+
+	}
 
 	/**
 	 * 设置短信密码
@@ -14,14 +79,7 @@ public class FileModel {
 
 		Constant.Sms_Pwd = password;
 
-		byte[] pwdBytes = password.getBytes();
-
-		for (int i = 0; i < pwdBytes.length; i++) {
-
-			Constant.File_Buffer[i] = pwdBytes[i];
-		}
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_SMS_PASSWORD);
+		writeFile(FileConstant.FILE_NAME_SMS_PASSWORD, password);
 
 	}
 
@@ -36,14 +94,7 @@ public class FileModel {
 		Constant.Tcp_Address_Ip = ip;
 		Constant.Tcp_Address_Port = port;
 
-		byte[] servBytes = (ip + FileConstant.FILE_STRING_SPLIP_SYMBOL + port).getBytes();
-
-		for (int i = 0; i < servBytes.length; i++) {
-
-			Constant.File_Buffer[i] = servBytes[i];
-		}
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_TCP_ADDRESS);
+		writeFile(FileConstant.FILE_NAME_TCP_ADDRESS, ip + FileConstant.FILE_STRING_SPLIP_SYMBOL + port);
 
 	}
 
@@ -56,14 +107,7 @@ public class FileModel {
 
 		Constant.Tcp_Heart_Beat_Period = hb;
 
-		byte[] hbBytes = String.valueOf(hb).getBytes();
-
-		for (int i = 0; i < hbBytes.length; i++) {
-
-			Constant.File_Buffer[i] = hbBytes[i];
-		}
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_TCP_HEART_BEAT_PERIOD);
+		writeFile(FileConstant.FILE_NAME_TCP_HEART_BEAT_PERIOD, hb);
 
 	}
 
@@ -76,14 +120,7 @@ public class FileModel {
 
 		Constant.Transmit_Error_Start_Time = errt;
 
-		byte[] errtBytes = String.valueOf(errt).getBytes();
-
-		for (int i = 0; i < errtBytes.length; i++) {
-
-			Constant.File_Buffer[i] = errtBytes[i];
-		}
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSMIT_ERROR_START_TIME);
+		writeFile(FileConstant.FILE_NAME_TRANSMIT_ERROR_START_TIME, errt);
 
 	}
 
@@ -96,14 +133,7 @@ public class FileModel {
 
 		Constant.Transmit_Error_End_Time = debt;
 
-		byte[] debtBytes = String.valueOf(debt).getBytes();
-
-		for (int i = 0; i < debtBytes.length; i++) {
-
-			Constant.File_Buffer[i] = debtBytes[i];
-		}
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSMIT_ERROR_END_TIME);
+		writeFile(FileConstant.FILE_NAME_TRANSMIT_ERROR_END_TIME, debt);
 
 	}
 
@@ -116,14 +146,7 @@ public class FileModel {
 
 		Constant.Transmit_Change_End_Time = healt;
 
-		byte[] healtBytes = String.valueOf(healt).getBytes();
-
-		for (int i = 0; i < healtBytes.length; i++) {
-
-			Constant.File_Buffer[i] = healtBytes[i];
-		}
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSMIT_CHANGE_END_TIME);
+		writeFile(FileConstant.FILE_NAME_TRANSMIT_CHANGE_END_TIME, healt);
 
 	}
 
@@ -136,14 +159,7 @@ public class FileModel {
 
 		Constant.Transmit_Pushkey_End_Time = butt;
 
-		byte[] buttBytes = String.valueOf(butt).getBytes();
-
-		for (int i = 0; i < buttBytes.length; i++) {
-
-			Constant.File_Buffer[i] = buttBytes[i];
-		}
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSMIT_PUSHKEY_END_TIME);
+		writeFile(FileConstant.FILE_NAME_TRANSMIT_PUSHKEY_END_TIME, butt);
 
 	}
 
@@ -156,14 +172,7 @@ public class FileModel {
 
 		Constant.Tcp_Sig_Period = sig;
 
-		byte[] sigBytes = String.valueOf(sig).getBytes();
-
-		for (int i = 0; i < sigBytes.length; i++) {
-
-			Constant.File_Buffer[i] = sigBytes[i];
-		}
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_TCP_SIG_PERIOD);
+		writeFile(FileConstant.FILE_NAME_TCP_SIG_PERIOD, sig);
 
 	}
 
@@ -176,14 +185,7 @@ public class FileModel {
 
 		Constant.Transmit_Check_Period = checkPeriod;
 
-		byte[] checkPeriodBytes = String.valueOf(checkPeriod).getBytes();
-
-		for (int i = 0; i < checkPeriodBytes.length; i++) {
-
-			Constant.File_Buffer[i] = checkPeriodBytes[i];
-		}
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSMIT_CHECK_PERIOD);
+		writeFile(FileConstant.FILE_NAME_TRANSMIT_CHECK_PERIOD, checkPeriod);
 
 	}
 
@@ -196,14 +198,7 @@ public class FileModel {
 
 		Constant.Transmit_Check_End_Time = checkTime;
 
-		byte[] checkTimeBytes = String.valueOf(checkTime).getBytes();
-
-		for (int i = 0; i < checkTimeBytes.length; i++) {
-
-			Constant.File_Buffer[i] = checkTimeBytes[i];
-		}
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_TRANSMIT_CHECK_END_TIME);
+		writeFile(FileConstant.FILE_NAME_TRANSMIT_CHECK_END_TIME, checkTime);
 
 	}
 
@@ -212,9 +207,7 @@ public class FileModel {
 	 */
 	public static void setAlwaysTransm() {
 
-		Constant.File_Buffer[0] = Constant.TRANSMIT_TYPE_ALWAYS;
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_DATA_TRANSM);
+		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_ALWAYS);
 
 	}
 
@@ -223,9 +216,7 @@ public class FileModel {
 	 */
 	public static void setStopTransm() {
 
-		Constant.File_Buffer[0] = Constant.TRANSMIT_TYPE_STOP;
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_DATA_TRANSM);
+		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_STOP);
 
 	}
 
@@ -234,9 +225,7 @@ public class FileModel {
 	 */
 	public static void setIsChoosed() {
 
-		Constant.File_Buffer[0] = (byte) 0x01;
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_GPRS_CHOOSED);
+		writeFile(FileConstant.FILE_NAME_GPRS_CHOOSED, (byte) 0x01);
 
 	}
 
@@ -245,9 +234,8 @@ public class FileModel {
 	 */
 	public static void setNotChoosed() {
 
-		Constant.File_Buffer[0] = (byte) 0x00;
+		writeFile(FileConstant.FILE_NAME_GPRS_CHOOSED, (byte) 0x00);
 
-		FileConnection.writeFile(FileConstant.FILE_NAME_GPRS_CHOOSED);
 	}
 
 	/**
@@ -257,14 +245,7 @@ public class FileModel {
 	 */
 	public static void setSpiAddress(int address) {
 
-		byte[] res = (address + "").getBytes();
-
-		for (int i = 0; i < res.length; i++) {
-
-			Constant.File_Buffer[i] = res[i];
-		}
-
-		FileConnection.writeFile(FileConstant.FILE_NAME_SPI_WRITE_ADDRESS);
+		writeFile(FileConstant.FILE_NAME_SPI_WRITE_ADDRESS, address + "");
 
 	}
 
@@ -282,29 +263,16 @@ public class FileModel {
 
 			Constant.Apn_Cucc = apn;
 
-			byte[] res = (Constant.Apn_Cucc + FileConstant.FILE_STRING_SPLIP_SYMBOL + Constant.Apn_Name
-					+ FileConstant.FILE_STRING_SPLIP_SYMBOL + Constant.Apn_Pwd).getBytes();
-
-			for (int i = 0; i < res.length; i++) {
-
-				Constant.File_Buffer[i] = res[i];
-			}
-
-			FileConnection.writeFile(FileConstant.FILE_NAME_APN_CUCC);
+			writeFile(FileConstant.FILE_NAME_APN_CUCC, Constant.Apn_Cucc + FileConstant.FILE_STRING_SPLIP_SYMBOL
+					+ Constant.Apn_Name + FileConstant.FILE_STRING_SPLIP_SYMBOL + Constant.Apn_Pwd);
 
 		} else {
 
 			Constant.Apn_Cmcc = apn;
 
-			byte[] res = (Constant.Apn_Cmcc + FileConstant.FILE_STRING_SPLIP_SYMBOL + Constant.Apn_Name
-					+ FileConstant.FILE_STRING_SPLIP_SYMBOL + Constant.Apn_Pwd).getBytes();
+			writeFile(FileConstant.FILE_NAME_APN_CMCC, Constant.Apn_Cmcc + FileConstant.FILE_STRING_SPLIP_SYMBOL
+					+ Constant.Apn_Name + FileConstant.FILE_STRING_SPLIP_SYMBOL + Constant.Apn_Pwd);
 
-			for (int i = 0; i < res.length; i++) {
-
-				Constant.File_Buffer[i] = res[i];
-			}
-
-			FileConnection.writeFile(FileConstant.FILE_NAME_APN_CMCC);
 		}
 
 	}

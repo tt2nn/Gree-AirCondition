@@ -34,24 +34,6 @@ public class FileConnection {
 	}
 
 	/**
-	 * 重置file
-	 * 
-	 * @param fileName
-	 * @throws IOException
-	 */
-	private static void resetFile(String fileName) throws IOException {
-
-		fileConn = (javax.microedition.io.file.FileConnection) Connector.open("file:///Phone/" + fileName);
-
-		if (fileConn.exists()) {
-
-			fileConn.delete();
-		}
-
-		fileConn.create();
-	}
-
-	/**
 	 * 读文件
 	 * 
 	 * @param fileName
@@ -109,7 +91,7 @@ public class FileConnection {
 
 		try {
 
-			resetFile(fileName);
+			openFile(fileName);
 
 			outputStream = fileConn.openOutputStream();
 
@@ -133,7 +115,7 @@ public class FileConnection {
 
 		try {
 
-			resetFile(fileName);
+			openFile(fileName);
 
 			outputStream = fileConn.openOutputStream();
 
