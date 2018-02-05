@@ -245,7 +245,7 @@ public class FileModel {
 	 */
 	public static void setSpiAddress(int address) {
 
-		writeFile(FileConstant.FILE_NAME_SPI_WRITE_ADDRESS, address + "");
+		writeFile(FileConstant.FILE_NAME_SPI_WRITE_ADDRESS, Utils.intToBytes(address, 3));
 
 	}
 

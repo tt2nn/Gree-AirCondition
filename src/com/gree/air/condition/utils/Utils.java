@@ -25,6 +25,33 @@ public class Utils {
 	}
 
 	/**
+	 * int 转 byte[len] 高位在前地位在后
+	 * 
+	 * @param src
+	 * @param len
+	 * @return
+	 */
+	public static byte[] intToBytes(int src, int len) {
+
+		byte[] value = new byte[len];
+
+		for (int i = len - 1; i >= 0; i--) {
+
+			if (i == len - 1) {
+
+				value[i] = (byte) (src & 0xFF);
+
+			} else {
+
+				value[i] = (byte) ((src >> ((len - 1 - i) * 8)) & 0xFF);
+			}
+
+		}
+
+		return value;
+	}
+
+	/**
 	 * byte[2] 转 int 高位在前地位在后
 	 * 
 	 * @param src
@@ -35,6 +62,48 @@ public class Utils {
 		int value;
 
 		value = (int) (((src[0] & 0xFF) << 8) | (src[1] & 0xFF));
+
+		return value;
+	}
+
+	/**
+	 * byte[len] 转 int 高位在前地位在后
+	 * 
+	 * @param src
+	 * @return
+	 */
+	public static int bytesToInt(byte[] src, int len) {
+
+		int value = 0;
+
+		switch (len) {
+
+		case 4:
+
+			value = (int) (((src[0] & 0xFF) << 24) | ((src[1] & 0xFF) << 16) | ((src[2] & 0xFF) << 8)
+					| (src[3] & 0xFF));
+
+			break;
+
+		case 3:
+
+			value = (int) (((src[0] & 0xFF) << 16) | ((src[1] & 0xFF) << 8) | (src[2] & 0xFF));
+
+			break;
+
+		case 2:
+
+			value = (int) (((src[0] & 0xFF) << 8) | (src[1] & 0xFF));
+
+			break;
+
+		case 1:
+
+			value = (int) ((src[0] & 0xFF));
+
+			break;
+
+		}
 
 		return value;
 	}
