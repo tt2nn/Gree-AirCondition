@@ -2,7 +2,7 @@ package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
-import com.gree.air.condition.file.FileModel;
+import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -67,8 +67,8 @@ public class ServModel {
 			end = smsValue.length();
 
 			Constant.Tcp_Address_Port = smsValue.substring(start, end);
-			
-			FileModel.setSmsServ(Constant.Tcp_Address_Ip, Constant.Tcp_Address_Port);
+
+			FileWriteModel.setSmsServ(Constant.Tcp_Address_Ip, Constant.Tcp_Address_Port);
 
 		}
 

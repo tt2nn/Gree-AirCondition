@@ -3,7 +3,7 @@ package com.gree.air.condition.center;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.FileConstant;
 import com.gree.air.condition.file.FileConnection;
-import com.gree.air.condition.file.FileModel;
+import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.lzo.LzoCompressor1x_1;
 import com.gree.air.condition.lzo.lzo_uintp;
 import com.gree.air.condition.spi.SpiTool;
@@ -295,7 +295,7 @@ public class DataCenter implements Runnable {
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_ALWAYS;
 			Transmit_Level = TRANSMIT_LEVEL_ALWAYS;
 
-			FileModel.setAlwaysTransm();
+			FileWriteModel.setAlwaysTransm();
 
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
 			ControlCenter.requestStartUpload();
@@ -655,7 +655,7 @@ public class DataCenter implements Runnable {
 		Transmit_Cache_Check = false;
 		Transmit_Cache_Warning = false;
 
-		FileModel.setStopTransm();
+		FileWriteModel.setStopTransm();
 
 		ControlCenter.stopTcpServer();
 	}

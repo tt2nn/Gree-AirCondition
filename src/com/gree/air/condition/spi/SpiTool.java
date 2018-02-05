@@ -3,7 +3,7 @@ package com.gree.air.condition.spi;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.FileConstant;
 import com.gree.air.condition.file.FileConnection;
-import com.gree.air.condition.file.FileModel;
+import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.spi.jedi.FlashROM;
 import com.gree.air.condition.spi.jedi.FlashROMDeviceFactory;
 import com.gree.air.condition.utils.Utils;
@@ -79,7 +79,7 @@ public class SpiTool {
 			}
 
 			Write_Address += Page_Size;
-			FileModel.setSpiAddress(Write_Address);
+			FileWriteModel.setSpiAddress(Write_Address);
 
 		} catch (Exception e) {
 

@@ -2,7 +2,7 @@ package com.gree.air.condition.tcp.model;
 
 import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
-import com.gree.air.condition.file.FileModel;
+import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.tcp.TcpModel;
 import com.gree.air.condition.utils.Utils;
 
@@ -132,7 +132,7 @@ public class ParamModel {
 
 						if (Utils.stringContains(param, "PWD") && !Constant.Sms_Pwd.equals(value)) { // sms pwd
 
-							FileModel.setSmsPassword(value);
+							FileWriteModel.setSmsPassword(value);
 
 						} else if (Utils.stringContains(param, "APN")) { // apn
 
@@ -159,7 +159,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Tcp_Heart_Beat_Period) {
 
-								FileModel.setSmsHb(time);
+								FileWriteModel.setSmsHb(time);
 							}
 
 						} else if (Utils.stringContains(param, "ERRT")) { // error transmit start time
@@ -167,7 +167,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Error_Start_Time) {
 
-								FileModel.setSmsErrt(time * 60);
+								FileWriteModel.setSmsErrt(time * 60);
 							}
 
 						} else if (Utils.stringContains(param, "DEBT")) { // error transmit end time
@@ -175,7 +175,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Error_End_Time) {
 
-								FileModel.setSmsDebt(time * 60);
+								FileWriteModel.setSmsDebt(time * 60);
 							}
 
 						} else if (Utils.stringContains(param, "BUTT")) { // push key transmit end time
@@ -183,7 +183,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Pushkey_End_Time) {
 
-								FileModel.setSmsButt(time * 60);
+								FileWriteModel.setSmsButt(time * 60);
 							}
 
 						} else if (Utils.stringContains(param, "HEALT")) { // change transmit end time
@@ -191,7 +191,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Change_End_Time) {
 
-								FileModel.setSmsHealt(time * 60);
+								FileWriteModel.setSmsHealt(time * 60);
 							}
 
 						} else if (Utils.stringContains(param, "SIG")) { // signal period time
@@ -199,7 +199,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Tcp_Sig_Period) {
 
-								FileModel.setSmsSig(time * 60);
+								FileWriteModel.setSmsSig(time * 60);
 							}
 
 						} else if (Utils.stringContains(param, "CHECKPERIOD")) { // check transmit period time
@@ -207,7 +207,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Check_Period) {
 
-								FileModel.setSmsCheckPeriod(time * 60);
+								FileWriteModel.setSmsCheckPeriod(time * 60);
 							}
 
 						} else if (Utils.stringContains(param, "CHECKTIME")) { // check transmit end time
@@ -215,7 +215,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Check_End_Time) {
 
-								FileModel.setSmsCheckTime(time);
+								FileWriteModel.setSmsCheckTime(time);
 							}
 						}
 					}
@@ -229,7 +229,7 @@ public class ParamModel {
 		// save apn
 		if (Utils.isNotEmpty(apn) && Utils.isNotEmpty(apnu) && Utils.isNotEmpty(apnp)) {
 
-			FileModel.setApn(apn, apnu, apnp);
+			FileWriteModel.setApn(apn, apnu, apnp);
 		}
 
 		// save ip
@@ -237,7 +237,7 @@ public class ParamModel {
 
 			if (!ip.equals(Constant.Tcp_Address_Ip) || !port.equals(Constant.Tcp_Address_Port)) {
 
-				FileModel.setSmsServ(ip, port);
+				FileWriteModel.setSmsServ(ip, port);
 			}
 		}
 

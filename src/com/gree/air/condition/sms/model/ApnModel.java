@@ -2,7 +2,7 @@ package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
-import com.gree.air.condition.file.FileModel;
+import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -84,7 +84,7 @@ public class ApnModel {
 		end = smsValue.length();
 		Constant.Apn_Pwd = smsValue.substring(start, end);
 
-		FileModel.setApn(apn, Constant.Apn_Name, Constant.Apn_Pwd);
+		FileWriteModel.setApn(apn, Constant.Apn_Name, Constant.Apn_Pwd);
 
 		apnSetSend();
 	}

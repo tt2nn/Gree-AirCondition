@@ -2,7 +2,7 @@ package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
-import com.gree.air.condition.file.FileModel;
+import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -56,7 +56,7 @@ public class DebtModel {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
-		FileModel.setSmsDebt(Integer.parseInt(smsValue) * 60);
+		FileWriteModel.setSmsDebt(Integer.parseInt(smsValue) * 60);
 
 		debtSetSend();
 	}

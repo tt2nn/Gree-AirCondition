@@ -2,7 +2,7 @@ package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
-import com.gree.air.condition.file.FileModel;
+import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.sms.SmsModel;
 
 /**
@@ -63,7 +63,7 @@ public class HbModel {
 		int end = smsValue.length();
 		String second = smsValue.substring(start, end);
 
-		FileModel.setSmsHb(Integer.parseInt(second));
+		FileWriteModel.setSmsHb(Integer.parseInt(second));
 
 		hbSetSend();
 	}

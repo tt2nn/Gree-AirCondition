@@ -1,7 +1,7 @@
 package com.gree.air.condition.center;
 
 import com.gree.air.condition.constant.Constant;
-import com.gree.air.condition.file.FileModel;
+import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.gpio.GpioPin;
 import com.gree.air.condition.tcp.TcpServer;
 import com.gree.air.condition.tcp.model.LoginModel;
@@ -158,7 +158,7 @@ public class ControlCenter {
 
 		Constant.Gprs_Choosed = false;
 		GpioPin.communicationDark();
-		FileModel.setNotChoosed();
+		FileWriteModel.setNotChoosed();
 		DataCenter.destoryUploadData();
 
 	}
@@ -170,7 +170,7 @@ public class ControlCenter {
 
 		Constant.Gprs_Choosed = true;
 		GpioPin.communicationLight();
-		FileModel.setIsChoosed();
+		FileWriteModel.setIsChoosed();
 		DataCenter.chooseTransmit();
 	}
 
