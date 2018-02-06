@@ -2,6 +2,7 @@ package com.gree.air.condition.center;
 
 import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.gpio.GpioPin;
 import com.gree.air.condition.gpio.GpioTool;
 
 /**
@@ -41,6 +42,27 @@ public class ControlTimer implements Runnable {
 				workTime = Constant.System_Time;
 
 				if (ControlCenter.canWorking()) {
+
+					// 上传数据时灯闪烁、空闲时灯常亮
+					if (Constant.Transmit_Type != Constant.TRANSMIT_TYPE_STOP) {
+
+						if (GpioTool.getCommunicationValue()) {
+
+							GpioPin.communicationDark();
+
+						} else {
+
+							GpioPin.communicationLight();
+						}
+
+					} else {
+
+						if (!GpioTool.getCommunicationValue()) {
+
+							GpioPin.communicationLight();
+						}
+
+					}
 
 					// 每三秒打包一次数据
 					if (Constant.System_Time - packageTime >= 3 * 1000) {
