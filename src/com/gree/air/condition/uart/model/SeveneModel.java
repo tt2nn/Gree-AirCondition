@@ -1,9 +1,11 @@
 package com.gree.air.condition.uart.model;
 
 import com.gree.air.condition.center.ControlCenter;
+import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.uart.UartModel;
 import com.gree.air.condition.utils.CRC;
+import com.gree.air.condition.utils.Utils;
 
 /**
  * 7E7E协议 model
@@ -104,7 +106,9 @@ public class SeveneModel {
 
 		UartModel.build(95);
 
-		// TODO 添加标记为处理 ControlCenter.setMarker()
+		ControlCenter.setMarker(Utils.byteGetBit(Constant.Uart_In_Buffer[11], 0),
+				Utils.byteGetBit(Constant.Uart_In_Buffer[11], 1), Utils.byteGetBit(Constant.Uart_In_Buffer[11], 2),
+				Utils.byteGetBit(Constant.Uart_In_Buffer[10], 3));
 
 	}
 
@@ -149,13 +153,20 @@ public class SeveneModel {
 		Constant.Uart_Out_Buffer[25] = (byte) 0x00;
 
 		// 状态标记
-		Constant.Uart_Out_Buffer[26] = (byte) 0x00;
+		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP) {
+
+			Constant.Uart_Out_Buffer[26] = (byte) 0x00;
+
+		} else {
+
+			Constant.Uart_Out_Buffer[26] = (byte) 0x01;
+		}
 
 		// 故障代码
 		Constant.Uart_Out_Buffer[27] = (byte) 0x00;
 
 		// 信号强度
-		Constant.Uart_Out_Buffer[28] = (byte) 16;
+		Constant.Uart_Out_Buffer[28] = (byte) DeviceConfigure.getNetworkSignalLevel();
 
 	}
 
