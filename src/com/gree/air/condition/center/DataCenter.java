@@ -34,8 +34,8 @@ public class DataCenter implements Runnable {
 
 	// 缓存数据传输模式
 	public static boolean Transmit_Cache_Warning = false;
-	public static boolean Transmit_Cache_Check = false;
-	public static boolean Transmit_Cache_Boot = false;
+	// public static boolean Transmit_Cache_Check = false;
+	// public static boolean Transmit_Cache_Boot = false;
 
 	// 数据使用游标 由 0-2047
 	private static int Data_Buffer_Mark = 0;
@@ -194,7 +194,26 @@ public class DataCenter implements Runnable {
 
 					} else {
 
-						stopUploadData();
+						if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER) {
+
+							if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT) {
+
+								registerBootTransmit();
+
+							} else if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_CHECK) {
+
+								registerCheckTransmit();
+
+							} else {
+
+								stopUploadData();
+							}
+
+						} else {
+
+							stopUploadData();
+						}
+
 					}
 
 					continue;
@@ -213,6 +232,21 @@ public class DataCenter implements Runnable {
 					Upload_Data_Interval_Time = Constant.System_Time;
 					ControlCenter.sendGprsSignal();
 
+				}
+
+				// 正在进行上电上报，如果缓存了实时上报，切换为实时上报
+				if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_ALWAYS
+						&& Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER) {
+
+					alwaysTransmit();
+					continue;
+				}
+
+				if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT
+						&& Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER && ControlCenter.getBootMark()) {
+
+					registerBootTransmit();
+					continue;
 				}
 
 				// TODO 选举上报 需要在 90秒后启动
@@ -461,14 +495,13 @@ public class DataCenter implements Runnable {
 			return;
 		}
 
-		if (ControlCenter.getTransmit_Mark_Boot() == 0 && (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP
+		if (!ControlCenter.getBootMark() && (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP
 				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS
 				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT)) {
 
 			convertUploadData();
 
-			Transmit_Cache_Boot = true;
-			Transmit_Cache_Check = false;
+			FileWriteModel.setBootTransm();
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_BOOT;
 			Transmit_Level = TRANSMIT_LEVEL_BOOT_CLOSE;
@@ -477,8 +510,7 @@ public class DataCenter implements Runnable {
 
 			convertUploadData();
 
-			Transmit_Cache_Boot = true;
-			Transmit_Cache_Check = false;
+			FileWriteModel.setBootTransm();
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_BOOT;
 			Transmit_Level = TRANSMIT_LEVEL_BOOT_OPEN;
@@ -507,7 +539,7 @@ public class DataCenter implements Runnable {
 		}
 
 		// 判断缓存上报状态
-		if (!Transmit_Cache_Boot || Transmit_Cache_Warning) {
+		if (Constant.Transmit_Power_Type != Constant.TRANSMIT_TYPE_BOOT || Transmit_Cache_Warning) {
 
 			return;
 		}
@@ -546,8 +578,7 @@ public class DataCenter implements Runnable {
 
 			convertUploadData();
 
-			Transmit_Cache_Boot = false;
-			Transmit_Cache_Check = true;
+			FileWriteModel.setCheckTransm();
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_CHECK;
 			Transmit_Level = TRANSMIT_LEVEL_CHECK;
@@ -573,7 +604,7 @@ public class DataCenter implements Runnable {
 		}
 
 		// 判断缓存上报状态
-		if (Transmit_Cache_Boot || Transmit_Cache_Warning || !Transmit_Cache_Check) {
+		if (Constant.Transmit_Power_Type != Constant.TRANSMIT_TYPE_CHECK || Transmit_Cache_Warning) {
 
 			return;
 		}
@@ -643,8 +674,6 @@ public class DataCenter implements Runnable {
 		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
 		Transmit_Level = TRANSMIT_LEVEL_STOP;
 
-		Transmit_Cache_Boot = false;
-		Transmit_Cache_Check = false;
 		Transmit_Cache_Warning = false;
 
 		FileWriteModel.setStopTransm();
