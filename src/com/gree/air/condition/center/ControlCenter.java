@@ -9,6 +9,7 @@ import com.gree.air.condition.tcp.model.ParamModel;
 import com.gree.air.condition.tcp.model.TimeModel;
 import com.gree.air.condition.tcp.model.TransmitModel;
 import com.gree.air.condition.uart.model.DoChoose;
+import com.gree.air.condition.utils.LogUtils;
 
 /**
  * 工作中心
@@ -69,6 +70,7 @@ public class ControlCenter {
 	 */
 	public static void login() {
 
+		LogUtils.showLog("ControlCenter", "login--login");
 		LoginModel.login();
 	}
 
@@ -77,6 +79,7 @@ public class ControlCenter {
 	 */
 	public static void heartBeat() {
 
+		LogUtils.showLog("ControlCenter", "heartBeat--heartBeat");
 		Constant.Heart_Beat_Time += 10 * 1000;
 
 		if (!TcpServer.isServerWorking()) {
@@ -109,6 +112,7 @@ public class ControlCenter {
 	 */
 	public static void requestStartUpload() {
 
+		LogUtils.showLog("ControlCenter", "requestStartUpload--requestStartUpload");
 		if (!TcpServer.isServerWorking()) {
 
 			waittingHeart = true;
@@ -126,6 +130,8 @@ public class ControlCenter {
 	 * 发送GPRS模块信息
 	 */
 	public static void sendGprsSignal() {
+
+		LogUtils.showLog("ControlCenter", "sendGprsSignal--sendGprsSignal");
 
 		ParamModel.gprsSignal();
 	}
@@ -146,6 +152,7 @@ public class ControlCenter {
 	 */
 	public static void stopTcpServer() {
 
+		LogUtils.showLog("ControlCenter", "stopTcpServer--stopTcpServer");
 		TcpServer.stopServer();
 	}
 
@@ -167,7 +174,7 @@ public class ControlCenter {
 	 * 选中GPRS
 	 */
 	public static void chooseGprs() {
-
+		LogUtils.showLog("ControlCenter", "chooseGprs--chooseGprs");
 		Constant.Gprs_Choosed = true;
 		GpioPin.communicationLight();
 		FileWriteModel.setIsChoosed();
@@ -178,7 +185,7 @@ public class ControlCenter {
 	 * 实时传输
 	 */
 	public static void alwaysTransmit() {
-
+		LogUtils.showLog("ControlCenter", "alwaysTransmit--alwaysTransmit");
 		DataCenter.alwaysTransmit();
 	}
 
@@ -186,7 +193,7 @@ public class ControlCenter {
 	 * 上电点名
 	 */
 	public static void powerCall() {
-
+		LogUtils.showLog("ControlCenter", "powerCall--powerCall");
 		DoChoose.choosed();
 		GpioPin.communicationLight();
 		DataCenter.powerTransmit();
@@ -196,7 +203,7 @@ public class ControlCenter {
 	 * 按键上报
 	 */
 	public static void pushKeyTransmit() {
-
+		LogUtils.showLog("ControlCenter", "pushKeyTransmit--pushKeyTransmit");
 		DataCenter.pushKeyTransmit();
 
 	}
@@ -205,7 +212,7 @@ public class ControlCenter {
 	 * 启动开机上报
 	 */
 	public static void startBootTransmit() {
-
+		LogUtils.showLog("ControlCenter", "startBootTransmit--startBootTransmit");
 		Transmit_Period_Time = 0L;
 		DataCenter.registerBootTransmit();
 	}
@@ -214,7 +221,7 @@ public class ControlCenter {
 	 * 周期性开机上报
 	 */
 	public static void periodBootTransmit() {
-
+		LogUtils.showLog("ControlCenter", "periodBootTransmit--periodBootTransmit");
 		Transmit_Period_Time = Constant.System_Time;
 		DataCenter.bootTransmit();
 
@@ -224,7 +231,7 @@ public class ControlCenter {
 	 * 启动打卡上报
 	 */
 	public static void startCheckTransmit() {
-
+		LogUtils.showLog("ControlCenter", "startCheckTransmit--startCheckTransmit");
 		Transmit_Period_Time = 0L;
 		DataCenter.registerCheckTransmit();
 	}
@@ -233,7 +240,7 @@ public class ControlCenter {
 	 * 周期打卡上报
 	 */
 	public static void periodCheckTransmit() {
-
+		LogUtils.showLog("ControlCenter", "periodCheckTransmit--periodCheckTransmit");
 		Transmit_Period_Time = Constant.System_Time;
 
 		DataCenter.checkTransmit();
@@ -266,7 +273,7 @@ public class ControlCenter {
 	 * 停止上传
 	 */
 	public static void stopUploadData() {
-
+		LogUtils.showLog("ControlCenter", "stopUploadData--stopUploadData");
 		DataCenter.destoryUploadData();
 	}
 
@@ -279,6 +286,8 @@ public class ControlCenter {
 	 * @param boot
 	 */
 	public static void setMarker(int error, int warning, int change, int boot) {
+
+		LogUtils.showLog("ControlCenter", "error : " + error + "--warning : " + warning + "--change : " + change);
 
 		if (DataCenter.Transmit_Cache_Boot && Transmit_Mark_Boot == 0 && boot == 1) {
 

@@ -3,6 +3,7 @@ package com.gree.air.condition.center;
 import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.gpio.GpioTool;
+import com.gree.air.condition.utils.LogUtils;
 
 /**
  * Timer
@@ -40,6 +41,9 @@ public class ControlTimer implements Runnable {
 				Thread.sleep(sleepTime);
 				workTime = Constant.System_Time;
 
+				LogUtils.showLog("ControlTimer",
+						Constant.Transmit_Type + "----" + DeviceConfigure.getNetworkSignalLevel());
+
 				if (ControlCenter.canWorking()) {
 
 					// 每三秒打包一次数据
@@ -48,6 +52,7 @@ public class ControlTimer implements Runnable {
 						packageTime = Constant.System_Time;
 						GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
 						ControlCenter.packageData();
+
 					}
 
 					// 周期性心跳

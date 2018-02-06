@@ -100,7 +100,7 @@ public class FileModel {
 
 		if (length > 0) {
 
-			if (Constant.File_Buffer[3] == (byte) 0x01) {
+			if (Constant.File_Buffer[2] == (byte) 0x01) {
 
 				return true;
 			}

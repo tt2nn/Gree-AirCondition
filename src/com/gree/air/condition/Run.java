@@ -1,5 +1,7 @@
 package com.gree.air.condition;
 
+import org.joshvm.j2me.dio.DeviceConfig;
+
 import com.gree.air.condition.center.ControlTimer;
 import com.gree.air.condition.center.DataCenter;
 import com.gree.air.condition.center.Timer;
@@ -12,6 +14,7 @@ import com.gree.air.condition.gpio.GpioTool;
 import com.gree.air.condition.sms.SmsServer;
 import com.gree.air.condition.spi.SpiTool;
 import com.gree.air.condition.uart.UartServer;
+import com.gree.air.condition.utils.LogUtils;
 import com.gree.air.condition.utils.Utils;
 
 /**
@@ -48,6 +51,10 @@ public class Run {
 			}
 
 			DeviceConfigure.deviceInfo();
+			
+			LogUtils.showLog("Run", Constant.device.getImei());
+			LogUtils.showLog("Run", Constant.device.getImsi());
+			LogUtils.showLog("Run", Constant.device.getIccid());
 
 			Apn apn = new Apn();
 			if (Constant.device.getMnc() == 1) {
