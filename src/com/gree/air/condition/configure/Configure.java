@@ -2,7 +2,7 @@ package com.gree.air.condition.configure;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.FileConstant;
-import com.gree.air.condition.file.FileConnection;
+import com.gree.air.condition.file.FileReadModel;
 import com.gree.air.condition.utils.Utils;
 
 /**
@@ -11,7 +11,7 @@ import com.gree.air.condition.utils.Utils;
  * @author lihaotian
  *
  */
-public class Configure {
+public class Configure extends FileReadModel {
 
 	/**
 	 * 初始化
@@ -53,15 +53,7 @@ public class Configure {
 	 */
 	private static void getGprsChoosed() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_GPRS_CHOOSED);
-
-		if (Constant.File_Buffer_Length > 0) {
-
-			if (Constant.File_Buffer[0] == (byte) 0x01) {
-
-				Constant.Gprs_Choosed = true;
-			}
-		}
+		Constant.Gprs_Choosed = readFileBool(FileConstant.FILE_NAME_GPRS_CHOOSED);
 	}
 
 	/**
@@ -69,16 +61,11 @@ public class Configure {
 	 */
 	private static void getSmsPassword() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_SMS_PASSWORD);
+		String pwd = readFileString(FileConstant.FILE_NAME_SMS_PASSWORD);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (Utils.isNotEmpty(pwd)) {
 
-			String pwd = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-
-			if (Utils.isNotEmpty(pwd)) {
-
-				Constant.Sms_Pwd = pwd;
-			}
+			Constant.Sms_Pwd = pwd;
 		}
 	}
 
@@ -87,14 +74,12 @@ public class Configure {
 	 */
 	private static void getTransmType() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_DATA_TRANSM);
+		int length = readFileLength(FileConstant.FILE_NAME_DATA_TRANSM);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (length == 1) {
 
-			Constant.Transmit_Power_Type = Constant.File_Buffer[0];
-
+			Constant.Transmit_Power_Type = Constant.File_Buffer[2];
 		}
-
 	}
 
 	/**
@@ -102,27 +87,21 @@ public class Configure {
 	 */
 	private static void getTcpAddress() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TCP_ADDRESS);
+		String address = readFileString(FileConstant.FILE_NAME_TCP_ADDRESS);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (Utils.isNotEmpty(address)) {
 
-			String addressString = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
+			int start = 0;
+			int end = address.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
 
-			if (Utils.isNotEmpty(addressString)) {
+			if (end < address.length()) {
 
-				int start = 0;
-				int end = addressString.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
+				Constant.Tcp_Address_Ip = address.substring(start, end);
 
-				if (end < addressString.length()) {
+				start = end + 1;
+				end = address.length();
 
-					Constant.Tcp_Address_Ip = addressString.substring(start, end);
-
-					start = end + 1;
-					end = addressString.length();
-
-					Constant.Tcp_Address_Port = addressString.substring(start, end);
-
-				}
+				Constant.Tcp_Address_Port = address.substring(start, end);
 
 			}
 		}
@@ -133,16 +112,11 @@ public class Configure {
 	 */
 	private static void getTcpHb() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TCP_HEART_BEAT_PERIOD);
+		int second = readFileInt(FileConstant.FILE_NAME_TCP_HEART_BEAT_PERIOD);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (second > 0) {
 
-			String second = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-
-			if (Utils.isNotEmpty(second)) {
-
-				Constant.Tcp_Heart_Beat_Period = Utils.stringToInt(second);
-			}
+			Constant.Tcp_Heart_Beat_Period = second;
 		}
 
 	}
@@ -152,16 +126,11 @@ public class Configure {
 	 */
 	private static void getTcpErrorBefore() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TRANSMIT_ERROR_START_TIME);
+		int second = readFileInt(FileConstant.FILE_NAME_TRANSMIT_ERROR_START_TIME);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (second > 0) {
 
-			String errorBefore = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-
-			if (Utils.isNotEmpty(errorBefore)) {
-
-				Constant.Transmit_Error_Start_Time = Utils.stringToInt(errorBefore);
-			}
+			Constant.Transmit_Error_Start_Time = second;
 		}
 
 	}
@@ -171,16 +140,11 @@ public class Configure {
 	 */
 	private static void getTcpErrorAfter() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TRANSMIT_ERROR_END_TIME);
+		int second = readFileInt(FileConstant.FILE_NAME_TRANSMIT_ERROR_END_TIME);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (second > 0) {
 
-			String errorAfter = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-
-			if (Utils.isNotEmpty(errorAfter)) {
-
-				Constant.Transmit_Error_End_Time = Utils.stringToInt(errorAfter);
-			}
+			Constant.Transmit_Error_End_Time = second;
 		}
 
 	}
@@ -190,16 +154,11 @@ public class Configure {
 	 */
 	private static void getTcpChangeBefore() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TRANSMIT_CHANGE_END_TIME);
+		int second = readFileInt(FileConstant.FILE_NAME_TRANSMIT_CHANGE_END_TIME);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (second > 0) {
 
-			String changeBefore = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-
-			if (Utils.isNotEmpty(changeBefore)) {
-
-				Constant.Transmit_Change_End_Time = Utils.stringToInt(changeBefore);
-			}
+			Constant.Transmit_Change_End_Time = second;
 		}
 
 	}
@@ -209,16 +168,11 @@ public class Configure {
 	 */
 	private static void getTcpPushkey() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TRANSMIT_PUSHKEY_END_TIME);
+		int second = readFileInt(FileConstant.FILE_NAME_TRANSMIT_PUSHKEY_END_TIME);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (second > 0) {
 
-			String pushkey = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-
-			if (Utils.isNotEmpty(pushkey)) {
-
-				Constant.Transmit_Pushkey_End_Time = Utils.stringToInt(pushkey);
-			}
+			Constant.Transmit_Pushkey_End_Time = second;
 		}
 
 	}
@@ -228,16 +182,11 @@ public class Configure {
 	 */
 	private static void getTcpSig() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TCP_SIG_PERIOD);
+		int second = readFileInt(FileConstant.FILE_NAME_TCP_SIG_PERIOD);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (second > 0) {
 
-			String sig = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-
-			if (Utils.isNotEmpty(sig)) {
-
-				Constant.Tcp_Sig_Period = Utils.stringToInt(sig);
-			}
+			Constant.Tcp_Sig_Period = second;
 		}
 
 	}
@@ -247,16 +196,11 @@ public class Configure {
 	 */
 	private static void getTcpCheckPeriod() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TRANSMIT_CHECK_PERIOD);
+		int second = readFileInt(FileConstant.FILE_NAME_TRANSMIT_CHECK_PERIOD);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (second > 0) {
 
-			String checkPeriod = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-
-			if (Utils.isNotEmpty(checkPeriod)) {
-
-				Constant.Transmit_Check_Period = Utils.stringToInt(checkPeriod);
-			}
+			Constant.Transmit_Check_Period = second;
 		}
 
 	}
@@ -266,16 +210,11 @@ public class Configure {
 	 */
 	private static void getTcpCheckTime() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_TRANSMIT_CHECK_END_TIME);
+		int second = readFileInt(FileConstant.FILE_NAME_TRANSMIT_CHECK_END_TIME);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (second > 0) {
 
-			String checkTime = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-
-			if (Utils.isNotEmpty(checkTime)) {
-
-				Constant.Transmit_Check_End_Time = Utils.stringToInt(checkTime);
-			}
+			Constant.Transmit_Check_End_Time = second;
 		}
 
 	}
@@ -285,26 +224,21 @@ public class Configure {
 	 */
 	private static void getApnCucc() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_APN_CUCC);
+		String apnString = readFileString(FileConstant.FILE_NAME_APN_CUCC);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (Utils.isNotEmpty(apnString)) {
 
-			String fileString = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
+			int start = 0;
+			int end = apnString.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
+			Constant.Apn_Cucc = apnString.substring(start, end);
 
-			if (Utils.isNotEmpty(fileString)) {
+			start = end + 1;
+			end = apnString.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
+			Constant.Apn_Name = apnString.substring(start, end);
 
-				int start = 0;
-				int end = fileString.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
-				Constant.Apn_Cucc = fileString.substring(start, end);
-
-				start = end + 1;
-				end = fileString.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
-				Constant.Apn_Name = fileString.substring(start, end);
-
-				start = end + 1;
-				end = fileString.length();
-				Constant.Apn_Pwd = fileString.substring(start, end);
-			}
+			start = end + 1;
+			end = apnString.length();
+			Constant.Apn_Pwd = apnString.substring(start, end);
 		}
 	}
 
@@ -313,18 +247,13 @@ public class Configure {
 	 */
 	private static void getApnCmcc() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_APN_CMCC);
+		String apnString = readFileString(FileConstant.FILE_NAME_APN_CMCC);
 
-		if (Constant.File_Buffer_Length > 0) {
+		if (Utils.isNotEmpty(apnString)) {
 
-			String fileString = new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length);
-
-			if (Utils.isNotEmpty(fileString)) {
-
-				int start = 0;
-				int end = fileString.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
-				Constant.Apn_Cmcc = fileString.substring(start, end);
-			}
+			int start = 0;
+			int end = apnString.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
+			Constant.Apn_Cmcc = apnString.substring(start, end);
 		}
 	}
 

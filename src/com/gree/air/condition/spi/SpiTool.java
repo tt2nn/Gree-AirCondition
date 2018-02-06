@@ -1,12 +1,10 @@
 package com.gree.air.condition.spi;
 
 import com.gree.air.condition.constant.Constant;
-import com.gree.air.condition.constant.FileConstant;
-import com.gree.air.condition.file.FileConnection;
+import com.gree.air.condition.file.FileReadModel;
 import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.spi.jedi.FlashROM;
 import com.gree.air.condition.spi.jedi.FlashROMDeviceFactory;
-import com.gree.air.condition.utils.Utils;
 
 public class SpiTool {
 
@@ -118,12 +116,7 @@ public class SpiTool {
 	 */
 	private static void getSpiWriteAddress() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_SPI_WRITE_ADDRESS);
-
-		if (Constant.File_Buffer_Length > 0) {
-
-			Write_Address = Utils.stringToInt(new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length));
-		}
+		Write_Address = FileReadModel.getSpiAddress();
 	}
 
 	/**

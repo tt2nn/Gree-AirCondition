@@ -1,8 +1,7 @@
 package com.gree.air.condition.center;
 
 import com.gree.air.condition.constant.Constant;
-import com.gree.air.condition.constant.FileConstant;
-import com.gree.air.condition.file.FileConnection;
+import com.gree.air.condition.file.FileReadModel;
 import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.lzo.LzoCompressor1x_1;
 import com.gree.air.condition.lzo.lzo_uintp;
@@ -66,14 +65,7 @@ public class DataCenter implements Runnable {
 	 */
 	public static void init() {
 
-		FileConnection.readFile(FileConstant.FILE_NAME_SPI_WRITE_ADDRESS);
-
-		int spiAddress = 0;
-
-		if (Constant.File_Buffer_Length > 0) {
-
-			spiAddress = Utils.stringToInt(new String(Constant.File_Buffer, 0, Constant.File_Buffer_Length));
-		}
+		int spiAddress = FileReadModel.getSpiAddress();
 
 		Data_Buffer_Mark = spiAddress / 2048;
 	}

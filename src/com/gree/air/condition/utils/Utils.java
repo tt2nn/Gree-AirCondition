@@ -70,9 +70,11 @@ public class Utils {
 	 * byte[len] 转 int 高位在前地位在后
 	 * 
 	 * @param src
+	 * @param start
+	 * @param len
 	 * @return
 	 */
-	public static int bytesToInt(byte[] src, int len) {
+	public static int bytesToIntValue(byte[] src, int start, int len) {
 
 		int value = 0;
 
@@ -80,26 +82,26 @@ public class Utils {
 
 		case 4:
 
-			value = (int) (((src[0] & 0xFF) << 24) | ((src[1] & 0xFF) << 16) | ((src[2] & 0xFF) << 8)
-					| (src[3] & 0xFF));
+			value = (int) (((src[start] & 0xFF) << 24) | ((src[start + 1] & 0xFF) << 16)
+					| ((src[start + 2] & 0xFF) << 8) | (src[start + 3] & 0xFF));
 
 			break;
 
 		case 3:
 
-			value = (int) (((src[0] & 0xFF) << 16) | ((src[1] & 0xFF) << 8) | (src[2] & 0xFF));
+			value = (int) (((src[start] & 0xFF) << 16) | ((src[start + 1] & 0xFF) << 8) | (src[start + 2] & 0xFF));
 
 			break;
 
 		case 2:
 
-			value = (int) (((src[0] & 0xFF) << 8) | (src[1] & 0xFF));
+			value = (int) (((src[start] & 0xFF) << 8) | (src[start + 1] & 0xFF));
 
 			break;
 
 		case 1:
 
-			value = (int) ((src[0] & 0xFF));
+			value = (int) ((src[start] & 0xFF));
 
 			break;
 
