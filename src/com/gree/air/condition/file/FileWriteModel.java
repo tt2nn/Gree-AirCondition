@@ -147,7 +147,7 @@ public class FileWriteModel extends FileModel {
 		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_ALWAYS);
 
 	}
-	
+
 	/**
 	 * 存储开机上报模式
 	 */
@@ -157,7 +157,7 @@ public class FileWriteModel extends FileModel {
 		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_BOOT);
 
 	}
-	
+
 	/**
 	 * 存储实时上报模式
 	 */
@@ -233,4 +233,47 @@ public class FileWriteModel extends FileModel {
 		}
 
 	}
+
+	/**
+	 * 存储Sms User
+	 */
+	public static void setSmsUser() {
+
+		StringBuffer stringBuffer = new StringBuffer();
+
+		for (int i = 0; i < Constant.Sms_User_List.length; i++) {
+
+			stringBuffer.append(Constant.Sms_User_List[i]);
+
+			if (i < Constant.Sms_User_List.length - 1) {
+
+				stringBuffer.append(FileConstant.FILE_STRING_SPLIP_SYMBOL);
+			}
+		}
+
+		writeFile(FileConstant.FILE_NAME_SMS_USER, stringBuffer.toString());
+
+	}
+
+	/**
+	 * 存储Sms Admin
+	 */
+	public static void setSmsAdmin() {
+
+		StringBuffer stringBuffer = new StringBuffer();
+
+		for (int i = 0; i < Constant.Sms_Admin_List.length; i++) {
+
+			stringBuffer.append(Constant.Sms_Admin_List[i]);
+
+			if (i < Constant.Sms_Admin_List.length - 1) {
+
+				stringBuffer.append(FileConstant.FILE_STRING_SPLIP_SYMBOL);
+			}
+		}
+
+		writeFile(FileConstant.FILE_NAME_SMS_ADMIN, stringBuffer.toString());
+
+	}
+
 }

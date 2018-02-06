@@ -32,6 +32,10 @@ public class FileConstant {
 	public static final String FILE_NAME_APN_CMCC = "File_Name_Apn_Cmcc";
 	// APN 联通
 	public static final String FILE_NAME_APN_CUCC = "File_Name_Apn_Cucc";
+	// sms user
+	public static final String FILE_NAME_SMS_USER = "File_Name_Sms_User";
+	// sms admin
+	public static final String FILE_NAME_SMS_ADMIN = "File_Name_Sms_Admin";
 
 	public static final String FILE_STRING_SPLIP_SYMBOL = ";";
 }
