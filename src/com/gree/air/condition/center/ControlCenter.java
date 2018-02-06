@@ -287,9 +287,9 @@ public class ControlCenter {
 	 */
 	public static void setMarker(int error, int warning, int change, int boot) {
 
-		LogUtils.showLog("ControlCenter", "error : " + error + "--warning : " + warning + "--change : " + change);
+//		LogUtils.showLog("ControlCenter", "error : " + error + "--warning : " + warning + "--change : " + change);
 
-		if (DataCenter.Transmit_Cache_Boot && Transmit_Mark_Boot == 0 && boot == 1) {
+		if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT && Transmit_Mark_Boot == 0 && boot == 1) {
 
 			// 开机上报时，开机标志位为1，启动开机实时上报
 			DataCenter.registerBootTransmit();
@@ -320,7 +320,8 @@ public class ControlCenter {
 			// 缓存上报模式为亚健康上报，标志位为1，继续亚健康上报
 			DataCenter.warningTransmit();
 
-		} else if (DataCenter.Transmit_Cache_Boot && Transmit_Mark_Boot == 1 && boot == 0) {
+		} else if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT && Transmit_Mark_Boot == 1
+				&& boot == 0) {
 
 			// 开机上报时，开机标志位为0，启动开机周期上报
 			DataCenter.registerBootTransmit();
@@ -333,8 +334,14 @@ public class ControlCenter {
 
 	}
 
-	public static int getTransmit_Mark_Boot() {
-		return Transmit_Mark_Boot;
+	public static boolean getBootMark() {
+
+		if (Transmit_Mark_Boot == 1) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

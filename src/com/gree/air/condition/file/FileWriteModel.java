@@ -143,7 +143,28 @@ public class FileWriteModel extends FileModel {
 	 */
 	public static void setAlwaysTransm() {
 
+		Constant.Transmit_Power_Type = Constant.TRANSMIT_TYPE_ALWAYS;
 		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_ALWAYS);
+
+	}
+	
+	/**
+	 * 存储开机上报模式
+	 */
+	public static void setBootTransm() {
+
+		Constant.Transmit_Power_Type = Constant.TRANSMIT_TYPE_BOOT;
+		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_BOOT);
+
+	}
+	
+	/**
+	 * 存储实时上报模式
+	 */
+	public static void setCheckTransm() {
+
+		Constant.Transmit_Power_Type = Constant.TRANSMIT_TYPE_CHECK;
+		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_CHECK);
 
 	}
 

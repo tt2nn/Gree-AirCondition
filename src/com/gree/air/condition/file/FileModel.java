@@ -121,7 +121,7 @@ public class FileModel {
 
 		if (length > 0 && length < 5) {
 
-			return Utils.bytesToIntValue(Constant.File_Buffer, 3, length);
+			return Utils.bytesToIntValue(Constant.File_Buffer, 2, length);
 
 		}
 

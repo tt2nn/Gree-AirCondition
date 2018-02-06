@@ -35,15 +35,23 @@ public class MbReadWordModel {
 		Constant.Uart_Out_Buffer[6] = (byte) 0x02;
 
 		// word1~8
-		byte[] imeiBytes = "8613900300839460".getBytes();
+		byte[] imeiBytes = Constant.device.getImei().getBytes();
 		for (int i = 7; i < 7 + imeiBytes.length; i++) {
 
 			Constant.Uart_Out_Buffer[i] = imeiBytes[i - 7];
 		}
+		Constant.Uart_Out_Buffer[22] = (byte) 0x00;
 
 		// word9
 		Constant.Uart_Out_Buffer[23] = (byte) 0x00;
-		Constant.Uart_Out_Buffer[24] = (byte) 0x00;
+		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP) {
+
+			Constant.Uart_Out_Buffer[24] = (byte) 0x00;
+
+		} else {
+
+			Constant.Uart_Out_Buffer[24] = (byte) 0x01;
+		}
 
 		// word10
 		Constant.Uart_Out_Buffer[25] = (byte) 0x00;

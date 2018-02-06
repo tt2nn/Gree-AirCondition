@@ -81,9 +81,9 @@ public class MbWriteModel {
 
 		UartModel.build(10);
 
-		// DataCenter.setUploadMarker(Constant.Uart_In_Buffer[30],
-		// Constant.Uart_In_Buffer[32],
-		// Constant.Uart_In_Buffer[34]);
+		ControlCenter.setMarker(Constant.Uart_In_Buffer[30], Constant.Uart_In_Buffer[32], Constant.Uart_In_Buffer[34],
+				Constant.Uart_In_Buffer[16]);
+
 	}
 
 	/**

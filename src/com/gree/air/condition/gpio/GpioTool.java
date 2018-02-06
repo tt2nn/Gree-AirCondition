@@ -1,5 +1,11 @@
 package com.gree.air.condition.gpio;
 
+import java.io.IOException;
+
+import org.joshvm.j2me.dio.ClosedDeviceException;
+import org.joshvm.j2me.dio.UnavailableDeviceException;
+import org.joshvm.j2me.dio.gpio.GPIOPin;
+
 /**
  * Gpio工具类
  * 
@@ -33,6 +39,44 @@ public class GpioTool {
 			GpioPin.signalHighLight();
 
 		}
+	}
+
+	/**
+	 * 获取通讯灯的状态
+	 * 
+	 * @return
+	 */
+	public static boolean getCommunicationValue() {
+
+		return getLightValue(GpioPin.pinoutCommunication);
+	}
+
+	/**
+	 * 通讯灯的状态
+	 */
+	private static boolean getLightValue(GPIOPin gpioPin) {
+
+		if (gpioPin != null) {
+
+			try {
+
+				return gpioPin.getValue();
+
+			} catch (UnavailableDeviceException e) {
+
+				e.printStackTrace();
+
+			} catch (ClosedDeviceException e) {
+
+				e.printStackTrace();
+
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+		}
+
+		return false;
 	}
 
 }
