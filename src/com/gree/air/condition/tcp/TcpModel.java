@@ -222,12 +222,12 @@ public class TcpModel {
 //			s = s + " " + Integer.toHexString(Constant.Tcp_Out_Data_Buffer[i] & 0xFF);
 //		}
 
-		int year = (Constant.Tcp_Out_Buffer[19] & 0xFF) + 2000;
-		int month = Constant.Tcp_Out_Buffer[20] & 0xFF;
-		int date = Constant.Tcp_Out_Buffer[21] & 0xFF;
-		int hour = Constant.Tcp_Out_Buffer[22] & 0xFF;
-		int min = Constant.Tcp_Out_Buffer[23] & 0xFF;
-		int sec = Constant.Tcp_Out_Buffer[24] & 0xFF;
+		int year = (Constant.Tcp_Out_Data_Buffer[19] & 0xFF) + 2000;
+		int month = Constant.Tcp_Out_Data_Buffer[20] & 0xFF;
+		int date = Constant.Tcp_Out_Data_Buffer[21] & 0xFF;
+		int hour = Constant.Tcp_Out_Data_Buffer[22] & 0xFF;
+		int min = Constant.Tcp_Out_Data_Buffer[23] & 0xFF;
+		int sec = Constant.Tcp_Out_Data_Buffer[24] & 0xFF;
 		
 		System.out.println("tcp send transmit message ---" + year+"-"+month+"-"+date+" "+hour+":"+min+":"+sec);
 
