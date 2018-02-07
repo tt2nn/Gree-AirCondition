@@ -17,7 +17,7 @@ public class ControlTimer implements Runnable {
 	private static boolean listensePush;
 	private static long Push_Time;
 
-	private long packageTime = 0L;
+	public static long packageTime = 0L;
 
 	private final long Sleep_Time = 1000L;
 	private long sleepTime = 1000L;
@@ -74,7 +74,6 @@ public class ControlTimer implements Runnable {
 					// 每三秒打包一次数据
 					if (Constant.System_Time - packageTime >= 3 * 1000) {
 
-						packageTime = Constant.System_Time;
 						GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
 						ControlCenter.packageData();
 
@@ -141,5 +140,5 @@ public class ControlTimer implements Runnable {
 
 		listensePush = false;
 	}
-
+	
 }

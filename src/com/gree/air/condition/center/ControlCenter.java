@@ -60,6 +60,7 @@ public class ControlCenter {
 	 */
 	public static void packageData() {
 
+		ControlTimer.packageTime = Constant.System_Time;
 		DataCenter.packageData();
 	}
 
