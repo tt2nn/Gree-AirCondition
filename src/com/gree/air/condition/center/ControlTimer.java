@@ -47,6 +47,9 @@ public class ControlTimer implements Runnable {
 
 				if (ControlCenter.canWorking()) {
 
+//					LogUtils.showLog("ControlTimer111", "totalMemory : " + Runtime.getRuntime().totalMemory()
+//							+ "--- freeMemory : " + Runtime.getRuntime().freeMemory());
+
 					// 上传数据时灯闪烁、空闲时灯常亮
 					if (Constant.Transmit_Type != Constant.TRANSMIT_TYPE_STOP) {
 
@@ -107,6 +110,9 @@ public class ControlTimer implements Runnable {
 						ControlCenter.stopUploadData();
 					}
 				}
+
+//				LogUtils.showLog("ControlTimer222", "totalMemory : " + Runtime.getRuntime().totalMemory()
+//						+ "--- freeMemory : " + Runtime.getRuntime().freeMemory());
 
 				sleepTime = Sleep_Time - (Constant.System_Time - workTime);
 				sleepTime = sleepTime < 0 ? 0 : sleepTime;

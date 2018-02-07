@@ -5,6 +5,7 @@ import com.gree.air.condition.file.FileReadModel;
 import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.spi.jedi.FlashROM;
 import com.gree.air.condition.spi.jedi.FlashROMDeviceFactory;
+import com.gree.air.condition.utils.LogUtils;
 
 public class SpiTool {
 
@@ -77,6 +78,7 @@ public class SpiTool {
 			}
 
 			Write_Address += Page_Size;
+			LogUtils.showLog("SpiTool", "SpiTool Write Address : " + Write_Address);
 			FileWriteModel.setSpiAddress(Write_Address);
 
 		} catch (Exception e) {
@@ -117,6 +119,7 @@ public class SpiTool {
 	private static void getSpiWriteAddress() {
 
 		Write_Address = FileReadModel.getSpiAddress();
+		LogUtils.showLog("SpiTool", "Spi Address : "+ Write_Address);
 	}
 
 	/**
