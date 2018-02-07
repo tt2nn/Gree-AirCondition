@@ -87,6 +87,11 @@ public class DataCenter implements Runnable {
 
 		synchronized (lock) {
 
+			if (Write_Data_Buffer_Poi + Constant.Uart_In_Buffer_Length >= Lzo_Buffer.length) {
+
+				ControlCenter.packageData();
+			}
+
 			for (int i = 0; i < Constant.Uart_In_Buffer_Length; i++) {
 
 				Constant.Data_Cache_Buffer[i + Write_Data_Buffer_Poi] = Constant.Uart_In_Buffer[i];
