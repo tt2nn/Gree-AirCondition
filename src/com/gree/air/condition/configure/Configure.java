@@ -46,6 +46,10 @@ public class Configure extends FileReadModel {
 
 		getApnCmcc();
 
+		getSmsUser();
+
+		getSmsAdmin();
+
 	}
 
 	/**
@@ -254,6 +258,58 @@ public class Configure extends FileReadModel {
 			int start = 0;
 			int end = apnString.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
 			Constant.Apn_Cmcc = apnString.substring(start, end);
+		}
+	}
+
+	/**
+	 * 获取Sms User
+	 */
+	private static void getSmsUser() {
+
+		String userString = readFileString(FileConstant.FILE_NAME_SMS_USER);
+
+		int symbolPoi = 0;
+		int userPoi = 0;
+		for (int i = 0; i < userString.length(); i++) {
+
+			if (userString.substring(i, i + 1).equals(FileConstant.FILE_STRING_SPLIP_SYMBOL)) {
+
+				String user = userString.substring(symbolPoi, i);
+				Constant.Sms_User_List[userPoi] = user;
+				userPoi++;
+				symbolPoi = i + 1;
+
+			} else if (i == userString.length() - 1) {
+
+				String user = userString.substring(symbolPoi, userString.length());
+				Constant.Sms_User_List[userPoi] = user;
+			}
+		}
+	}
+
+	/**
+	 * 获取Sms Admin
+	 */
+	private static void getSmsAdmin() {
+
+		String userString = readFileString(FileConstant.FILE_NAME_SMS_ADMIN);
+
+		int symbolPoi = 0;
+		int adminPoi = 0;
+		for (int i = 0; i < userString.length(); i++) {
+
+			if (userString.substring(i, i + 1).equals(FileConstant.FILE_STRING_SPLIP_SYMBOL)) {
+
+				String user = userString.substring(symbolPoi, i);
+				Constant.Sms_Admin_List[adminPoi] = user;
+				adminPoi++;
+				symbolPoi = i + 1;
+
+			} else if (i == userString.length() - 1) {
+
+				String user = userString.substring(symbolPoi, userString.length());
+				Constant.Sms_Admin_List[adminPoi] = user;
+			}
 		}
 	}
 
