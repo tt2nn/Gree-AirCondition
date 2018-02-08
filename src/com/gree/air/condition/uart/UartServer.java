@@ -24,7 +24,7 @@ public class UartServer implements Runnable {
 	private static int InBufferPoi = 0;
 	private static int start = 0;
 	private static int end = 0;
-	
+
 	/**
 	 * 启动串口通信
 	 */
@@ -50,7 +50,7 @@ public class UartServer implements Runnable {
 			System.out.println("========================= start uart server ============================");
 
 			receiveData();
-			
+
 		} catch (IOException ioe) {
 
 			ioe.printStackTrace();
@@ -58,6 +58,7 @@ public class UartServer implements Runnable {
 		} finally {
 
 			stopServer();
+			clearStream();
 		}
 	}
 
@@ -69,7 +70,7 @@ public class UartServer implements Runnable {
 		try {
 
 			if (inputStream != null) {
-				
+
 				int streamByte = 0;
 				while ((streamByte = inputStream.read()) != -1) {
 
@@ -173,19 +174,16 @@ public class UartServer implements Runnable {
 			if (inputStream != null) {
 
 				inputStream.close();
-				inputStream = null;
 			}
 
 			if (outputStream != null) {
 
 				outputStream.close();
-				outputStream = null;
 			}
 
 			if (streamConnect != null) {
 
 				streamConnect.close();
-				streamConnect = null;
 			}
 
 		} catch (IOException e) {
@@ -193,6 +191,16 @@ public class UartServer implements Runnable {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * 清空流
+	 */
+	private static void clearStream() {
+
+		inputStream = null;
+		outputStream = null;
+		streamConnect = null;
 	}
 
 	/**
