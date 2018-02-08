@@ -61,6 +61,8 @@ public class DataCenter implements Runnable {
 	private static lzo_uintp lzo_uintp = new lzo_uintp();
 	private static byte[] Lzo_Buffer = new byte[1792];
 
+	private static byte[] Data_Out_Success_Array = new byte[256];
+
 	/**
 	 * 初始化
 	 */
@@ -69,6 +71,8 @@ public class DataCenter implements Runnable {
 		int spiAddress = FileReadModel.getSpiAddress();
 
 		Data_Buffer_Mark = spiAddress / 2048;
+
+		Data_Out_Success_Array[0] = (byte) 0x01;
 	}
 
 	/**
@@ -290,8 +294,7 @@ public class DataCenter implements Runnable {
 
 					ControlCenter.transmitData(length, time);
 
-					byte[] res = { (byte) 0x01 };
-					SpiTool.writeData((Data_Buffer_Out_Mark * 2 * 1024 + 1792), res);
+					SpiTool.writeData((Data_Buffer_Out_Mark * 2 * 1024 + 1792), Data_Out_Success_Array);
 
 					Data_Buffer_Out_Mark++;
 
@@ -626,9 +629,9 @@ public class DataCenter implements Runnable {
 			if (localTime - spiTimeStamp > beforeTime * 1000) {
 
 				startMark++;
-				
+
 				if (startMark == localMark) {
-					
+
 					Data_Buffer_Out_Mark = startMark;
 					break;
 				}
