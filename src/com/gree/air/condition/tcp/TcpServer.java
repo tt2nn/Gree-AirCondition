@@ -128,6 +128,10 @@ public class TcpServer implements Runnable {
 
 					System.out.println("=================== tcp server close =========================");
 				}
+				
+				inputStream = null;
+				outputStream = null;
+				streamConnect = null;
 			}
 		}
 	}
@@ -215,19 +219,16 @@ public class TcpServer implements Runnable {
 			if (inputStream != null) {
 
 				inputStream.close();
-				inputStream = null;
 			}
 
 			if (outputStream != null) {
 
 				outputStream.close();
-				outputStream = null;
 			}
 
 			if (streamConnect != null) {
 
 				streamConnect.close();
-				streamConnect = null;
 			}
 
 		} catch (IOException e) {
