@@ -24,7 +24,7 @@ import com.gree.air.condition.sms.model.VerModel;
 
 public class SmsModel {
 
-	private static final String SMS_GREE = "[格力信息]";
+	// private static final String SMS_GREE = "[格力信息]";
 
 	/**
 	 * 解析由服务器发送的短信，判断短信的功能，交给对应的模块进行处理
@@ -32,97 +32,96 @@ public class SmsModel {
 	public static void analyze() {
 
 		// 判断是否是正确的短信格式
-		if ((Constant.Sms_Receive.startsWith(SMS_GREE)
-				&& Constant.Sms_Receive.endsWith(SmsConstant.Sms_Split_Key_Symbol))
-				|| (Constant.Sms_Receive.startsWith(SmsConstant.Sms_Split_Key_Symbol)
-						&& Constant.Sms_Receive.endsWith(SMS_GREE))) {
+		// if ((Constant.Sms_Receive.startsWith(SMS_GREE)
+		// && Constant.Sms_Receive.endsWith(SmsConstant.Sms_Split_Key_Symbol))
+		// || (Constant.Sms_Receive.startsWith(SmsConstant.Sms_Split_Key_Symbol)
+		// && Constant.Sms_Receive.endsWith(SMS_GREE))) {
 
-			// TODO 验证白名单
+		// TODO 验证白名单
 
-			// 验证 短信密码
-			if (!smsGetPwd(Constant.Sms_Receive).equals(Constant.Sms_Pwd)) {
+		// 验证 短信密码
+		if (!smsGetPwd(Constant.Sms_Receive).equals(Constant.Sms_Pwd)) {
 
-				return;
-			}
+			return;
+		}
 
-			// 判断短信类型
-			if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Apn) != -1) {// 接入点
+		// 判断短信类型
+		if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Apn) != -1) {// 接入点
 
-				ApnModel.smsAnalyze();
+			ApnModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Serv) != -1) { // 域名、IP，端口号
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Serv) != -1) { // 域名、IP，端口号
 
-				ServModel.smsAnalyze();
+			ServModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Hb) != -1) { // 心跳间隔
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Hb) != -1) { // 心跳间隔
 
-				HbModel.smsAnalyze();
+			HbModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Pwd) != -1) { // 短信密码
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Pwd) != -1) { // 短信密码
 
-				PwdModel.smsAnalyze();
+			PwdModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Start) != -1) { // 开始连接服务器
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Start) != -1) { // 开始连接服务器
 
-				StartModel.smsAnalyze();
+			StartModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Stop) != -1) { // 断开连接服务器
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Stop) != -1) { // 断开连接服务器
 
-				StopModel.smsAnalyze();
+			StopModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Ver) != -1) { // DTU软件版本号
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Ver) != -1) { // DTU软件版本号
 
-				VerModel.smsAnalyze();
+			VerModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Adm) != -1) { // 管理员号码
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Adm) != -1) { // 管理员号码
 
-				AdmModel.smsAnalyze();
+			AdmModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Usron) != -1) { // 普通手机账号
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Usron) != -1) { // 普通手机账号
 
-				UsronModel.smsAnalyze();
+			UsronModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Rst) != -1) { // 复位DTU
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Rst) != -1) { // 复位DTU
 
-				RstModel.smsAnalyze();
+			RstModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Errt) != -1) { // 故障点前传输时间
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Errt) != -1) { // 故障点前传输时间
 
-				ErrtModel.smsAnalyze();
+			ErrtModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Debt) != -1) { // 故障点后传输时间
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Debt) != -1) { // 故障点后传输时间
 
-				DebtModel.smsAnalyze();
+			DebtModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Healt) != -1) { // 厂家参数改变前传输结束时间
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Healt) != -1) { // 厂家参数改变前传输结束时间
 
-				HealtModel.smsAnalyze();
+			HealtModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Butt) != -1) { // 按键调试周期
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Butt) != -1) { // 按键调试周期
 
-				ButtModel.smsAnalyze();
+			ButtModel.smsAnalyze();
 
-			} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_SIG) != -1) { // 信号上报周期
+		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_SIG) != -1) { // 信号上报周期
 
-				SigModel.smsAnalyze();
+			SigModel.smsAnalyze();
 
-			} else if (checkSmsType(SmsConstant.Sms_Type_Run_Start)) { // 开机上报
+		} else if (checkSmsType(SmsConstant.Sms_Type_Run_Start)) { // 开机上报
 
-				RunStartModel.smsAnalyze();
+			RunStartModel.smsAnalyze();
 
-			} else if (checkSmsType(SmsConstant.Sms_Type_Check_Start)) { // 打卡上报
+		} else if (checkSmsType(SmsConstant.Sms_Type_Check_Start)) { // 打卡上报
 
-				CheckStartModel.smsAnalyze();
+			CheckStartModel.smsAnalyze();
 
-			} else if (checkSmsType(SmsConstant.Sms_Type_Check_Period)) { // 打卡间隔
+		} else if (checkSmsType(SmsConstant.Sms_Type_Check_Period)) { // 打卡间隔
 
-				CheckPeriodModel.smsAnalyze();
+			CheckPeriodModel.smsAnalyze();
 
-			} else if (checkSmsType(SmsConstant.Sms_Type_Check_Time)) { // 打卡时长
+		} else if (checkSmsType(SmsConstant.Sms_Type_Check_Time)) { // 打卡时长
 
-				CheckTimeModel.smsAnalyze();
+			CheckTimeModel.smsAnalyze();
 
-			}
 		}
 	}
 

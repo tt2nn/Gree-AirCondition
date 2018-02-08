@@ -109,11 +109,12 @@ public class TcpServer implements Runnable {
 
 						closeStream();
 
-						Thread.sleep(3000);
+						Thread.sleep(10 * 1000);
 
 						if (Server_ReConnect_Num == 5) {
 
-							stopServer();
+							ControlCenter.stopUploadData();
+							ControlCenter.stopTcpServer();
 
 						} else {
 
@@ -121,9 +122,10 @@ public class TcpServer implements Runnable {
 						}
 
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+
 						e.printStackTrace();
 					}
+
 				} else {
 
 					System.out.println("=================== tcp server close =========================");
@@ -175,6 +177,7 @@ public class TcpServer implements Runnable {
 			if (outputStream != null) {
 
 				outputStream.write(Constant.Tcp_Out_Buffer, 0, length);
+				Server_ReConnect_Num = 0;
 			}
 
 		} catch (IOException e) {
@@ -193,13 +196,12 @@ public class TcpServer implements Runnable {
 			if (outputStream != null) {
 
 				outputStream.write(Constant.Tcp_Out_Data_Buffer, 0, length);
+				Server_ReConnect_Num = 0;
 			}
 
 		} catch (IOException e) {
 
 			e.printStackTrace();
-
-			closeStream();
 		}
 	}
 
