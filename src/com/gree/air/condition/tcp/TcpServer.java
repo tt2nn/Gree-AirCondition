@@ -128,10 +128,8 @@ public class TcpServer implements Runnable {
 
 					System.out.println("=================== tcp server close =========================");
 				}
-				
-				inputStream = null;
-				outputStream = null;
-				streamConnect = null;
+
+				clearStream();
 			}
 		}
 	}
@@ -182,8 +180,6 @@ public class TcpServer implements Runnable {
 		} catch (IOException e) {
 
 			e.printStackTrace();
-
-			closeStream();
 		}
 	}
 
@@ -236,6 +232,16 @@ public class TcpServer implements Runnable {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * 清空流
+	 */
+	private static void clearStream() {
+
+		inputStream = null;
+		outputStream = null;
+		streamConnect = null;
 	}
 
 	/**
