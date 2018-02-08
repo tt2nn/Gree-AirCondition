@@ -1,10 +1,14 @@
 package com.gree.air.condition.spi;
 
+import java.io.IOException;
+
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.file.FileReadModel;
 import com.gree.air.condition.file.FileWriteModel;
+import com.gree.air.condition.spi.jedi.DriverException;
 import com.gree.air.condition.spi.jedi.FlashROM;
 import com.gree.air.condition.spi.jedi.FlashROMDeviceFactory;
+import com.gree.air.condition.spi.jedi.UnsupportedPageSizeException;
 
 public class SpiTool {
 
@@ -80,6 +84,33 @@ public class SpiTool {
 			FileWriteModel.setSpiAddress(Write_Address);
 
 		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * 写flash
+	 * 
+	 * @param address
+	 * @param res
+	 */
+	public static void writeData(int address, byte[] res) {
+
+		try {
+
+			flashROM.pageProgram(address, res);
+
+		} catch (UnsupportedPageSizeException e) {
+
+			e.printStackTrace();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		} catch (DriverException e) {
 
 			e.printStackTrace();
 		}

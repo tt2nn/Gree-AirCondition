@@ -1,6 +1,7 @@
 package com.gree.air.condition.center;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.entity.Time;
 import com.gree.air.condition.file.FileReadModel;
 import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.lzo.LzoCompressor1x_1;
@@ -264,20 +265,21 @@ public class DataCenter implements Runnable {
 
 				int length = 0;
 				long time = 0L;
-				// 缓存数据符合取值要求
-				synchronized (lock) {
 
-					if (SpiTool.readData(Data_Buffer_Out_Mark * 2 * 1024)) {
+				if (SpiTool.readData(Data_Buffer_Out_Mark * 2 * 1024)) {
 
-						length = Utils.bytesToInt(Constant.Data_Buffer, 2, 3);
+					// 验证数据没有发过
+					if (Constant.Data_SPI_Buffer[1792] != (byte) 0x01) {
+
+						length = Utils.bytesToInt(Constant.Data_SPI_Buffer, 2, 3);
 
 						if (length > 0) {
 
-							time = Utils.bytesToLong(Constant.Data_Buffer, 4);
+							time = Utils.bytesToLong(Constant.Data_SPI_Buffer, 4);
 
 							for (int i = 12; i < 12 + length; i++) {
 
-								Constant.Tcp_Out_Data_Buffer[i - 12 + 25] = Constant.Data_Buffer[i];
+								Constant.Tcp_Out_Data_Buffer[i - 12 + 25] = Constant.Data_SPI_Buffer[i];
 							}
 						}
 					}
@@ -288,12 +290,14 @@ public class DataCenter implements Runnable {
 
 					ControlCenter.transmitData(length, time);
 
+					byte[] res = { (byte) 0x01 };
+					SpiTool.writeData((Data_Buffer_Out_Mark * 2 * 1024 + 1792), res);
+
 					Data_Buffer_Out_Mark++;
 
 					if (Data_Buffer_Out_Mark == BUFFER_MARK_SIZE) {
 
 						Data_Buffer_Out_Mark = 0;
-
 					}
 
 					Thread.sleep(500);
@@ -344,17 +348,8 @@ public class DataCenter implements Runnable {
 			convertUploadData();
 
 			// 重置发送游标，上报故障点前30分钟到后5分钟数据
-			Data_Buffer_Out_Mark = Data_Buffer_Mark - (Constant.Transmit_Error_Start_Time / 3);
-			if (Data_Buffer_Out_Mark < 0) {
-
-				Data_Buffer_Out_Mark = Data_Buffer_Out_Mark + BUFFER_MARK_SIZE;
-			}
-			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Error_End_Time / 3);
-
-			if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
-
-				Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
-			}
+			checkOutStartMark(Constant.Transmit_Error_Start_Time);
+			checkOutEndMark(Constant.Transmit_Error_End_Time);
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_ERROR;
 			Transmit_Level = TRANSMIT_LEVEL_ERROR;
@@ -374,17 +369,8 @@ public class DataCenter implements Runnable {
 			convertUploadData();
 
 			// 重置发送游标，上报变化点前5分钟到后1分钟数据
-			Data_Buffer_Out_Mark = Data_Buffer_Mark - (5 * 60 / 3);
-			if (Data_Buffer_Out_Mark < 0) {
-
-				Data_Buffer_Out_Mark = Data_Buffer_Out_Mark + BUFFER_MARK_SIZE;
-			}
-
-			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Change_End_Time / 3);
-			if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
-
-				Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
-			}
+			checkOutStartMark(5 * 60);
+			checkOutEndMark(Constant.Transmit_Change_End_Time);
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_CHANGE;
 			Transmit_Level = TRANSMIT_LEVEL_CHANGE;
@@ -404,11 +390,7 @@ public class DataCenter implements Runnable {
 			convertUploadData();
 
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
-			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Pushkey_End_Time / 3);
-			if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
-
-				Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
-			}
+			checkOutEndMark(Constant.Transmit_Pushkey_End_Time);
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_PUSHKEY;
 			Transmit_Level = TRANSMIT_LEVEL_PUSHKEY;
@@ -452,11 +434,7 @@ public class DataCenter implements Runnable {
 
 			// 重置发送游标，选举上报持续发送5分钟数据
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
-			Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (5 * 60 / 3);
-			if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
-
-				Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
-			}
+			checkOutEndMark(5 * 60);
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_CHOOSE;
 			Transmit_Level = TRANSMIT_LEVEL_CHOOSE;
@@ -477,11 +455,7 @@ public class DataCenter implements Runnable {
 
 		// 重置发送游标，选举上报持续发送5分钟数据
 		Data_Buffer_Out_Mark = Data_Buffer_Mark;
-		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (5 * 60 / 3);
-		if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
-
-			Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
-		}
+		checkOutEndMark(5 * 60);
 
 		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_POWER;
 		Transmit_Level = TRANSMIT_LEVEL_POWER;
@@ -558,11 +532,7 @@ public class DataCenter implements Runnable {
 
 		// 重置发送游标
 		Data_Buffer_Out_Mark = Data_Buffer_Mark;
-		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Check_End_Time / 3);
-		if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
-
-			Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
-		}
+		checkOutEndMark(Constant.Transmit_Check_End_Time);
 
 		ControlCenter.requestStartUpload();
 	}
@@ -623,13 +593,72 @@ public class DataCenter implements Runnable {
 
 		// 重置发送游标
 		Data_Buffer_Out_Mark = Data_Buffer_Mark;
-		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (Constant.Transmit_Check_End_Time / 3);
+		checkOutEndMark(Constant.Transmit_Check_End_Time);
+
+		ControlCenter.requestStartUpload();
+	}
+
+	/**
+	 * 验证起始Mark
+	 * 
+	 * @param beforeTime
+	 */
+	private static void checkOutStartMark(int beforeTime) {
+
+		long localTime = Constant.System_Time;
+
+		int localMark = Data_Buffer_Mark;
+		int startMark = localMark - (beforeTime / 3);
+
+		if (startMark < 0) {
+
+			startMark += BUFFER_MARK_SIZE;
+		}
+
+		// 验证SPI中数据的时间是否满足条件
+		while (true) {
+
+			SpiTool.readData(startMark * 2 * 1024);
+			Time spiTime = Utils.bytesToTime(Constant.Data_SPI_Buffer, 4);
+			long spiTimeStamp = Utils.getTime(spiTime.getYear(), spiTime.getMonth(), spiTime.getDay(),
+					spiTime.getHours(), spiTime.getMinutes(), spiTime.getSeconds());
+
+			if (localTime - spiTimeStamp > beforeTime * 1000) {
+
+				startMark++;
+				
+				if (startMark == localMark) {
+					
+					Data_Buffer_Out_Mark = startMark;
+					break;
+				}
+
+				if (startMark > BUFFER_MARK_SIZE) {
+
+					startMark = 0;
+				}
+
+			} else {
+
+				Data_Buffer_Out_Mark = startMark;
+				break;
+			}
+		}
+	}
+
+	/**
+	 * 验证结束Mark
+	 * 
+	 * @param endTime
+	 */
+	private static void checkOutEndMark(int endTime) {
+
+		Data_Buffer_Out_End_Mark = Data_Buffer_Mark + (endTime / 3);
+
 		if (Data_Buffer_Out_End_Mark > BUFFER_MARK_SIZE) {
 
 			Data_Buffer_Out_End_Mark = Data_Buffer_Out_End_Mark - BUFFER_MARK_SIZE;
 		}
-
-		ControlCenter.requestStartUpload();
 	}
 
 	/**

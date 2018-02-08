@@ -1,5 +1,7 @@
 package com.gree.air.condition.utils;
 
+import com.gree.air.condition.entity.Time;
+
 /**
  * 工具类
  * 
@@ -159,6 +161,27 @@ public class Utils {
 		int value = (data >> position) & 0x1;
 
 		return value;
+	}
+
+	/**
+	 * 从 byte[] 中取 time
+	 * 
+	 * @param res
+	 * @param start
+	 * @return
+	 */
+	public static Time bytesToTime(byte[] res, int start) {
+
+		Time time = new Time();
+
+		time.setYear((res[start] & 0xFF) + 2000);
+		time.setMonth(res[start + 1] & 0xFF);
+		time.setDay(res[start + 2] & 0xFF);
+		time.setHours(res[start + 3] & 0xFF);
+		time.setMinutes(res[start + 4] & 0xFF);
+		time.setSeconds(res[start + 5] & 0xFF);
+
+		return time;
 	}
 
 	/**
