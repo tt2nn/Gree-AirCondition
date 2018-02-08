@@ -28,7 +28,7 @@ public class DoChoose {
 		if (chooseNum == -1) { // 当选举计数为-1的时候，收到选举则重新取随机数
 
 			chooseNum = new Random().nextInt(chooseRandom);
-			chooseRandom += 5;
+			chooseRandom += 3;
 		}
 
 		if (chooseNum == 0) { // 当计数为0的时候，可以执行选举
