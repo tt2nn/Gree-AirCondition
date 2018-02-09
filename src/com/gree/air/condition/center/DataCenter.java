@@ -409,7 +409,7 @@ public class DataCenter implements Runnable {
 	 */
 	public static void warningTransmit() {
 
-		if (Transmit_Level < TRANSMIT_LEVEL_CHANGE && Constant.System_Time > Constant.Stop_Time) {
+		if (Transmit_Level < TRANSMIT_LEVEL_WARNING && Constant.System_Time > Constant.Stop_Time) {
 
 			convertUploadData();
 
