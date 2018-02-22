@@ -173,6 +173,7 @@ public class FileWriteModel extends FileModel {
 	 */
 	public static void setStopTransm() {
 
+		Constant.Transmit_Power_Type = Constant.TRANSMIT_TYPE_STOP;
 		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_STOP);
 
 	}
