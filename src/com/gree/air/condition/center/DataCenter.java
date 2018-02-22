@@ -203,24 +203,16 @@ public class DataCenter implements Runnable {
 
 					} else {
 
-						if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER) {
+						stopUploadData();
 
-							if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT) {
+						if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT) {
 
-								registerBootTransmit();
+							registerBootTransmit();
 
-							} else if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_CHECK) {
+						} else if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_CHECK) {
 
-								registerCheckTransmit();
+							registerCheckTransmit();
 
-							} else {
-
-								stopUploadData();
-							}
-
-						} else {
-
-							stopUploadData();
 						}
 
 					}
@@ -258,14 +250,6 @@ public class DataCenter implements Runnable {
 					continue;
 				}
 
-				// TODO 选举上报 需要在 90秒后启动
-				// if (Constant.Transm_Type == Constant.TRANSM_TYPE_CHOOSE &&
-				// Constant.System_Time <= 90 * 1000) {
-				//
-				// Thread.sleep(1000);
-				// continue;
-				// }
-
 				int length = 0;
 				long time = 0L;
 
@@ -287,24 +271,14 @@ public class DataCenter implements Runnable {
 
 						} else {
 
-							Data_Buffer_Out_Mark++;
-
-							if (Data_Buffer_Out_Mark == BUFFER_MARK_SIZE) {
-
-								Data_Buffer_Out_Mark = 0;
-							}
+							outMarkAdd();
 
 							continue;
 						}
 
 					} else {
 
-						Data_Buffer_Out_Mark++;
-
-						if (Data_Buffer_Out_Mark == BUFFER_MARK_SIZE) {
-
-							Data_Buffer_Out_Mark = 0;
-						}
+						outMarkAdd();
 
 						continue;
 					}
@@ -317,12 +291,7 @@ public class DataCenter implements Runnable {
 
 					SpiTool.writeData((Data_Buffer_Out_Mark * 2 * 1024 + 1792), Data_Out_Success_Array);
 
-					Data_Buffer_Out_Mark++;
-
-					if (Data_Buffer_Out_Mark == BUFFER_MARK_SIZE) {
-
-						Data_Buffer_Out_Mark = 0;
-					}
+					outMarkAdd();
 
 					Thread.sleep(500);
 
@@ -337,6 +306,19 @@ public class DataCenter implements Runnable {
 			}
 		}
 
+	}
+
+	/**
+	 * Out Mark Add
+	 */
+	private void outMarkAdd() {
+
+		Data_Buffer_Out_Mark++;
+
+		if (Data_Buffer_Out_Mark == BUFFER_MARK_SIZE) {
+
+			Data_Buffer_Out_Mark = 0;
+		}
 	}
 
 	/**
@@ -690,6 +672,8 @@ public class DataCenter implements Runnable {
 
 		Can_Upload_Data = false;
 		Data_Buffer_Out_End_Mark = -1;
+		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
+
 	}
 
 	/**
