@@ -1,7 +1,6 @@
 package com.gree.air.condition.center;
 
 import com.gree.air.condition.constant.Constant;
-import com.gree.air.condition.entity.Time;
 import com.gree.air.condition.file.FileReadModel;
 import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.lzo.LzoCompressor1x_1;
@@ -277,7 +276,7 @@ public class DataCenter implements Runnable {
 
 						length = Utils.bytesToInt(Constant.Data_SPI_Buffer, 2, 3);
 
-						if (length > 0) {
+						if (length > 0 && length < 1792) {
 
 							time = Utils.bytesToLong(Constant.Data_SPI_Buffer, 4);
 
@@ -285,7 +284,29 @@ public class DataCenter implements Runnable {
 
 								Constant.Tcp_Out_Data_Buffer[i - 12 + 25] = Constant.Data_SPI_Buffer[i];
 							}
+
+						} else {
+
+							Data_Buffer_Out_Mark++;
+
+							if (Data_Buffer_Out_Mark == BUFFER_MARK_SIZE) {
+
+								Data_Buffer_Out_Mark = 0;
+							}
+
+							continue;
 						}
+
+					} else {
+
+						Data_Buffer_Out_Mark++;
+
+						if (Data_Buffer_Out_Mark == BUFFER_MARK_SIZE) {
+
+							Data_Buffer_Out_Mark = 0;
+						}
+
+						continue;
 					}
 				}
 
@@ -622,9 +643,7 @@ public class DataCenter implements Runnable {
 		while (true) {
 
 			SpiTool.readData(startMark * 2 * 1024);
-			Time spiTime = Utils.bytesToTime(Constant.Data_SPI_Buffer, 4);
-			long spiTimeStamp = Utils.getTime(spiTime.getYear(), spiTime.getMonth(), spiTime.getDay(),
-					spiTime.getHours(), spiTime.getMinutes(), spiTime.getSeconds());
+			long spiTimeStamp = Utils.bytesToLong(Constant.Data_SPI_Buffer, 4);
 
 			if (localTime - spiTimeStamp > beforeTime * 1000) {
 
