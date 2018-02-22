@@ -142,4 +142,6 @@ public class Constant {
 
 	public static long Heart_Beat_Time = 0L;
 
+	public static boolean Init_Success = false;
+
 }

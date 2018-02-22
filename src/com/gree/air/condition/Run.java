@@ -70,7 +70,7 @@ public class Run {
 			Constant.Gprs_Mac[5] = Utils.stringToByte(Constant.device.getImei().substring(11, 13));
 			Constant.Gprs_Mac[6] = Utils.stringToByte(Constant.device.getImei().substring(13, 15));
 
-			Constant.System_Time = 60000;
+			Constant.Init_Success = true;
 
 			SmsServer.startServer();
 			UartServer.startServer();

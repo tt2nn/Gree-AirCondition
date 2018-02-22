@@ -38,7 +38,7 @@ public class ControlCenter {
 	 */
 	public static boolean canWorking() {
 
-		if (Constant.Gprs_Choosed && Constant.System_Time > 946656000000L) {
+		if (Constant.Init_Success && Constant.Gprs_Choosed && Constant.System_Time > 946656000000L) {
 
 			return true;
 		}

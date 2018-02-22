@@ -89,7 +89,7 @@ public class SeveneModel {
 		}
 
 		// 判断是否是 上电是状态为选中
-		if (!DoChoose.isChooseResp() && Constant.System_Time > 60 * 1000) {
+		if (!DoChoose.isChooseResp() && Constant.Init_Success) {
 
 			ControlCenter.powerCall();
 		}
