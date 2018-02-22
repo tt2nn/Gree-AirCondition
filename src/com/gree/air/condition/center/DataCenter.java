@@ -649,7 +649,9 @@ public class DataCenter implements Runnable {
 
 		Can_Upload_Data = false;
 		Data_Buffer_Out_End_Mark = -1;
+		
 		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
+		Transmit_Level = TRANSMIT_LEVEL_STOP;
 
 	}
 

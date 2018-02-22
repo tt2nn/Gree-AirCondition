@@ -82,7 +82,7 @@ public class TransmitModel {
 	 */
 	public static void stopResponse() {
 
-		ControlCenter.stopUploadData();
+		ControlCenter.destoryUploadData();
 		stop();
 	}
 

@@ -113,7 +113,7 @@ public class TcpServer implements Runnable {
 
 						if (Server_ReConnect_Num == 5) {
 
-							ControlCenter.stopUploadData();
+							ControlCenter.destoryUploadData();
 							ControlCenter.stopTcpServer();
 
 						} else {

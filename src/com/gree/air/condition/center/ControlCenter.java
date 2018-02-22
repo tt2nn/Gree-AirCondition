@@ -268,6 +268,14 @@ public class ControlCenter {
 	 */
 	public static void stopUploadData() {
 
+		DataCenter.stopUploadData();
+	}
+
+	/**
+	 * 销毁上报
+	 */
+	public static void destoryUploadData() {
+
 		DataCenter.destoryUploadData();
 	}
 

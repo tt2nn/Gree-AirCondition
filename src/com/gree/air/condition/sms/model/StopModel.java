@@ -27,7 +27,7 @@ public class StopModel {
 	 */
 	private static void stopReceive() {
 		
-		ControlCenter.stopUploadData();
+		ControlCenter.destoryUploadData();
 		stopSend();
 	}
 
