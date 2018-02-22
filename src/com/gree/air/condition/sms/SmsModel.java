@@ -21,6 +21,7 @@ import com.gree.air.condition.sms.model.StartModel;
 import com.gree.air.condition.sms.model.StopModel;
 import com.gree.air.condition.sms.model.UsronModel;
 import com.gree.air.condition.sms.model.VerModel;
+import com.gree.air.condition.utils.Utils;
 
 public class SmsModel {
 
@@ -38,6 +39,12 @@ public class SmsModel {
 		// && Constant.Sms_Receive.endsWith(SMS_GREE))) {
 
 		// TODO 验证白名单
+
+		// 验空
+		if (!Utils.isNotEmpty(Constant.Sms_Receive)) {
+
+			return;
+		}
 
 		// 验证 短信密码
 		if (!smsGetPwd(Constant.Sms_Receive).equals(Constant.Sms_Pwd)) {
