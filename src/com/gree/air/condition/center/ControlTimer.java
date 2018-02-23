@@ -4,6 +4,7 @@ import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.gpio.GpioPin;
 import com.gree.air.condition.gpio.GpioTool;
+import com.gree.air.condition.tcp.TcpServer;
 
 /**
  * Timer
@@ -100,6 +101,14 @@ public class ControlTimer implements Runnable {
 						listensePush = false;
 						ControlCenter.stopUploadData();
 					}
+
+					// 恢复数据上报
+					if (TcpServer.isServerNormal() && ControlCenter.Tcp_Error_Pause_Upload
+							&& Constant.Transmit_Type != Constant.TRANSMIT_TYPE_STOP) {
+
+						ControlCenter.recoverUpload();
+					}
+
 				}
 
 				sleepTime = Sleep_Time - (Constant.System_Time - workTime);
@@ -129,5 +138,5 @@ public class ControlTimer implements Runnable {
 
 		listensePush = false;
 	}
-	
+
 }

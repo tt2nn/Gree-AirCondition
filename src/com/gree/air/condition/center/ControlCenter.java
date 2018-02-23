@@ -31,6 +31,8 @@ public class ControlCenter {
 
 	public static long Transmit_Period_Time = 0L;
 
+	public static boolean Tcp_Error_Pause_Upload = false;
+
 	/**
 	 * 判断App是否可以工作
 	 * 
@@ -96,11 +98,11 @@ public class ControlCenter {
 
 		if (waittingHeart) {
 
-			ControlCenter.requestStartUpload();
+			requestStartUpload();
 
 		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP) {
 
-			ControlCenter.stopTcpServer();
+			stopTcpServer();
 		}
 
 	}
@@ -113,7 +115,6 @@ public class ControlCenter {
 		if (!TcpServer.isServerWorking()) {
 
 			waittingHeart = true;
-
 			TcpServer.startServer();
 
 			return;
@@ -121,6 +122,17 @@ public class ControlCenter {
 
 		waittingHeart = false;
 		TransmitModel.start();
+	}
+
+	/**
+	 * 恢复数据上传
+	 */
+	public static void recoverUpload() {
+
+		Tcp_Error_Pause_Upload = false;
+		waittingHeart = true;
+		login();
+
 	}
 
 	/**
@@ -160,7 +172,7 @@ public class ControlCenter {
 		Constant.Gprs_Choosed = false;
 		GpioPin.communicationDark();
 		FileWriteModel.setNotChoosed();
-		DataCenter.destoryUploadData();
+		destoryUploadData();
 
 	}
 
@@ -236,7 +248,6 @@ public class ControlCenter {
 	public static void periodCheckTransmit() {
 
 		Transmit_Period_Time = Constant.System_Time;
-
 		DataCenter.checkTransmit();
 	}
 
@@ -260,7 +271,18 @@ public class ControlCenter {
 	 */
 	public static void uploadData() {
 
+		Tcp_Error_Pause_Upload = false;
 		DataCenter.notifyUploadData();
+	}
+
+	/**
+	 * 暂停上传
+	 */
+	public static void pauseUploadData() {
+
+		Tcp_Error_Pause_Upload = true;
+
+		DataCenter.pauseUploadData();
 	}
 
 	/**
@@ -268,7 +290,9 @@ public class ControlCenter {
 	 */
 	public static void stopUploadData() {
 
+		Tcp_Error_Pause_Upload = false;
 		DataCenter.stopUploadData();
+		stopTcpServer();
 	}
 
 	/**
@@ -276,7 +300,10 @@ public class ControlCenter {
 	 */
 	public static void destoryUploadData() {
 
+		Tcp_Error_Pause_Upload = false;
 		DataCenter.destoryUploadData();
+		stopTcpServer();
+		FileWriteModel.setStopTransm();
 	}
 
 	/**

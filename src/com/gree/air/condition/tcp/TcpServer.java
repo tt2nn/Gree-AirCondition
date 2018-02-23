@@ -107,14 +107,16 @@ public class TcpServer implements Runnable {
 
 					try {
 
+						ControlCenter.pauseUploadData();
+
 						closeStream();
 
 						Thread.sleep(10 * 1000);
 
 						if (Server_ReConnect_Num == 5) {
 
-							ControlCenter.destoryUploadData();
-							ControlCenter.stopTcpServer();
+							Server_ReConnect_Num = 0;
+							ControlCenter.chooseRest();
 
 						} else {
 
@@ -177,7 +179,6 @@ public class TcpServer implements Runnable {
 			if (outputStream != null) {
 
 				outputStream.write(Constant.Tcp_Out_Buffer, 0, length);
-				Server_ReConnect_Num = 0;
 			}
 
 		} catch (IOException e) {

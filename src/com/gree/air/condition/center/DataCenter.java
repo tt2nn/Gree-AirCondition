@@ -649,10 +649,18 @@ public class DataCenter implements Runnable {
 
 		Can_Upload_Data = false;
 		Data_Buffer_Out_End_Mark = -1;
-		
+
 		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
 		Transmit_Level = TRANSMIT_LEVEL_STOP;
 
+	}
+
+	/**
+	 * 暂停上报
+	 */
+	public static void pauseUploadData() {
+
+		Can_Upload_Data = false;
 	}
 
 	/**
@@ -665,8 +673,6 @@ public class DataCenter implements Runnable {
 
 		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
 		Transmit_Level = TRANSMIT_LEVEL_STOP;
-
-		ControlCenter.stopTcpServer();
 
 	}
 
@@ -683,9 +689,6 @@ public class DataCenter implements Runnable {
 
 		Transmit_Cache_Warning = false;
 
-		FileWriteModel.setStopTransm();
-
-		ControlCenter.stopTcpServer();
 	}
 
 }
