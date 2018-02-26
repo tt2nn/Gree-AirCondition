@@ -197,16 +197,27 @@ public class DataCenter implements Runnable {
 				// 达到上报标志位
 				if (Data_Buffer_Out_Mark == Data_Buffer_Out_End_Mark) {
 
-					ControlCenter.stopUploadData();
+					// 判断上电上报切换
+					if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER) {
 
-					if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT) {
+						if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT) {
 
-						registerBootTransmit();
+							convertUploadData();
+							ControlCenter.periodBootTransmit();
 
-					} else if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_CHECK) {
+						} else if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_CHECK) {
 
-						registerCheckTransmit();
+							convertUploadData();
+							ControlCenter.periodCheckTransmit();
 
+						} else {
+
+							ControlCenter.stopUploadData();
+						}
+
+					} else {
+
+						ControlCenter.stopUploadData();
 					}
 
 					continue;
