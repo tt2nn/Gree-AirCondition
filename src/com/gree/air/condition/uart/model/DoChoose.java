@@ -51,6 +51,11 @@ public class DoChoose {
 		chooseResp = true;
 	}
 
+	public static void reset() {
+
+		chooseResp = false;
+	}
+
 	public static boolean isChooseResp() {
 		return chooseResp;
 	}

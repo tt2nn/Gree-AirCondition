@@ -169,6 +169,7 @@ public class ControlCenter {
 	 */
 	public static void chooseRest() {
 
+		DoChoose.reset();
 		Constant.Gprs_Choosed = false;
 		GpioPin.communicationDark();
 		FileWriteModel.setNotChoosed();
