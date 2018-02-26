@@ -44,8 +44,8 @@ public class SmsModel {
 			return;
 		}
 
-		int start = phoneAddress.indexOf("");
-		int end = phoneAddress.indexOf("", start);
+		int start = phoneAddress.indexOf("sms://") + 6;
+		int end = phoneAddress.indexOf(":", start);
 
 		if (start == -1 || end == -1 || end <= start) {
 
@@ -100,6 +100,12 @@ public class SmsModel {
 
 		// 验证 短信密码
 		if (!smsGetPwd(Constant.Sms_Receive).equals(Constant.Sms_Pwd)) {
+
+			return;
+		}
+
+		// 普通用户不能进行设置
+		if (!isAdmin && !Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
 
 			return;
 		}
