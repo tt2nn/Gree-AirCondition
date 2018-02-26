@@ -38,7 +38,7 @@ public class SmsModel {
 		// || (Constant.Sms_Receive.startsWith(SmsConstant.Sms_Split_Key_Symbol)
 		// && Constant.Sms_Receive.endsWith(SMS_GREE))) {
 
-		// TODO 验证白名单
+		// 验证白名单
 		if (!Utils.isNotEmpty(phoneAddress)) {
 
 			return;
@@ -62,9 +62,10 @@ public class SmsModel {
 		boolean phoneValid = false;
 		boolean isAdmin = false;
 
-		for (String adminPhone : Constant.Sms_Admin_List) {
+		// 验证管理员
+		for (int i = 0; i < Constant.Sms_Admin_List.length; i++) {
 
-			if (adminPhone.equals(phone)) {
+			if (Constant.Sms_Admin_List[i].equals(phone)) {
 
 				phoneValid = true;
 				isAdmin = true;
@@ -74,11 +75,13 @@ public class SmsModel {
 
 		if (!phoneValid) {
 
-			for (String userPhone : Constant.Sms_User_List) {
+			// 验证普通用户
+			for (int i = 0; i < Constant.Sms_User_List.length; i++) {
 
-				if (userPhone.equals(phone)) {
+				if (Constant.Sms_User_List[i].equals(phone)) {
 
 					phoneValid = true;
+					isAdmin = true;
 					break;
 				}
 			}
