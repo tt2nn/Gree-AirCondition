@@ -197,7 +197,7 @@ public class DataCenter implements Runnable {
 				// 达到上报标志位
 				if (Data_Buffer_Out_Mark == Data_Buffer_Out_End_Mark) {
 
-					stopUploadData();
+					ControlCenter.stopUploadData();
 
 					if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT) {
 
@@ -645,7 +645,7 @@ public class DataCenter implements Runnable {
 	/**
 	 * 用于转换数据上报时调用
 	 */
-	public static void convertUploadData() {
+	private static void convertUploadData() {
 
 		Can_Upload_Data = false;
 		Data_Buffer_Out_End_Mark = -1;
