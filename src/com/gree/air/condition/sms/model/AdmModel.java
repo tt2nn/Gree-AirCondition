@@ -38,11 +38,22 @@ public class AdmModel {
 	 * 服务器 查询 GPRS 管理员号码 回复服务器短信
 	 */
 	private static void admQuerySend() {
-		String value1 = "1";
-		String admPhone = "";
-		String smsValue = value1 + SmsConstant.Sms_Split_Value_Symbol + admPhone;
 
-		SmsModel.buildMessage(SmsConstant.Sms_Type_Adm, smsValue);
+		StringBuffer stringBuffer = new StringBuffer();
+
+		for (int i = 0; i < Constant.Sms_Admin_List.length; i++) {
+
+			stringBuffer.append(i + 1);
+			stringBuffer.append(SmsConstant.Sms_Split_Value_Symbol);
+			stringBuffer.append(Constant.Sms_Admin_List[i]);
+
+			if (i < Constant.Sms_Admin_List.length - 1) {
+
+				stringBuffer.append(SmsConstant.Sms_Split_Value_Symbol);
+			}
+		}
+
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Adm, stringBuffer.toString());
 	}
 
 	/**
