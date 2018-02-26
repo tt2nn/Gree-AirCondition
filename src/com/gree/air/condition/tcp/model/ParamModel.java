@@ -217,6 +217,66 @@ public class ParamModel {
 
 								FileWriteModel.setSmsCheckTime(time);
 							}
+
+						} else if (Utils.stringContains(param, "ADM*1")) {
+
+							Constant.Sms_Admin_List[0] = value;
+
+						} else if (Utils.stringContains(param, "ADM*2")) {
+
+							Constant.Sms_Admin_List[1] = value;
+
+						} else if (Utils.stringContains(param, "ADM*3")) {
+
+							Constant.Sms_Admin_List[2] = value;
+
+						} else if (Utils.stringContains(param, "ADM*4")) {
+
+							Constant.Sms_Admin_List[3] = value;
+
+						} else if (Utils.stringContains(param, "ADM*5")) {
+
+							Constant.Sms_Admin_List[4] = value;
+
+						} else if (Utils.stringContains(param, "USRON*1")) {
+
+							Constant.Sms_User_List[0] = value;
+
+						} else if (Utils.stringContains(param, "USRON*2")) {
+
+							Constant.Sms_User_List[1] = value;
+
+						} else if (Utils.stringContains(param, "USRON*3")) {
+
+							Constant.Sms_User_List[2] = value;
+
+						} else if (Utils.stringContains(param, "USRON*4")) {
+
+							Constant.Sms_User_List[3] = value;
+
+						} else if (Utils.stringContains(param, "USRON*5")) {
+
+							Constant.Sms_User_List[4] = value;
+
+						} else if (Utils.stringContains(param, "USRON*6")) {
+
+							Constant.Sms_User_List[5] = value;
+
+						} else if (Utils.stringContains(param, "USRON*7")) {
+
+							Constant.Sms_User_List[6] = value;
+
+						} else if (Utils.stringContains(param, "USRON*8")) {
+
+							Constant.Sms_User_List[7] = value;
+
+						} else if (Utils.stringContains(param, "USRON*9")) {
+
+							Constant.Sms_User_List[8] = value;
+
+						} else if (Utils.stringContains(param, "USRON*10")) {
+
+							Constant.Sms_User_List[9] = value;
 						}
 					}
 				}
@@ -240,6 +300,9 @@ public class ParamModel {
 				FileWriteModel.setSmsServ(ip, port);
 			}
 		}
+
+		FileWriteModel.setSmsAdmin();
+		FileWriteModel.setSmsUser();
 
 		update();
 	}
