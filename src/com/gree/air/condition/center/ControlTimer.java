@@ -114,7 +114,7 @@ public class ControlTimer implements Runnable {
 				sleepTime = Sleep_Time - (Constant.System_Time - workTime);
 				sleepTime = sleepTime < 0 ? 0 : sleepTime;
 
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 
 				e.printStackTrace();
 			}
