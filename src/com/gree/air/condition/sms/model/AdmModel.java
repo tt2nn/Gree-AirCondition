@@ -2,7 +2,9 @@ package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
+import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.sms.SmsModel;
+import com.gree.air.condition.utils.Utils;
 
 /**
  * 管理员号码
@@ -64,12 +66,41 @@ public class AdmModel {
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
 		int start = 0;
-		int end = smsValue.indexOf(SmsConstant.Sms_Split_Value_Symbol, start);
-		String number = smsValue.substring(start, end);
+		int end = 0;
+		boolean isPhone = false;
+		int num = 0;
+		boolean isChange = false;
 
-		start = end + 1;
-		end = smsValue.length();
-		String phone = smsValue.substring(start, end);
+		while ((end = smsValue.indexOf(SmsConstant.Sms_Split_Value_Symbol, start)) != -1) {
+
+			if (!isPhone) {
+
+				String numString = smsValue.substring(start, end);
+				num = Utils.stringToInt(numString) - 1;
+
+				start = end + 1;
+				isPhone = true;
+
+			} else {
+
+				String phone = smsValue.substring(start, end);
+
+				if (Utils.isNotEmpty(phone) && num > 0 && num < Constant.Sms_Admin_List.length) {
+
+					Constant.Sms_Admin_List[num] = phone;
+
+					start = end + 1;
+					isPhone = false;
+					isChange = true;
+
+				}
+			}
+		}
+
+		if (isChange) {
+
+			FileWriteModel.setSmsAdmin();
+		}
 
 		admSetSend();
 	}
