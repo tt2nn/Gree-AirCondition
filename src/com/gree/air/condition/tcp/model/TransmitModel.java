@@ -121,7 +121,7 @@ public class TransmitModel {
 		Constant.Tcp_Out_Data_Buffer[18] = (byte) 0x96;
 
 		// 获取年月日时分秒
-		date.setTime(Constant.System_Time);
+		date.setTime(time);
 		calendar.setTime(date);
 		Constant.Tcp_Out_Data_Buffer[19] = (byte) (calendar.get(Calendar.YEAR) - 2000);
 		Constant.Tcp_Out_Data_Buffer[20] = (byte) (calendar.get(Calendar.MONTH) + 1);
