@@ -30,7 +30,7 @@ public class SmsModel {
 	/**
 	 * 解析由服务器发送的短信，判断短信的功能，交给对应的模块进行处理
 	 */
-	public static void analyze() {
+	public static void analyze(String phoneAddress) {
 
 		// 判断是否是正确的短信格式
 		// if ((Constant.Sms_Receive.startsWith(SMS_GREE)
@@ -39,6 +39,55 @@ public class SmsModel {
 		// && Constant.Sms_Receive.endsWith(SMS_GREE))) {
 
 		// TODO 验证白名单
+		if (!Utils.isNotEmpty(phoneAddress)) {
+
+			return;
+		}
+
+		int start = phoneAddress.indexOf("");
+		int end = phoneAddress.indexOf("", start);
+
+		if (start == -1 || end == -1 || end <= start) {
+
+			return;
+		}
+
+		String phone = phoneAddress.substring(start, end);
+
+		if (!Utils.isNotEmpty(phone)) {
+
+			return;
+		}
+
+		boolean phoneValid = false;
+		boolean isAdmin = false;
+
+		for (String adminPhone : Constant.Sms_Admin_List) {
+
+			if (adminPhone.equals(phone)) {
+
+				phoneValid = true;
+				isAdmin = true;
+				break;
+			}
+		}
+
+		if (!phoneValid) {
+
+			for (String userPhone : Constant.Sms_User_List) {
+
+				if (userPhone.equals(phone)) {
+
+					phoneValid = true;
+					break;
+				}
+			}
+		}
+
+		if (!phoneValid) {
+
+			return;
+		}
 
 		// 验空
 		if (!Utils.isNotEmpty(Constant.Sms_Receive)) {

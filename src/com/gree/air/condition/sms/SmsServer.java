@@ -54,7 +54,7 @@ public class SmsServer implements Runnable {
 						// message).getPayloadText());
 
 						Constant.Sms_Receive = ((TextMessage) message).getPayloadText();
-						SmsModel.analyze();
+						SmsModel.analyze(Sms_Address);
 
 					} else if (message instanceof BinaryMessage) {
 
@@ -63,7 +63,7 @@ public class SmsServer implements Runnable {
 						// System.out.println("Recieved Binary Messsage: \n" + new String(data));
 
 						Constant.Sms_Receive = new String(((BinaryMessage) message).getPayloadData());
-						SmsModel.analyze();
+						SmsModel.analyze(Sms_Address);
 					}
 
 				}
