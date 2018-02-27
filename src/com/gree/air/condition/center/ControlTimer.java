@@ -45,7 +45,7 @@ public class ControlTimer implements Runnable {
 				if (ControlCenter.canWorking()) {
 
 					// 上传数据时灯闪烁
-					if (!ControlCenter.Tcp_Error_Pause_Upload
+					if (Constant.GPRS_ERROR_TYPE == Constant.GPRS_ERROR_TYPE_NO
 							&& Constant.Transmit_Type != Constant.TRANSMIT_TYPE_STOP) {
 
 						if (GpioTool.getErrorValue()) {
@@ -62,7 +62,7 @@ public class ControlTimer implements Runnable {
 							GpioPin.communicationLight();
 						}
 
-					} else if (ControlCenter.Tcp_Error_Pause_Upload) {
+					} else if (Constant.GPRS_ERROR_TYPE != Constant.GPRS_ERROR_TYPE_NO) {
 
 						// 异常状态下 异常灯亮 通讯灯灭
 						if (!GpioTool.getErrorValue()) {
@@ -127,7 +127,7 @@ public class ControlTimer implements Runnable {
 					}
 
 					// 恢复数据上报
-					if (TcpServer.isServerNormal() && ControlCenter.Tcp_Error_Pause_Upload
+					if (TcpServer.isServerNormal() && Constant.GPRS_ERROR_TYPE != Constant.GPRS_ERROR_TYPE_NO
 							&& Constant.Transmit_Type != Constant.TRANSMIT_TYPE_STOP) {
 
 						ControlCenter.recoverUpload();

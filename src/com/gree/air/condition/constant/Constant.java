@@ -144,4 +144,12 @@ public class Constant {
 
 	public static boolean Init_Success = false;
 
+	// =============== gprs error type ===================
+
+	public static int GPRS_ERROR_TYPE_NO = 0;
+	public static int GPRS_ERROR_TYPE_SIM = 1;
+	public static int GPRS_ERROR_TYPE_NETWORK = 2;
+
+	public static int GPRS_ERROR_TYPE = GPRS_ERROR_TYPE_NO;
+
 }

@@ -107,6 +107,7 @@ public class TcpServer implements Runnable {
 
 					try {
 
+						Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NETWORK;
 						ControlCenter.pauseUploadData();
 
 						closeStream();
@@ -197,7 +198,7 @@ public class TcpServer implements Runnable {
 			if (outputStream != null) {
 
 				outputStream.write(Constant.Tcp_Out_Data_Buffer, 0, length);
-				Server_ReConnect_Num = 0;
+//				Server_ReConnect_Num = 0;
 			}
 
 		} catch (IOException e) {

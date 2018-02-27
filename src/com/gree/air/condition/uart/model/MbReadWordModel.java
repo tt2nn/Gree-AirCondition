@@ -17,7 +17,7 @@ public class MbReadWordModel {
 	 * 处理
 	 */
 	public static void analyze() {
-		
+
 		if (!Constant.Gprs_Choosed && !DoChoose.isChooseResp()) {
 
 			return;
@@ -44,7 +44,12 @@ public class MbReadWordModel {
 
 		// word9
 		Constant.Uart_Out_Buffer[23] = (byte) 0x00;
-		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP) {
+
+		if (Constant.GPRS_ERROR_TYPE != Constant.GPRS_ERROR_TYPE_NO) {
+
+			Constant.Uart_Out_Buffer[24] = (byte) 0x02;
+
+		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP) {
 
 			Constant.Uart_Out_Buffer[24] = (byte) 0x00;
 
@@ -55,7 +60,15 @@ public class MbReadWordModel {
 
 		// word10
 		Constant.Uart_Out_Buffer[25] = (byte) 0x00;
-		Constant.Uart_Out_Buffer[26] = (byte) 0x00;
+
+		if (Constant.GPRS_ERROR_TYPE == Constant.GPRS_ERROR_TYPE_NETWORK) {
+
+			Constant.Uart_Out_Buffer[26] = (byte) 0x03;
+
+		} else {
+
+			Constant.Uart_Out_Buffer[26] = (byte) 0x00;
+		}
 
 		// word11
 		Constant.Uart_Out_Buffer[27] = (byte) 0x00;
