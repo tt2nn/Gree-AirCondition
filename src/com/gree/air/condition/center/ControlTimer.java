@@ -99,31 +99,48 @@ public class ControlTimer implements Runnable {
 					// 周期性心跳
 					if (Constant.System_Time - Constant.Heart_Beat_Time >= Constant.Tcp_Heart_Beat_Period * 1000) {
 
-						ControlCenter.heartBeat();
+						if (Constant.GPRS_ERROR_TYPE != Constant.GPRS_ERROR_TYPE_NO) {
+
+							Constant.Heart_Beat_Time += 10 * 1000;
+
+						} else {
+
+							ControlCenter.heartBeat();
+						}
 					}
 
 					// 周期性开机或者打卡上报
 					if (Constant.System_Time - ControlCenter.Transmit_Period_Time >= Constant.Transmit_Check_Period
 							* 1000) {
 
-						ControlCenter.periodBootTransmit();
-						ControlCenter.periodCheckTransmit();
+						if (Constant.GPRS_ERROR_TYPE != Constant.GPRS_ERROR_TYPE_NO) {
+
+							ControlCenter.Transmit_Period_Time = Constant.System_Time;
+
+						} else {
+
+							ControlCenter.periodBootTransmit();
+							ControlCenter.periodCheckTransmit();
+						}
 					}
 
-					// 判断进行按键上报
-					if (Constant.System_Time - Push_Time >= 3 * 1000 && listensePush
-							&& Constant.Transmit_Type != Constant.TRANSMIT_TYPE_PUSHKEY) {
+					if (Constant.GPRS_ERROR_TYPE == Constant.GPRS_ERROR_TYPE_NO) {
 
-						listensePush = false;
-						ControlCenter.pushKeyTransmit();
-					}
+						// 判断进行按键上报
+						if (Constant.System_Time - Push_Time >= 3 * 1000 && listensePush
+								&& Constant.Transmit_Type != Constant.TRANSMIT_TYPE_PUSHKEY) {
 
-					// 判断停止按键上报
-					if (Constant.System_Time - Push_Time >= 5 * 1000 && listensePush
-							&& Constant.Transmit_Type == Constant.TRANSMIT_TYPE_PUSHKEY) {
+							listensePush = false;
+							ControlCenter.pushKeyTransmit();
+						}
 
-						listensePush = false;
-						ControlCenter.stopUploadData();
+						// 判断停止按键上报
+						if (Constant.System_Time - Push_Time >= 5 * 1000 && listensePush
+								&& Constant.Transmit_Type == Constant.TRANSMIT_TYPE_PUSHKEY) {
+
+							listensePush = false;
+							ControlCenter.stopUploadData();
+						}
 					}
 
 					// 恢复数据上报
