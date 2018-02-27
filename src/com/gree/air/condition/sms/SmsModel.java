@@ -81,7 +81,6 @@ public class SmsModel {
 				if (Constant.Sms_User_List[i].equals(phone)) {
 
 					phoneValid = true;
-					isAdmin = true;
 					break;
 				}
 			}
@@ -229,7 +228,9 @@ public class SmsModel {
 	 */
 	public static String smsGetValue(String sms) {
 
-		int start = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, 1) + 1);
+		int start = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, 0);
+		start = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, start + 1);
+		start = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, start + 1);
 
 		int end = 0;
 		int poi = start;
