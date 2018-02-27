@@ -52,6 +52,16 @@ public class GpioTool {
 	}
 
 	/**
+	 * 获取异常灯状态
+	 * 
+	 * @return
+	 */
+	public static boolean getErrorValue() {
+
+		return getLightValue(GpioPin.pinoutError);
+	}
+
+	/**
 	 * 通讯灯的状态
 	 */
 	private static boolean getLightValue(GPIOPin gpioPin) {

@@ -44,8 +44,14 @@ public class ControlTimer implements Runnable {
 
 				if (ControlCenter.canWorking()) {
 
-					// 上传数据时灯闪烁、空闲时灯常亮
-					if (Constant.Transmit_Type != Constant.TRANSMIT_TYPE_STOP) {
+					// 上传数据时灯闪烁
+					if (!ControlCenter.Tcp_Error_Pause_Upload
+							&& Constant.Transmit_Type != Constant.TRANSMIT_TYPE_STOP) {
+
+						if (GpioTool.getErrorValue()) {
+
+							GpioPin.errorDark();
+						}
 
 						if (GpioTool.getCommunicationValue()) {
 
@@ -56,13 +62,31 @@ public class ControlTimer implements Runnable {
 							GpioPin.communicationLight();
 						}
 
+					} else if (ControlCenter.Tcp_Error_Pause_Upload) {
+
+						// 异常状态下 异常灯亮 通讯灯灭
+						if (!GpioTool.getErrorValue()) {
+
+							GpioPin.errorLight();
+						}
+
+						if (GpioTool.getCommunicationValue()) {
+
+							GpioPin.communicationDark();
+						}
+
 					} else {
+
+						// 空闲时 异常灯灭 通讯灯常亮
+						if (GpioTool.getErrorValue()) {
+
+							GpioPin.errorDark();
+						}
 
 						if (!GpioTool.getCommunicationValue()) {
 
 							GpioPin.communicationLight();
 						}
-
 					}
 
 					// 每三秒打包一次数据
