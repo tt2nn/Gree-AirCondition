@@ -24,7 +24,7 @@ public class ParamModel {
 		int poi = 19;
 
 		String apn = "APN:";
-		if (Constant.device.getMcc() == 1) {
+		if (Constant.device.getMnc() == 1) {
 
 			apn += Constant.Apn_Cucc;
 		} else {
@@ -61,11 +61,8 @@ public class ParamModel {
 				poi++;
 			}
 
-			if (i < res.length - 1) {
-
-				Constant.Tcp_Out_Buffer[poi] = (byte) 0x00;
-				poi++;
-			}
+			Constant.Tcp_Out_Buffer[poi] = (byte) 0x00;
+			poi++;
 		}
 
 		TcpModel.build(poi - 18, poi);
@@ -126,35 +123,36 @@ public class ParamModel {
 
 				if (start > 0) {
 
+					String key = param.substring(0, start - 1);
 					String value = param.substring(start, param.length());
 
 					if (Utils.isNotEmpty(value)) {
 
-						if (Utils.stringContains(param, "PWD") && !Constant.Sms_Pwd.equals(value)) { // sms pwd
+						if (key.equals("PWD") && !Constant.Sms_Pwd.equals(value)) { // sms pwd
 
 							FileWriteModel.setSmsPassword(value);
 
-						} else if (Utils.stringContains(param, "APN")) { // apn
+						} else if (key.equals("APN")) { // apn
 
 							apn = value;
 
-						} else if (Utils.stringContains(param, "APNU")) { // apn name
+						} else if (key.equals("APNU")) { // apn name
 
 							apnu = value;
 
-						} else if (Utils.stringContains(param, "APNP")) { // apn pwd
+						} else if (key.equals("APNP")) { // apn pwd
 
 							apnp = value;
 
-						} else if (Utils.stringContains(param, "IP")) { // tcp ip
+						} else if (key.equals("IP")) { // tcp ip
 
 							ip = value;
 
-						} else if (Utils.stringContains(param, "PORT")) { // tcp port
+						} else if (key.equals("PORT")) { // tcp port
 
 							port = value;
 
-						} else if (Utils.stringContains(param, "WT")) { // heart beat period
+						} else if (key.equals("WT")) { // heart beat period
 
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Tcp_Heart_Beat_Period) {
@@ -162,7 +160,7 @@ public class ParamModel {
 								FileWriteModel.setSmsHb(time);
 							}
 
-						} else if (Utils.stringContains(param, "ERRT")) { // error transmit start time
+						} else if (key.equals("ERRT")) { // error transmit start time
 
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Error_Start_Time) {
@@ -170,7 +168,7 @@ public class ParamModel {
 								FileWriteModel.setSmsErrt(time * 60);
 							}
 
-						} else if (Utils.stringContains(param, "DEBT")) { // error transmit end time
+						} else if (key.equals("DEBT")) { // error transmit end time
 
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Error_End_Time) {
@@ -178,7 +176,7 @@ public class ParamModel {
 								FileWriteModel.setSmsDebt(time * 60);
 							}
 
-						} else if (Utils.stringContains(param, "BUTT")) { // push key transmit end time
+						} else if (key.equals("BUTT")) { // push key transmit end time
 
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Pushkey_End_Time) {
@@ -186,7 +184,7 @@ public class ParamModel {
 								FileWriteModel.setSmsButt(time * 60);
 							}
 
-						} else if (Utils.stringContains(param, "HEALT")) { // change transmit end time
+						} else if (key.equals("HEALT")) { // change transmit end time
 
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Change_End_Time) {
@@ -194,7 +192,7 @@ public class ParamModel {
 								FileWriteModel.setSmsHealt(time * 60);
 							}
 
-						} else if (Utils.stringContains(param, "SIG")) { // signal period time
+						} else if (key.equals("SIG")) { // signal period time
 
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Tcp_Sig_Period) {
@@ -202,7 +200,7 @@ public class ParamModel {
 								FileWriteModel.setSmsSig(time * 60);
 							}
 
-						} else if (Utils.stringContains(param, "CHECKPERIOD")) { // check transmit period time
+						} else if (key.equals("CHECKPERIOD")) { // check transmit period time
 
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Check_Period) {
@@ -210,7 +208,7 @@ public class ParamModel {
 								FileWriteModel.setSmsCheckPeriod(time * 60);
 							}
 
-						} else if (Utils.stringContains(param, "CHECKTIME")) { // check transmit end time
+						} else if (key.equals("CHECKTIME")) { // check transmit end time
 
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Check_End_Time) {
@@ -218,70 +216,70 @@ public class ParamModel {
 								FileWriteModel.setSmsCheckTime(time);
 							}
 
-						} else if (Utils.stringContains(param, "ADM*1")) {
+						} else if (key.equals("ADM*1")) {
 
 							Constant.Sms_Admin_List[0] = value;
 
-						} else if (Utils.stringContains(param, "ADM*2")) {
+						} else if (key.equals("ADM*2")) {
 
 							Constant.Sms_Admin_List[1] = value;
 
-						} else if (Utils.stringContains(param, "ADM*3")) {
+						} else if (key.equals("ADM*3")) {
 
 							Constant.Sms_Admin_List[2] = value;
 
-						} else if (Utils.stringContains(param, "ADM*4")) {
+						} else if (key.equals("ADM*4")) {
 
 							Constant.Sms_Admin_List[3] = value;
 
-						} else if (Utils.stringContains(param, "ADM*5")) {
+						} else if (key.equals("ADM*5")) {
 
 							Constant.Sms_Admin_List[4] = value;
 
-						} else if (Utils.stringContains(param, "USRON*1")) {
+						} else if (key.equals("USRON*1")) {
 
 							Constant.Sms_User_List[0] = value;
 
-						} else if (Utils.stringContains(param, "USRON*2")) {
+						} else if (key.equals("USRON*2")) {
 
 							Constant.Sms_User_List[1] = value;
 
-						} else if (Utils.stringContains(param, "USRON*3")) {
+						} else if (key.equals("USRON*3")) {
 
 							Constant.Sms_User_List[2] = value;
 
-						} else if (Utils.stringContains(param, "USRON*4")) {
+						} else if (key.equals("USRON*4")) {
 
 							Constant.Sms_User_List[3] = value;
 
-						} else if (Utils.stringContains(param, "USRON*5")) {
+						} else if (key.equals("USRON*5")) {
 
 							Constant.Sms_User_List[4] = value;
 
-						} else if (Utils.stringContains(param, "USRON*6")) {
+						} else if (key.equals("USRON*6")) {
 
 							Constant.Sms_User_List[5] = value;
 
-						} else if (Utils.stringContains(param, "USRON*7")) {
+						} else if (key.equals("USRON*7")) {
 
 							Constant.Sms_User_List[6] = value;
 
-						} else if (Utils.stringContains(param, "USRON*8")) {
+						} else if (key.equals("USRON*8")) {
 
 							Constant.Sms_User_List[7] = value;
 
-						} else if (Utils.stringContains(param, "USRON*9")) {
+						} else if (key.equals("USRON*9")) {
 
 							Constant.Sms_User_List[8] = value;
 
-						} else if (Utils.stringContains(param, "USRON*10")) {
+						} else if (key.equals("USRON*10")) {
 
 							Constant.Sms_User_List[9] = value;
 						}
 					}
 				}
 
-				poi = i;
+				poi = i + 1;
 			}
 
 		}
