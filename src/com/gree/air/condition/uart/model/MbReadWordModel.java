@@ -76,7 +76,15 @@ public class MbReadWordModel {
 
 		// word12
 		Constant.Uart_Out_Buffer[29] = (byte) 0x00;
-		Constant.Uart_Out_Buffer[30] = (byte) 0x00;
+		if (Constant.Data_Word_Change) {
+
+			Constant.Uart_Out_Buffer[30] = (byte) 0xFF;
+			Constant.Data_Word_Change = false;
+
+		} else {
+
+			Constant.Uart_Out_Buffer[30] = (byte) 0x00;
+		}
 
 		int readStart = Utils.bytesToInt(Constant.Uart_In_Buffer, 2, 3);
 		// 回复读数据内容

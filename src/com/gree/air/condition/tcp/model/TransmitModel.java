@@ -102,13 +102,13 @@ public class TransmitModel {
 		case Constant.TRANSMIT_TYPE_BOOT:
 
 			ControlCenter.startBootTransmit();
-			
+
 			break;
 
 		case Constant.TRANSMIT_TYPE_CHECK:
 
 			ControlCenter.startCheckTransmit();
-			
+
 			break;
 		}
 	}
@@ -164,10 +164,15 @@ public class TransmitModel {
 				|| Constant.Tcp_In_Buffer[25] == (byte) 0x31) {
 
 			Utils.resetData(Constant.Server_Data_Word_Buffer);
-			
+
 			for (int i = 0; i < dataLength; i++) {
 
 				Constant.Server_Data_Word_Buffer[i] = Constant.Tcp_In_Buffer[26 + i];
+			}
+
+			if (Constant.Tcp_In_Buffer[25] == (byte) 0x11) {
+
+				Constant.Data_Word_Change = true;
 			}
 
 			return;
@@ -181,6 +186,11 @@ public class TransmitModel {
 				Constant.Server_Data_Word_Buffer[i] = Constant.Tcp_In_Buffer[i - 214 + 26];
 			}
 
+			if (Constant.Tcp_In_Buffer[25] == (byte) 0x22) {
+
+				Constant.Data_Word_Change = true;
+			}
+
 			return;
 		}
 
@@ -191,6 +201,8 @@ public class TransmitModel {
 
 				Constant.Server_Data_Word_Buffer[i] = Constant.Tcp_In_Buffer[i - 254 + 26];
 			}
+
+			Constant.Data_Word_Change = true;
 
 			return;
 		}

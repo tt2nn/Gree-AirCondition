@@ -66,17 +66,14 @@ public class Constant {
 	public static byte Transmit_Type = TRANSMIT_TYPE_STOP;
 
 	// =============== about sms constant =====================
-
 	public static String Sms_Receive = "";
 	public static String Sms_Send = "";
 
 	// ================= about file constant ================
-
 	public static byte[] File_Buffer = new byte[256];
 	public static int File_Buffer_Length = 0;
 
 	// =============== about cache constant ===================
-
 	// 服务器下发的数据
 	public static byte[] Server_Data_Word_Buffer = new byte[1024];
 	public static byte[] Server_Data_Byte_Buffer = new byte[256];
@@ -87,7 +84,6 @@ public class Constant {
 	public static long Stop_Time = 0;
 
 	// =================== about params ===================
-
 	// 普通手机号白名单
 	public static String[] Sms_User_List = { "18926932769", "13128540406", "13113444079", "13128541143", "18666911714",
 			"07568663110", "07568522593", "07568668938", "07568669703", "07568668717" };
@@ -131,7 +127,6 @@ public class Constant {
 	public static byte Transmit_Power_Type = TRANSMIT_TYPE_STOP;
 
 	// ================== about gprs info =================================
-
 	public static Device device = new Device();
 
 	// Mac地址
@@ -139,17 +134,18 @@ public class Constant {
 	public static byte[] Server_Mac = new byte[7];
 
 	// ================= about interim params =======================
-
 	public static long Heart_Beat_Time = 0L;
 
 	public static boolean Init_Success = false;
 
 	// =============== gprs error type ===================
-
 	public static int GPRS_ERROR_TYPE_NO = 0;
 	public static int GPRS_ERROR_TYPE_SIM = 1;
 	public static int GPRS_ERROR_TYPE_NETWORK = 2;
 
 	public static int GPRS_ERROR_TYPE = GPRS_ERROR_TYPE_NO;
+
+	// 是否有改变的数据
+	public static boolean Data_Word_Change = false;
 
 }
