@@ -36,6 +36,8 @@ public class FileConstant {
 	public static final String FILE_NAME_SMS_USER = "File_Name_Sms_User";
 	// sms admin
 	public static final String FILE_NAME_SMS_ADMIN = "File_Name_Sms_Admin";
+	// BAUD RATE 波特率
+	public static final String FILE_NAME_BAUD_RATE = "File_Name_Baud_Rate";
 
 	public static final String FILE_STRING_SPLIP_SYMBOL = ";";
 }

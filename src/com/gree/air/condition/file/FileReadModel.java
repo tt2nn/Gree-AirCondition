@@ -16,4 +16,16 @@ public class FileReadModel extends FileModel {
 		return address;
 	}
 
+	/**
+	 * 获取波特率
+	 * 
+	 * @return
+	 */
+	public static int getBaudRate() {
+
+		int value = readFileInt(FileConstant.FILE_NAME_BAUD_RATE);
+
+		return value;
+	}
+
 }

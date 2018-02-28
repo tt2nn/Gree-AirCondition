@@ -277,4 +277,15 @@ public class FileWriteModel extends FileModel {
 
 	}
 
+	/**
+	 * 存储波特率
+	 * 
+	 * @param value
+	 */
+	public static void setBaudRate(int value) {
+
+		writeFile(FileConstant.FILE_NAME_BAUD_RATE, value);
+
+	}
+
 }
