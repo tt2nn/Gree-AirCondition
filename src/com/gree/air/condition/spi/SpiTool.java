@@ -74,13 +74,29 @@ public class SpiTool {
 				erase(Write_Address);
 			}
 
+			// for (int i = 0; i < 7; i++) {
+			//
+			// flashROM.pageProgram(Write_Address, Constant.Data_Buffer, Page_Size * i,
+			// Page_Size);
+			// Write_Address += Page_Size;
+			// }
+			//
+			// Write_Address += Page_Size;
+
 			for (int i = 0; i < 7; i++) {
 
-				flashROM.pageProgram(Write_Address, Constant.Data_Buffer, Page_Size * i, Page_Size);
+				byte[] spiData = new byte[256];
+
+				for (int j = 0; j < Page_Size; j++) {
+
+					spiData[j] = Constant.Data_Buffer[i * Page_Size + j];
+				}
+
+				flashROM.pageProgram(Write_Address, spiData);
 				Write_Address += Page_Size;
 			}
-
 			Write_Address += Page_Size;
+
 			FileWriteModel.setSpiAddress(Write_Address);
 
 		} catch (Exception e) {

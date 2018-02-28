@@ -104,10 +104,12 @@ public class SmsModel {
 		}
 
 		// 普通用户不能进行设置
-		if (!isAdmin && !Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
-
-			return;
-		}
+		/*
+		 * if (!isAdmin && !Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol))
+		 * {
+		 * 
+		 * return; }
+		 */
 
 		// 判断短信类型
 		if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_Apn) != -1) {// 接入点

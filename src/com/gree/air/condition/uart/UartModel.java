@@ -51,10 +51,11 @@ public class UartModel {
 			}
 		}
 		if (isFrock) {
-			
+
 			FrockCheckModel.frockCheck();
+
+			return;
 		}
-		
 
 		// 如果是 A5A7 开头 则是 7E7E协议
 		if (Constant.Uart_In_Buffer[0] == (byte) 0xA5 && Constant.Uart_In_Buffer[1] == (byte) 0xA7) {
