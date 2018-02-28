@@ -116,7 +116,7 @@ public class ParamModel {
 
 		int length = Utils.bytesToInt(Constant.Tcp_In_Buffer, 16, 17);
 
-		for (int i = 19; i < length; i++) {
+		for (int i = 19; i < 19 + length; i++) {
 
 			// 查看所有的参数
 			if (Constant.Tcp_In_Buffer[i] == (byte) 0x00) {
