@@ -18,8 +18,8 @@ import com.gree.air.condition.utils.Utils;
  */
 public class UartModel {
 
-	private static final byte[] FROCK_BYTES = { (byte) 0x55, (byte) 0xAA, (byte) 0x55, (byte) 0xAA, (byte) 15,
-			(byte) 00, (byte) 00, (byte) 5D, (byte) 36 };
+	private static final byte[] FROCK_BYTES = { (byte) 0x55, (byte) 0xAA, (byte) 0x55, (byte) 0xAA, (byte) 0x15,
+			(byte) 0x00, (byte) 0x00, (byte) 0x5D, (byte) 0x36 };
 
 	/**
 	 * 判断串口通信协议类型（7E7E / modbus）
