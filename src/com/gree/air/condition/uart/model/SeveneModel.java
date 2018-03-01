@@ -108,7 +108,7 @@ public class SeveneModel {
 
 		ControlCenter.setMarker(Utils.byteGetBit(Constant.Uart_In_Buffer[11], 0),
 				Utils.byteGetBit(Constant.Uart_In_Buffer[11], 1), Utils.byteGetBit(Constant.Uart_In_Buffer[11], 2),
-				Utils.byteGetBit(Constant.Uart_In_Buffer[10], 3));
+				Utils.byteGetBit(Constant.Uart_In_Buffer[10], 3), Utils.byteGetBit(Constant.Uart_In_Buffer[10], 4));
 
 	}
 

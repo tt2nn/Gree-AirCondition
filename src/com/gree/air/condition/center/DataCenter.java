@@ -415,7 +415,7 @@ public class DataCenter implements Runnable {
 			// 正在开机上报，向后延时
 			if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CLOSE) {
 
-				checkOutEndMark(Constant.Transmit_Open_End_Time);
+				checkOutEndMark(Constant.Transmit_Close_End_Time);
 				return;
 			}
 

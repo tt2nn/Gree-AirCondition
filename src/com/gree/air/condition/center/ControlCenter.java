@@ -311,14 +311,23 @@ public class ControlCenter {
 	 * @param error
 	 * @param warning
 	 * @param change
-	 * @param boot
+	 * @param open
+	 * @param close
 	 */
-	public static void setMarker(int error, int warning, int change, int boot) {
+	public static void setMarker(int error, int warning, int change, int open, int close) {
 
 		if (Transmit_Mark_Error == 0 && error == 1) {
 
 			// 故障标志位由0-1，启动故障上报
 			DataCenter.errorTransmit();
+
+		} else if (Transmit_Mark_Open == 0 && open == 1) {
+
+			DataCenter.openTransmit();
+
+		} else if (Transmit_Mark_Close == 0 && close == 1) {
+
+			DataCenter.closeTransmit();
 
 		} else if (Transmit_Mark_Change == 0 && change == 1) {
 
@@ -346,7 +355,8 @@ public class ControlCenter {
 		Transmit_Mark_Error = error;
 		Transmit_Mark_Warning = warning;
 		Transmit_Mark_Change = change;
-
+		Transmit_Mark_Open = open;
+		Transmit_Mark_Close = close;
 	}
 
 	/**
