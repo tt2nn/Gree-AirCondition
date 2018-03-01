@@ -210,6 +210,11 @@ public class DataCenter implements Runnable {
 							ControlCenter.stopUploadData();
 						}
 
+					} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHANGE
+							&& ControlCenter.getTransmit_Mark_Change()) {
+
+						Data_Buffer_Out_End_Mark = -1;
+
 					} else {
 
 						ControlCenter.stopUploadData();
