@@ -54,7 +54,7 @@ public class Constant {
 	// 厂家参数变化上报
 	public static final byte TRANSMIT_TYPE_CHANGE = (byte) 0x05;
 	// 关机上报
-	public static final byte TRANSMIT_TYPE_CLOSE = (byte) 0x05;
+	public static final byte TRANSMIT_TYPE_CLOSE = (byte) 0x06;
 	// 选举上报
 	public static final byte TRANSMIT_TYPE_CHOOSE = (byte) 0x07;
 	// 上电上报
@@ -100,22 +100,22 @@ public class Constant {
 	public static String Tcp_Address_Ip = "192.13.182.157";
 	public static String Tcp_Address_Port = "7005";
 	// 心跳间隔
-	public static int Tcp_Heart_Beat_Period = 300;
+	public static int Tcp_Heart_Beat_Period = 5 * 60;
 	// 故障点前传输时间
-	public static int Transmit_Error_Start_Time = 1800;
+	public static int Transmit_Error_Start_Time = 30 * 60;
 	// 故障点后传输时间
-	public static int Transmit_Error_End_Time = 300;
+	public static int Transmit_Error_End_Time = 5 * 60;
 	// 厂家参数改变前传输结束时间
-	public static int Transmit_Change_End_Time = 60;
+	public static int Transmit_Change_End_Time = 1 * 60;
 	// 按键调试周期
-	public static int Transmit_Pushkey_End_Time = 14400;
+	public static int Transmit_Pushkey_End_Time = 240 * 60;
 	// 信号信息周期
-	public static int Tcp_Sig_Period = 600;
+	public static int Tcp_Sig_Period = 10 * 60;
 	// 打卡周期
-	public static int Transmit_Check_Period = 3600;
+	public static int Transmit_Check_Period = 60 * 60;
 	// 打卡时长
-	public static int Transmit_Check_End_Time = 60;
-
+	public static int Transmit_Check_End_Time = 1 * 60;
+	
 	// APN信息
 	// 联通
 	public static String Apn_Cucc = "greeac.gd";

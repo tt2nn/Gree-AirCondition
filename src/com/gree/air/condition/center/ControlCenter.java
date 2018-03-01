@@ -220,21 +220,22 @@ public class ControlCenter {
 	/**
 	 * 启动开机上报
 	 */
-	/*public static void startBootTransmit() {
-
-		Transmit_Period_Time = 0L;
-		DataCenter.registerBootTransmit();
-	}*/
+	/*
+	 * public static void startBootTransmit() {
+	 * 
+	 * Transmit_Period_Time = 0L; DataCenter.registerBootTransmit(); }
+	 */
 
 	/**
 	 * 周期性开机上报
 	 */
-	/*public static void periodBootTransmit() {
-
-		Transmit_Period_Time = Constant.System_Time;
-		DataCenter.bootTransmit();
-
-	}*/
+	/*
+	 * public static void periodBootTransmit() {
+	 * 
+	 * Transmit_Period_Time = Constant.System_Time; DataCenter.bootTransmit();
+	 * 
+	 * }
+	 */
 
 	/**
 	 * 启动打卡上报
@@ -331,7 +332,7 @@ public class ControlCenter {
 
 		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_WARNING && warning == 0) {
 
-			// 亚健康标志位由0-1，停止亚健康上报
+			// 亚健康标志位由1-0，停止亚健康上报
 			DataCenter.Transmit_Cache_Warning = false;
 			DataCenter.stopUploadData();
 
@@ -346,6 +347,50 @@ public class ControlCenter {
 		Transmit_Mark_Warning = warning;
 		Transmit_Mark_Change = change;
 
+	}
+
+	/**
+	 * get change mark
+	 * 
+	 * @return
+	 */
+	public static boolean getTransmit_Mark_Change() {
+
+		if (Transmit_Mark_Change == 1) {
+
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * get open mark
+	 * 
+	 * @return
+	 */
+	public static boolean getTransmit_Mark_Open() {
+
+		if (Transmit_Mark_Open == 1) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * get close mark
+	 * 
+	 * @return
+	 */
+	public static boolean getTransmit_Mark_Close() {
+
+		if (Transmit_Mark_Close == 1) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }
