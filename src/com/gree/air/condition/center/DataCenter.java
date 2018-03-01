@@ -20,22 +20,19 @@ public class DataCenter implements Runnable {
 	// 上报优先级 开机实时-实时-工程调试-故障-厂家参数-按键触发-亚健康-选举-上电-开机周期-打卡
 	private static final int TRANSMIT_LEVEL_STOP = 0;
 	private static final int TRANSMIT_LEVEL_CHECK = 1;
-	private static final int TRANSMIT_LEVEL_BOOT_CLOSE = 2;
-	private static final int TRANSMIT_LEVEL_POWER = 3;
-	private static final int TRANSMIT_LEVEL_CHOOSE = 4;
-	private static final int TRANSMIT_LEVEL_WARNING = 5;
-	private static final int TRANSMIT_LEVEL_PUSHKEY = 6;
-	private static final int TRANSMIT_LEVEL_CHANGE = 7;
+	private static final int TRANSMIT_LEVEL_POWER = 2;
+	private static final int TRANSMIT_LEVEL_CHOOSE = 3;
+	private static final int TRANSMIT_LEVEL_WARNING = 4;
+	private static final int TRANSMIT_LEVEL_PUSHKEY = 5;
+	private static final int TRANSMIT_LEVEL_CHANGE = 6;
+	private static final int TRANSMIT_LEVEL_OPEN_CLOSE = 7;
 	private static final int TRANSMIT_LEVEL_ERROR = 8;
 	private static final int TRANSMIT_LEVEL_DEBUG = 9;
 	private static final int TRANSMIT_LEVEL_ALWAYS = 10;
-	private static final int TRANSMIT_LEVEL_BOOT_OPEN = 11;
 	private static int Transmit_Level = TRANSMIT_LEVEL_STOP;
 
 	// 缓存数据传输模式
 	public static boolean Transmit_Cache_Warning = false;
-	// public static boolean Transmit_Cache_Check = false;
-	// public static boolean Transmit_Cache_Boot = false;
 
 	// 数据使用游标 由 0-2047
 	private static int Data_Buffer_Mark = 0;
@@ -465,38 +462,6 @@ public class DataCenter implements Runnable {
 		ControlCenter.requestStartUpload();
 
 	}
-
-	/**
-	 * 注册开机上报
-	 *//*
-		 * public static void registerBootTransmit() {
-		 * 
-		 * if (Constant.System_Time < Constant.Stop_Time) {
-		 * 
-		 * return; }
-		 * 
-		 * if (ControlCenter.getBootMark()) {
-		 * 
-		 * convertUploadData();
-		 * 
-		 * FileWriteModel.setBootTransm();
-		 * 
-		 * Constant.Transmit_Type = Constant.TRANSMIT_TYPE_BOOT; Transmit_Level =
-		 * TRANSMIT_LEVEL_BOOT_OPEN;
-		 * 
-		 * Data_Buffer_Out_End_Mark = Data_Buffer_Mark;
-		 * ControlCenter.requestStartUpload();
-		 * 
-		 * } else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP ||
-		 * Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS ||
-		 * Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT) {
-		 * 
-		 * convertUploadData();
-		 * 
-		 * FileWriteModel.setBootTransm(); }
-		 * 
-		 * }
-		 */
 
 	/**
 	 * 开机上报
