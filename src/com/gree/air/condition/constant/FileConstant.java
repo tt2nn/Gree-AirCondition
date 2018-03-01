@@ -38,6 +38,12 @@ public class FileConstant {
 	public static final String FILE_NAME_SMS_ADMIN = "File_Name_Sms_Admin";
 	// BAUD RATE 波特率
 	public static final String FILE_NAME_BAUD_RATE = "File_Name_Baud_Rate";
+	// Transmit Open File
+	public static final String FILE_NAME_OPEN_START_TIME = "File_Name_Open_Start_Time";
+	public static final String FILE_NAME_OPEN_END_TIME = "File_Name_Open_End_Time";
+	// Transmit Close File
+	public static final String FILE_NAME_CLOSE_START_TIME = "File_Name_Close_Start_Time";
+	public static final String FILE_NAME_CLOSE_END_TIME = "File_Name_Close_End_Time";
 
 	public static final String FILE_STRING_SPLIP_SYMBOL = ";";
 }

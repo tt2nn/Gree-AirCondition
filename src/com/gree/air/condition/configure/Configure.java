@@ -50,6 +50,14 @@ public class Configure extends FileReadModel {
 
 		getSmsAdmin();
 
+		getOpenStartTime();
+
+		getOpenEndTime();
+
+		getCloseStartTime();
+
+		getCloseEndTime();
+
 	}
 
 	/**
@@ -310,6 +318,58 @@ public class Configure extends FileReadModel {
 				String user = userString.substring(symbolPoi, userString.length());
 				Constant.Sms_Admin_List[adminPoi] = user;
 			}
+		}
+	}
+
+	/**
+	 * 获取开机上报前置时间
+	 */
+	private static void getOpenStartTime() {
+
+		int time = readFileInt(FileConstant.FILE_NAME_OPEN_START_TIME);
+
+		if (time > 0) {
+
+			Constant.Transmit_Open_Start_Time = time;
+		}
+	}
+
+	/**
+	 * 获取开机上报后置时间
+	 */
+	private static void getOpenEndTime() {
+
+		int time = readFileInt(FileConstant.FILE_NAME_OPEN_END_TIME);
+
+		if (time > 0) {
+
+			Constant.Transmit_Open_End_Time = time;
+		}
+	}
+
+	/**
+	 * 获取开机上报前置时间
+	 */
+	private static void getCloseStartTime() {
+
+		int time = readFileInt(FileConstant.FILE_NAME_CLOSE_START_TIME);
+
+		if (time > 0) {
+
+			Constant.Transmit_Close_Start_Time = time;
+		}
+	}
+
+	/**
+	 * 获取开机上报前置时间
+	 */
+	private static void getCloseEndTime() {
+
+		int time = readFileInt(FileConstant.FILE_NAME_CLOSE_END_TIME);
+
+		if (time > 0) {
+
+			Constant.Transmit_Close_End_Time = time;
 		}
 	}
 

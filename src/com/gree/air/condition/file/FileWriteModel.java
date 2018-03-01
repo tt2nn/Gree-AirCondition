@@ -163,9 +163,9 @@ public class FileWriteModel extends FileModel {
 	 */
 	public static void setStopTransm() {
 
-		Constant.Transmit_Power_Type = Constant.TRANSMIT_TYPE_STOP;
-		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_STOP);
-
+		// Constant.Transmit_Power_Type = Constant.TRANSMIT_TYPE_STOP;
+		// writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_STOP);
+		setCheckTransm();
 	}
 
 	/**
@@ -275,7 +275,50 @@ public class FileWriteModel extends FileModel {
 	public static void setBaudRate(int value) {
 
 		writeFile(FileConstant.FILE_NAME_BAUD_RATE, value);
+	}
 
+	/**
+	 * 存储开机上报前置时间
+	 * 
+	 * @param value
+	 */
+	public static void setOpenStartTime(int value) {
+
+		Constant.Transmit_Open_Start_Time = value;
+		writeFile(FileConstant.FILE_NAME_OPEN_START_TIME, value);
+	}
+
+	/**
+	 * 存储开机上报后置时间
+	 * 
+	 * @param value
+	 */
+	public static void setOpenEndTime(int value) {
+
+		Constant.Transmit_Open_End_Time = value;
+		writeFile(FileConstant.FILE_NAME_OPEN_END_TIME, value);
+	}
+
+	/**
+	 * 存储关机上报前置时间
+	 * 
+	 * @param value
+	 */
+	public static void setCloseStartTime(int value) {
+
+		Constant.Transmit_Close_Start_Time = value;
+		writeFile(FileConstant.FILE_NAME_CLOSE_START_TIME, value);
+	}
+
+	/**
+	 * 存储关机上报后置时间
+	 * 
+	 * @param value
+	 */
+	public static void setCloseEndTime(int value) {
+
+		Constant.Transmit_Close_End_Time = value;
+		writeFile(FileConstant.FILE_NAME_CLOSE_END_TIME, value);
 	}
 
 }
