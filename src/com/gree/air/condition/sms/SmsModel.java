@@ -14,7 +14,6 @@ import com.gree.air.condition.sms.model.HbModel;
 import com.gree.air.condition.sms.model.HealtModel;
 import com.gree.air.condition.sms.model.PwdModel;
 import com.gree.air.condition.sms.model.RstModel;
-import com.gree.air.condition.sms.model.RunStartModel;
 import com.gree.air.condition.sms.model.ServModel;
 import com.gree.air.condition.sms.model.SigModel;
 import com.gree.air.condition.sms.model.StartModel;
@@ -171,10 +170,6 @@ public class SmsModel {
 		} else if (Constant.Sms_Receive.indexOf(SmsConstant.Sms_Type_SIG) != -1) { // 信号上报周期
 
 			SigModel.smsAnalyze();
-
-		} else if (checkSmsType(SmsConstant.Sms_Type_Run_Start)) { // 开机上报
-
-			RunStartModel.smsAnalyze();
 
 		} else if (checkSmsType(SmsConstant.Sms_Type_Check_Start)) { // 打卡上报
 

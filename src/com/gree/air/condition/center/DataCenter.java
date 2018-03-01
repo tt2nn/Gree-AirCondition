@@ -200,12 +200,7 @@ public class DataCenter implements Runnable {
 					// 判断上电上报切换
 					if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER) {
 
-						if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT) {
-
-							convertUploadData();
-							ControlCenter.periodBootTransmit();
-
-						} else if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_CHECK) {
+						if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_CHECK) {
 
 							convertUploadData();
 							ControlCenter.periodCheckTransmit();
@@ -243,13 +238,6 @@ public class DataCenter implements Runnable {
 						&& Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER) {
 
 					alwaysTransmit();
-					continue;
-				}
-
-				if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT
-						&& Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER && ControlCenter.getBootMark()) {
-
-					registerBootTransmit();
 					continue;
 				}
 
@@ -329,7 +317,7 @@ public class DataCenter implements Runnable {
 	 */
 	public static void alwaysTransmit() {
 
-		if (Transmit_Level < TRANSMIT_LEVEL_ALWAYS || Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT) {
+		if (Transmit_Level < TRANSMIT_LEVEL_ALWAYS) {
 
 			// 重置静默时间
 			Constant.Stop_Time = 0;
@@ -475,68 +463,63 @@ public class DataCenter implements Runnable {
 
 	/**
 	 * 注册开机上报
-	 */
-	public static void registerBootTransmit() {
-
-		if (Constant.System_Time < Constant.Stop_Time) {
-
-			return;
-		}
-
-		if (ControlCenter.getBootMark()) {
-
-			convertUploadData();
-
-			FileWriteModel.setBootTransm();
-
-			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_BOOT;
-			Transmit_Level = TRANSMIT_LEVEL_BOOT_OPEN;
-
-			Data_Buffer_Out_End_Mark = Data_Buffer_Mark;
-			ControlCenter.requestStartUpload();
-
-		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP
-				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS
-				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT) {
-
-			convertUploadData();
-
-			FileWriteModel.setBootTransm();
-		}
-
-	}
+	 *//*
+		 * public static void registerBootTransmit() {
+		 * 
+		 * if (Constant.System_Time < Constant.Stop_Time) {
+		 * 
+		 * return; }
+		 * 
+		 * if (ControlCenter.getBootMark()) {
+		 * 
+		 * convertUploadData();
+		 * 
+		 * FileWriteModel.setBootTransm();
+		 * 
+		 * Constant.Transmit_Type = Constant.TRANSMIT_TYPE_BOOT; Transmit_Level =
+		 * TRANSMIT_LEVEL_BOOT_OPEN;
+		 * 
+		 * Data_Buffer_Out_End_Mark = Data_Buffer_Mark;
+		 * ControlCenter.requestStartUpload();
+		 * 
+		 * } else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP ||
+		 * Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS ||
+		 * Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT) {
+		 * 
+		 * convertUploadData();
+		 * 
+		 * FileWriteModel.setBootTransm(); }
+		 * 
+		 * }
+		 */
 
 	/**
 	 * 开机上报
 	 */
-	public static void bootTransmit() {
-
-		// 判断静默时间
-		if (Constant.System_Time < Constant.Stop_Time) {
-
-			return;
-		}
-
-		// 判断上报优先级
-		if (Transmit_Level > TRANSMIT_LEVEL_BOOT_CLOSE) {
-
-			return;
-		}
-
-		// 判断缓存上报状态
-		if (Constant.Transmit_Power_Type != Constant.TRANSMIT_TYPE_BOOT || Transmit_Cache_Warning) {
-
-			return;
-		}
-
-		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_BOOT;
-		Transmit_Level = TRANSMIT_LEVEL_BOOT_CLOSE;
-
-		Data_Buffer_Out_Mark = Data_Buffer_Mark;
-		checkOutEndMark(Constant.Transmit_Check_End_Time);
-
-		ControlCenter.requestStartUpload();
-	}
+	/*
+	 * public static void bootTransmit() {
+	 * 
+	 * // 判断静默时间 if (Constant.System_Time < Constant.Stop_Time) {
+	 * 
+	 * return; }
+	 * 
+	 * // 判断上报优先级 if (Transmit_Level > TRANSMIT_LEVEL_BOOT_CLOSE) {
+	 * 
+	 * return; }
+	 * 
+	 * // 判断缓存上报状态 if (Constant.Transmit_Power_Type != Constant.TRANSMIT_TYPE_BOOT
+	 * || Transmit_Cache_Warning) {
+	 * 
+	 * return; }
+	 * 
+	 * Constant.Transmit_Type = Constant.TRANSMIT_TYPE_BOOT; Transmit_Level =
+	 * TRANSMIT_LEVEL_BOOT_CLOSE;
+	 * 
+	 * Data_Buffer_Out_Mark = Data_Buffer_Mark;
+	 * checkOutEndMark(Constant.Transmit_Check_End_Time);
+	 * 
+	 * ControlCenter.requestStartUpload(); }
+	 */
 
 	/**
 	 * 注册打卡上报
@@ -549,15 +532,12 @@ public class DataCenter implements Runnable {
 		}
 
 		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP
-				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS
-				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_BOOT) {
+				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS) {
 
 			convertUploadData();
 
 			FileWriteModel.setCheckTransm();
-
 		}
-
 	}
 
 	/**

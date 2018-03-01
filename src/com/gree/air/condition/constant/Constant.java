@@ -53,6 +53,8 @@ public class Constant {
 	public static final byte TRANSMIT_TYPE_WARNING = (byte) 0x04;
 	// 厂家参数变化上报
 	public static final byte TRANSMIT_TYPE_CHANGE = (byte) 0x05;
+	// 关机上报
+	public static final byte TRANSMIT_TYPE_CLOSE = (byte) 0x05;
 	// 选举上报
 	public static final byte TRANSMIT_TYPE_CHOOSE = (byte) 0x07;
 	// 上电上报
@@ -60,7 +62,7 @@ public class Constant {
 	// 打卡上报
 	public static final byte TRANSMIT_TYPE_CHECK = (byte) 0x09;
 	// 开机上报
-	public static final byte TRANSMIT_TYPE_BOOT = (byte) 0X0A;
+	public static final byte TRANSMIT_TYPE_OPEN = (byte) 0X0A;
 	// 停止上报
 	public static final byte TRANSMIT_TYPE_STOP = (byte) 0xFF;
 	// 缓存 上报数据状态 默认无

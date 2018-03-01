@@ -119,7 +119,6 @@ public class ControlTimer implements Runnable {
 
 						} else {
 
-							ControlCenter.periodBootTransmit();
 							ControlCenter.periodCheckTransmit();
 						}
 					}

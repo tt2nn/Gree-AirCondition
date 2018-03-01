@@ -27,7 +27,9 @@ public class ControlCenter {
 	// 参数变化标志位
 	private static int Transmit_Mark_Change = 0;
 	// 开机标志位
-	private static int Transmit_Mark_Boot = 0;
+	private static int Transmit_Mark_Open = 0;
+	// 关机标志位
+	private static int Transmit_Mark_Close = 0;
 
 	public static long Transmit_Period_Time = 0L;
 
@@ -218,21 +220,21 @@ public class ControlCenter {
 	/**
 	 * 启动开机上报
 	 */
-	public static void startBootTransmit() {
+	/*public static void startBootTransmit() {
 
 		Transmit_Period_Time = 0L;
 		DataCenter.registerBootTransmit();
-	}
+	}*/
 
 	/**
 	 * 周期性开机上报
 	 */
-	public static void periodBootTransmit() {
+	/*public static void periodBootTransmit() {
 
 		Transmit_Period_Time = Constant.System_Time;
 		DataCenter.bootTransmit();
 
-	}
+	}*/
 
 	/**
 	 * 启动打卡上报
@@ -312,12 +314,7 @@ public class ControlCenter {
 	 */
 	public static void setMarker(int error, int warning, int change, int boot) {
 
-		if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT && Transmit_Mark_Boot == 0 && boot == 1) {
-
-			// 开机上报时，开机标志位为1，启动开机实时上报
-			DataCenter.registerBootTransmit();
-
-		} else if (Transmit_Mark_Error == 0 && error == 1) {
+		if (Transmit_Mark_Error == 0 && error == 1) {
 
 			// 故障标志位由0-1，启动故障上报
 			DataCenter.errorTransmit();
@@ -343,28 +340,12 @@ public class ControlCenter {
 			// 缓存上报模式为亚健康上报，标志位为1，继续亚健康上报
 			DataCenter.warningTransmit();
 
-		} else if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_BOOT && Transmit_Mark_Boot == 1
-				&& boot == 0) {
-
-			// 开机上报时，开机标志位为0，启动开机周期上报
-			DataCenter.registerBootTransmit();
 		}
 
 		Transmit_Mark_Error = error;
 		Transmit_Mark_Warning = warning;
 		Transmit_Mark_Change = change;
-		Transmit_Mark_Boot = boot;
 
-	}
-
-	public static boolean getBootMark() {
-
-		if (Transmit_Mark_Boot == 1) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 }
