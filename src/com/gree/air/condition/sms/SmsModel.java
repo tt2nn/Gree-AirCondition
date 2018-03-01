@@ -12,6 +12,10 @@ import com.gree.air.condition.sms.model.DebtModel;
 import com.gree.air.condition.sms.model.ErrtModel;
 import com.gree.air.condition.sms.model.HbModel;
 import com.gree.air.condition.sms.model.HealtModel;
+import com.gree.air.condition.sms.model.OfftOneModel;
+import com.gree.air.condition.sms.model.OfftTwoModel;
+import com.gree.air.condition.sms.model.OntOneModel;
+import com.gree.air.condition.sms.model.OntTwoModel;
 import com.gree.air.condition.sms.model.PwdModel;
 import com.gree.air.condition.sms.model.RstModel;
 import com.gree.air.condition.sms.model.ServModel;
@@ -36,6 +40,11 @@ public class SmsModel {
 		// && Constant.Sms_Receive.endsWith(SmsConstant.Sms_Split_Key_Symbol))
 		// || (Constant.Sms_Receive.startsWith(SmsConstant.Sms_Split_Key_Symbol)
 		// && Constant.Sms_Receive.endsWith(SMS_GREE))) {
+
+		if (!Constant.Gprs_Choosed || !Constant.Init_Success) {
+
+			return;
+		}
 
 		// 验证白名单
 		if (!Utils.isNotEmpty(phoneAddress)) {
@@ -182,6 +191,22 @@ public class SmsModel {
 		} else if (checkSmsType(SmsConstant.Sms_Type_Check_Time)) { // 打卡时长
 
 			CheckTimeModel.smsAnalyze();
+
+		} else if (checkSmsType(SmsConstant.Sms_Type_Open_Start)) {// 开机前置时间
+
+			OntOneModel.smsAnalyze();
+
+		} else if (checkSmsType(SmsConstant.Sms_Type_Open_End)) {// 开机后置时间
+
+			OntTwoModel.smsAnalyze();
+
+		} else if (checkSmsType(SmsConstant.Sms_Type_Close_Start)) {// 关机前置时间
+
+			OfftOneModel.smsAnalyze();
+
+		} else if (checkSmsType(SmsConstant.Sms_Type_Close_End)) {// 关机后置时间
+
+			OfftTwoModel.smsAnalyze();
 
 		}
 	}
