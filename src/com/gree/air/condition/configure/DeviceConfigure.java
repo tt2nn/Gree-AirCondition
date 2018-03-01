@@ -9,7 +9,6 @@ import org.joshvm.j2me.cellular.NetworkInfo;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.entity.Apn;
-import com.gree.air.condition.utils.Utils;
 
 /**
  * 
@@ -39,7 +38,7 @@ public class DeviceConfigure {
 
 				NetworkInfo networkInfo = devices[0].getNetworkInfo();
 
-				if (networkInfo.getMCC() == 460 && Utils.isNotEmpty(devices[0].getIMSI())) {
+				if (networkInfo.getMCC() == 460 && devices[0].getIMSI().length() > 1) {
 
 					return true;
 				}

@@ -48,6 +48,11 @@ public class SeveneModel {
 	 * 选举
 	 */
 	private static void choose() {
+		
+		if (!Constant.Init_Success) {
+
+			return;
+		}
 
 		if (Constant.Gprs_Choosed) {
 
@@ -78,6 +83,11 @@ public class SeveneModel {
 	 */
 	private static void call() {
 
+		if (!Constant.Init_Success) {
+
+			return;
+		}
+
 		if (!Constant.Gprs_Choosed && !DoChoose.isChooseResp()) {
 
 			return;
@@ -89,7 +99,7 @@ public class SeveneModel {
 		}
 
 		// 判断是否是 上电是状态为选中
-		if (!DoChoose.isChooseResp() && Constant.Init_Success) {
+		if (!DoChoose.isChooseResp()) {
 
 			ControlCenter.powerCall();
 		}

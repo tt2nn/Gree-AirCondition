@@ -17,6 +17,11 @@ public class MbReadWordModel {
 	 * 处理
 	 */
 	public static void analyze() {
+		
+		if (!Constant.Init_Success) {
+
+			return;
+		}
 
 		if (!Constant.Gprs_Choosed && !DoChoose.isChooseResp()) {
 
