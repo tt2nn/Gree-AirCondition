@@ -12,6 +12,7 @@ public class Constant {
 
 	public static final String APP_VERSION = "v0.0.0";
 	public static final int BAUD_RATE = 9600;
+	public static final byte GPRS_MODEL = (byte) 0x02;
 
 	// =================== about uart constant ===================
 	// 记录收Buffer的长度

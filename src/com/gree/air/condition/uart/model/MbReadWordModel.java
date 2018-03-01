@@ -32,7 +32,7 @@ public class MbReadWordModel {
 
 		// word0
 		Constant.Uart_Out_Buffer[5] = (byte) 0x00;
-		Constant.Uart_Out_Buffer[6] = (byte) 0x02;
+		Constant.Uart_Out_Buffer[6] = Constant.GPRS_MODEL;
 
 		// word1~8
 		byte[] imeiBytes = Constant.device.getImei().getBytes();

@@ -84,7 +84,7 @@ public class LoginModel {
 		Constant.Tcp_Out_Buffer[66] = (byte) 0x00;
 
 		// 模块型号
-		Constant.Tcp_Out_Buffer[67] = (byte) 0x02;
+		Constant.Tcp_Out_Buffer[67] = Constant.GPRS_MODEL;
 
 		TcpModel.build(50, 68);
 
