@@ -40,7 +40,7 @@ public class CheckTimeModel {
 	 */
 	private static void checkTimeQuerySend() {
 
-		String smsValue = Constant.Transmit_Check_Period + "";
+		String smsValue = (Constant.Transmit_Check_Period / 60) + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Check_Time, smsValue);
 	}
@@ -52,7 +52,7 @@ public class CheckTimeModel {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
-		FileWriteModel.setSmsCheckTime(Integer.parseInt(smsValue));
+		FileWriteModel.setSmsCheckTime(Integer.parseInt(smsValue) * 60);
 
 		checkTimeSetSend();
 	}

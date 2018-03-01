@@ -44,12 +44,13 @@ public class ParamModel {
 				"USRON*9:" + Constant.Sms_User_List[8], "USRON*10:" + Constant.Sms_User_List[9],
 				"ERRT:" + (Constant.Transmit_Error_Start_Time / 60), "DEBT:" + (Constant.Transmit_Error_End_Time / 60),
 				"BUTT:" + (Constant.Transmit_Pushkey_End_Time / 60),
-				"HEALT:" + (Constant.Transmit_Change_End_Time / 60) };
-
-		// "FTP:" + Constant.Tcp_Address_Ip + ":" + Constant.Tcp_Address_Port,
-		// "SIG:" + (Constant.Tcp_Sig_Period / 60),
-		// "CHECKPERIOD:" + (Constant.Transmit_Check_Period / 60),
-		// "CHECKTIME:" + Constant.Transmit_Check_End_Time
+				"HEALT:" + (Constant.Transmit_Change_End_Time / 60),
+				"FTP:" + Constant.Tcp_Address_Ip + ":" + Constant.Tcp_Address_Port,
+				"SIG:" + (Constant.Tcp_Sig_Period / 60), "ONT1:" + (Constant.Transmit_Open_Start_Time / 60),
+				"ONT2:" + (Constant.Transmit_Open_End_Time / 60), "OFFT1:" + (Constant.Transmit_Close_Start_Time / 60),
+				"OFFT2:" + (Constant.Transmit_Close_End_Time / 60),
+				"CHECKPERIOD:" + (Constant.Transmit_Check_Period / 60),
+				"CHECKTIME:" + (Constant.Transmit_Check_End_Time / 60) };
 
 		for (int i = 0; i < res.length; i++) {
 
@@ -200,6 +201,38 @@ public class ParamModel {
 								FileWriteModel.setSmsSig(time * 60);
 							}
 
+						} else if (key.equals("ONT1")) {
+
+							int time = Utils.stringToInt(value);
+							if (time != 0 && time != Constant.Transmit_Open_Start_Time) {
+
+								FileWriteModel.setOpenStartTime(time * 60);
+							}
+
+						} else if (key.equals("ONT2")) {
+
+							int time = Utils.stringToInt(value);
+							if (time != 0 && time != Constant.Transmit_Open_End_Time) {
+
+								FileWriteModel.setOpenStartTime(time * 60);
+							}
+
+						} else if (key.equals("OFFT1")) {
+
+							int time = Utils.stringToInt(value);
+							if (time != 0 && time != Constant.Transmit_Close_Start_Time) {
+
+								FileWriteModel.setCloseStartTime(time * 60);
+							}
+
+						} else if (key.equals("OFFT2")) {
+
+							int time = Utils.stringToInt(value);
+							if (time != 0 && time != Constant.Transmit_Close_End_Time) {
+
+								FileWriteModel.setCloseEndTime(time * 60);
+							}
+
 						} else if (key.equals("CHECKPERIOD")) { // check transmit period time
 
 							int time = Utils.stringToInt(value);
@@ -213,7 +246,7 @@ public class ParamModel {
 							int time = Utils.stringToInt(value);
 							if (time != 0 && time != Constant.Transmit_Check_End_Time) {
 
-								FileWriteModel.setSmsCheckTime(time);
+								FileWriteModel.setSmsCheckTime(time * 60);
 							}
 
 						} else if (key.equals("ADM*1")) {
