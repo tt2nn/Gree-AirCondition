@@ -84,6 +84,11 @@ public class UartModel {
 
 			case (byte) 0x10: // 10写功能
 
+				if (Constant.Uart_In_Buffer_Length == 8) {
+
+					return;
+				}
+
 				// modbus 下标6表示 有效数据长度
 				int dataLength = Constant.Uart_In_Buffer[6] & 0xFF;
 
@@ -102,6 +107,11 @@ public class UartModel {
 
 			case (byte) 0x04: // 读word CRC16的校验位在6和7
 
+				if (Constant.Uart_In_Buffer_Length > 8) {
+
+					return;
+				}
+				
 				byte[] crc04 = CRC.crc16(Constant.Uart_In_Buffer, 6);
 
 				if (Utils.bytesToInt(Constant.Uart_In_Buffer, 4, 5) <= 123 && Constant.Uart_In_Buffer[6] == crc04[1]
@@ -115,6 +125,11 @@ public class UartModel {
 				return;
 
 			case (byte) 0x02:// 读bit
+				
+				if (Constant.Uart_In_Buffer_Length > 8) {
+
+					return;
+				}
 
 				byte[] crc02 = CRC.crc16(Constant.Uart_In_Buffer, 6);
 

@@ -22,7 +22,7 @@ public class SeveneModel {
 
 		if (Constant.Uart_In_Buffer[4] != (byte) 0x70 && Constant.Uart_In_Buffer[5] != (byte) 0xFF) {
 
-			System.out.println("from or to address is error");
+//			System.out.println("from or to address is error");
 
 			return;
 		}

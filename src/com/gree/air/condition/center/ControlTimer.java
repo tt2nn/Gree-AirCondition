@@ -42,6 +42,12 @@ public class ControlTimer implements Runnable {
 				Thread.sleep(sleepTime);
 				workTime = Constant.System_Time;
 
+				// 3秒更新信号灯
+				if (Constant.System_Time - packageTime >= 3 * 1000) {
+
+					GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
+				}
+
 				if (ControlCenter.canWorking()) {
 
 					// 上传数据时灯闪烁
@@ -92,7 +98,6 @@ public class ControlTimer implements Runnable {
 					// 每三秒打包一次数据
 					if (Constant.System_Time - packageTime >= 3 * 1000) {
 
-						GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
 						ControlCenter.packageData();
 					}
 
