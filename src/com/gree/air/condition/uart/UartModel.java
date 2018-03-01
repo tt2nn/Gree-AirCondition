@@ -76,7 +76,7 @@ public class UartModel {
 		}
 
 		// 判断是modbus协议
-		if (Constant.Uart_In_Buffer[0] == (byte) 0xFF) {
+		if (Constant.Uart_In_Buffer[0] == (byte) 0xFF || Constant.Uart_In_Buffer[0] == (byte) 0XF7) {
 
 			// System.out.println("message is modbus");
 
