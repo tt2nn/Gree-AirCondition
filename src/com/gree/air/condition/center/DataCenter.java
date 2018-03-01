@@ -212,6 +212,16 @@ public class DataCenter implements Runnable {
 
 						Data_Buffer_Out_End_Mark = -1;
 
+					} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_OPEN
+							&& ControlCenter.getTransmit_Mark_Open()) {
+
+						Data_Buffer_Out_End_Mark = -1;
+
+					} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CLOSE
+							&& ControlCenter.getTransmit_Mark_Close()) {
+
+						Data_Buffer_Out_End_Mark = -1;
+
 					} else {
 
 						ControlCenter.stopUploadData();
@@ -298,7 +308,6 @@ public class DataCenter implements Runnable {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	/**
@@ -333,7 +342,6 @@ public class DataCenter implements Runnable {
 
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
 			ControlCenter.requestStartUpload();
-
 		}
 	}
 
@@ -342,20 +350,89 @@ public class DataCenter implements Runnable {
 	 */
 	public static void errorTransmit() {
 
-		if (Transmit_Level < TRANSMIT_LEVEL_ERROR && Constant.System_Time > Constant.Stop_Time) {
+		if (Constant.System_Time > Constant.Stop_Time) {
 
-			convertUploadData();
+			// 如果正在故障上报，向后延时
+			if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ERROR) {
 
-			// 重置发送游标，上报故障点前30分钟到后5分钟数据
-			checkOutStartMark(Constant.Transmit_Error_Start_Time);
-			checkOutEndMark(Constant.Transmit_Error_End_Time);
+				checkOutEndMark(Constant.Transmit_Error_End_Time);
+				return;
+			}
 
-			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_ERROR;
-			Transmit_Level = TRANSMIT_LEVEL_ERROR;
+			if (Transmit_Level < TRANSMIT_LEVEL_ERROR) {
 
-			ControlCenter.requestStartUpload();
+				convertUploadData();
+
+				// 重置发送游标，上报故障点前30分钟到后5分钟数据
+				checkOutStartMark(Constant.Transmit_Error_Start_Time);
+				checkOutEndMark(Constant.Transmit_Error_End_Time);
+
+				Constant.Transmit_Type = Constant.TRANSMIT_TYPE_ERROR;
+				Transmit_Level = TRANSMIT_LEVEL_ERROR;
+
+				ControlCenter.requestStartUpload();
+			}
 		}
+	}
 
+	/**
+	 * 开机上报
+	 */
+	public static void openTransmit() {
+
+		if (Constant.System_Time > Constant.Stop_Time) {
+
+			// 正在开机上报，向后延时
+			if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_OPEN) {
+
+				checkOutEndMark(Constant.Transmit_Open_End_Time);
+				return;
+			}
+
+			if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CLOSE || Transmit_Level < TRANSMIT_LEVEL_OPEN_CLOSE) {
+
+				convertUploadData();
+
+				// 重置发送游标
+				checkOutStartMark(Constant.Transmit_Open_Start_Time);
+				checkOutEndMark(Constant.Transmit_Open_End_Time);
+
+				Constant.Transmit_Type = Constant.TRANSMIT_TYPE_OPEN;
+				Transmit_Level = TRANSMIT_LEVEL_OPEN_CLOSE;
+
+				ControlCenter.requestStartUpload();
+			}
+		}
+	}
+
+	/**
+	 * 开机上报
+	 */
+	public static void closeTransmit() {
+
+		if (Constant.System_Time > Constant.Stop_Time) {
+
+			// 正在开机上报，向后延时
+			if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CLOSE) {
+
+				checkOutEndMark(Constant.Transmit_Open_End_Time);
+				return;
+			}
+
+			if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_OPEN || Transmit_Level < TRANSMIT_LEVEL_OPEN_CLOSE) {
+
+				convertUploadData();
+
+				// 重置发送游标
+				checkOutStartMark(Constant.Transmit_Close_Start_Time);
+				checkOutEndMark(Constant.Transmit_Close_End_Time);
+
+				Constant.Transmit_Type = Constant.TRANSMIT_TYPE_CLOSE;
+				Transmit_Level = TRANSMIT_LEVEL_OPEN_CLOSE;
+
+				ControlCenter.requestStartUpload();
+			}
+		}
 	}
 
 	/**
@@ -376,7 +453,6 @@ public class DataCenter implements Runnable {
 
 			ControlCenter.requestStartUpload();
 		}
-
 	}
 
 	/**
@@ -395,9 +471,7 @@ public class DataCenter implements Runnable {
 			Transmit_Level = TRANSMIT_LEVEL_PUSHKEY;
 
 			ControlCenter.requestStartUpload();
-
 		}
-
 	}
 
 	/**
@@ -439,7 +513,6 @@ public class DataCenter implements Runnable {
 			Transmit_Level = TRANSMIT_LEVEL_CHOOSE;
 
 			ControlCenter.requestStartUpload();
-
 		}
 	}
 
@@ -462,34 +535,6 @@ public class DataCenter implements Runnable {
 		ControlCenter.requestStartUpload();
 
 	}
-
-	/**
-	 * 开机上报
-	 */
-	/*
-	 * public static void bootTransmit() {
-	 * 
-	 * // 判断静默时间 if (Constant.System_Time < Constant.Stop_Time) {
-	 * 
-	 * return; }
-	 * 
-	 * // 判断上报优先级 if (Transmit_Level > TRANSMIT_LEVEL_BOOT_CLOSE) {
-	 * 
-	 * return; }
-	 * 
-	 * // 判断缓存上报状态 if (Constant.Transmit_Power_Type != Constant.TRANSMIT_TYPE_BOOT
-	 * || Transmit_Cache_Warning) {
-	 * 
-	 * return; }
-	 * 
-	 * Constant.Transmit_Type = Constant.TRANSMIT_TYPE_BOOT; Transmit_Level =
-	 * TRANSMIT_LEVEL_BOOT_CLOSE;
-	 * 
-	 * Data_Buffer_Out_Mark = Data_Buffer_Mark;
-	 * checkOutEndMark(Constant.Transmit_Check_End_Time);
-	 * 
-	 * ControlCenter.requestStartUpload(); }
-	 */
 
 	/**
 	 * 注册打卡上报

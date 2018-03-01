@@ -115,7 +115,13 @@ public class Constant {
 	public static int Transmit_Check_Period = 60 * 60;
 	// 打卡时长
 	public static int Transmit_Check_End_Time = 1 * 60;
-	
+	// 开机上报时间
+	public static int Transmit_Open_Start_Time = 10 * 60;
+	public static int Transmit_Open_End_Time = 30 * 60;
+	// 关机上报时间
+	public static int Transmit_Close_Start_Time = 30 * 60;
+	public static int Transmit_Close_End_Time = 10 * 60;
+
 	// APN信息
 	// 联通
 	public static String Apn_Cucc = "greeac.gd";
