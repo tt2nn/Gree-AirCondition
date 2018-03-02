@@ -36,6 +36,6 @@ public class CheckStartModel {
 	private static void checkStartSend() {
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Check_Start, "ok");
-
 	}
+	
 }

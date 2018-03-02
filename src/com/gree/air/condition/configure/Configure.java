@@ -114,7 +114,6 @@ public class Configure extends FileReadModel {
 				end = address.length();
 
 				Constant.Tcp_Address_Port = address.substring(start, end);
-
 			}
 		}
 	}
@@ -130,7 +129,6 @@ public class Configure extends FileReadModel {
 
 			Constant.Tcp_Heart_Beat_Period = second;
 		}
-
 	}
 
 	/**
@@ -144,7 +142,6 @@ public class Configure extends FileReadModel {
 
 			Constant.Transmit_Error_Start_Time = second;
 		}
-
 	}
 
 	/**
@@ -158,7 +155,6 @@ public class Configure extends FileReadModel {
 
 			Constant.Transmit_Error_End_Time = second;
 		}
-
 	}
 
 	/**
@@ -172,7 +168,6 @@ public class Configure extends FileReadModel {
 
 			Constant.Transmit_Change_End_Time = second;
 		}
-
 	}
 
 	/**
@@ -186,7 +181,6 @@ public class Configure extends FileReadModel {
 
 			Constant.Transmit_Pushkey_End_Time = second;
 		}
-
 	}
 
 	/**
@@ -200,7 +194,6 @@ public class Configure extends FileReadModel {
 
 			Constant.Tcp_Sig_Period = second;
 		}
-
 	}
 
 	/**
@@ -214,7 +207,6 @@ public class Configure extends FileReadModel {
 
 			Constant.Transmit_Check_Period = second;
 		}
-
 	}
 
 	/**
@@ -228,7 +220,6 @@ public class Configure extends FileReadModel {
 
 			Constant.Transmit_Check_End_Time = second;
 		}
-
 	}
 
 	/**

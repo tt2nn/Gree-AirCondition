@@ -257,9 +257,7 @@ public class TcpServer implements Runnable {
 	public static void stopServer() {
 
 		serverWorking = false;
-
 		closeStream();
-
 	}
 
 	public static boolean isServerNormal() {

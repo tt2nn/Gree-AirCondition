@@ -52,7 +52,6 @@ public class GpioPin {
 
 						ControlTimer.pushDown();
 					}
-
 				}
 			});
 
@@ -162,7 +161,6 @@ public class GpioPin {
 	public static void signalLowLight() {
 
 		lightOpen(pinoutLow);
-
 	}
 
 	/**
@@ -182,7 +180,6 @@ public class GpioPin {
 		lightClose(pinoutHight);
 		lightClose(pinoutMiddle);
 		lightClose(pinoutLow);
-
 	}
 
 	/**

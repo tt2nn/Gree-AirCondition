@@ -43,7 +43,6 @@ public class TimeModel {
 		System.out.println("-----------------------" + Constant.System_Time);
 
 		ControlCenter.heartBeatResp();
-
 	}
 
 	/**
@@ -87,7 +86,6 @@ public class TimeModel {
 		}
 
 		stopTime();
-
 	}
 
 }

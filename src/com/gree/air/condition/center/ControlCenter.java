@@ -224,26 +224,6 @@ public class ControlCenter {
 	}
 
 	/**
-	 * 启动开机上报
-	 */
-	/*
-	 * public static void startBootTransmit() {
-	 * 
-	 * Transmit_Period_Time = 0L; DataCenter.registerBootTransmit(); }
-	 */
-
-	/**
-	 * 周期性开机上报
-	 */
-	/*
-	 * public static void periodBootTransmit() {
-	 * 
-	 * Transmit_Period_Time = Constant.System_Time; DataCenter.bootTransmit();
-	 * 
-	 * }
-	 */
-
-	/**
 	 * 启动打卡上报
 	 */
 	public static void startCheckTransmit() {

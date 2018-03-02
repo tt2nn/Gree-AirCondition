@@ -36,7 +36,6 @@ public class ErrtModel {
 	private static void errtQueryReceive() {
 
 		errtQuerySend();
-
 	}
 
 	/**
@@ -69,6 +68,6 @@ public class ErrtModel {
 	private static void errtSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Errt);
-
 	}
+	
 }

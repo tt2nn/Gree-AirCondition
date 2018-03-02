@@ -37,7 +37,6 @@ public class UartModel {
 			ControlCenter.cacheData();
 
 			return;
-
 		}
 
 		// 判断是否是工装测试
@@ -142,7 +141,6 @@ public class UartModel {
 				}
 
 				return;
-
 			}
 		}
 

@@ -58,7 +58,6 @@ public class PwdModel {
 		FileWriteModel.setSmsPassword(smsValue);
 
 		pwdSetSend();
-
 	}
 
 	/**
@@ -67,6 +66,6 @@ public class PwdModel {
 	private static void pwdSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Pwd);
-
 	}
+	
 }

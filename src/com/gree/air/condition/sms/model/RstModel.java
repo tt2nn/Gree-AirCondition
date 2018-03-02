@@ -35,8 +35,7 @@ public class RstModel {
 	private static void rstSend() {
 
 		String smsValue = "ok";
-
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Rst, smsValue);
-
 	}
+	
 }

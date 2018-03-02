@@ -97,4 +97,5 @@ public class ApnModel {
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Apn);
 
 	}
+	
 }

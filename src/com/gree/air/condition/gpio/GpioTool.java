@@ -37,7 +37,6 @@ public class GpioTool {
 			GpioPin.signalLowLight();
 			GpioPin.signalMindleLight();
 			GpioPin.signalHighLight();
-
 		}
 	}
 

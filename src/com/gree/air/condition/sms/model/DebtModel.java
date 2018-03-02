@@ -67,6 +67,6 @@ public class DebtModel {
 	private static void debtSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Debt);
-
 	}
+	
 }

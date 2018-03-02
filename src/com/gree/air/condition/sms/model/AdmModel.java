@@ -111,6 +111,6 @@ public class AdmModel {
 	private static void admSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Adm);
-
 	}
+	
 }

@@ -79,24 +79,7 @@ public class ParamModel {
 		Constant.Tcp_Out_Buffer[18] = (byte) 0x95;
 		Constant.Tcp_Out_Buffer[19] = (byte) 0x00;
 
-		// String[] s = new String[] { "PWD", "APN" };
-		// int poi = 20;
-		// for (int i = 0; i < s.length; i++) {
-		//
-		// byte[] b = s[i].getBytes();
-		//
-		// for (int j = 0; j < b.length; j++) {
-		//
-		// Constant.Tcp_Out_Buffer[poi] = (byte) b[j];
-		// poi++;
-		// }
-		//
-		// Constant.Tcp_Out_Buffer[poi] = (byte) 0x00;
-		// poi++;
-		// }
-
 		TcpModel.build(2, 20);
-
 	}
 
 	/**
@@ -315,7 +298,6 @@ public class ParamModel {
 
 				poi = i + 1;
 			}
-
 		}
 
 		// save apn
@@ -366,7 +348,6 @@ public class ParamModel {
 		Constant.Tcp_Out_Buffer[38] = (byte) DeviceConfigure.getNetworkSignalLevel();
 
 		TcpModel.build(21, 39);
-
 	}
 
 }

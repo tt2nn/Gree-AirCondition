@@ -95,7 +95,6 @@ public class UartServer implements Runnable {
 						} else {
 
 							start = 2;
-							// System.out.println("read in start");
 						}
 
 						continue;
@@ -114,7 +113,6 @@ public class UartServer implements Runnable {
 							InBufferPoi++;
 
 							continue;
-
 						}
 
 						if (end == 1) {
@@ -134,11 +132,8 @@ public class UartServer implements Runnable {
 								InBufferPoi = 0;
 								start = 0;
 								end = 0;
-
 							}
-
 						}
-
 					}
 
 				}
@@ -193,10 +188,8 @@ public class UartServer implements Runnable {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	/**

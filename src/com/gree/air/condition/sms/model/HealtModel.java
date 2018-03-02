@@ -68,6 +68,6 @@ public class HealtModel {
 	private static void healtSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Healt);
-
 	}
+	
 }

@@ -665,7 +665,6 @@ public class DataCenter implements Runnable {
 
 		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
 		Transmit_Level = TRANSMIT_LEVEL_STOP;
-
 	}
 
 	/**
@@ -686,7 +685,6 @@ public class DataCenter implements Runnable {
 
 		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
 		Transmit_Level = TRANSMIT_LEVEL_STOP;
-
 	}
 
 	/**
@@ -701,7 +699,6 @@ public class DataCenter implements Runnable {
 		Transmit_Level = TRANSMIT_LEVEL_STOP;
 
 		Transmit_Cache_Warning = false;
-
 	}
 
 	public static Thread getDataCenterThread() {

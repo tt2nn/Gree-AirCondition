@@ -30,7 +30,6 @@ public class FileConnection {
 
 			fileConn.create();
 		}
-
 	}
 
 	/**
@@ -55,7 +54,6 @@ public class FileConnection {
 
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -103,7 +101,6 @@ public class FileConnection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -127,7 +124,6 @@ public class FileConnection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	/**

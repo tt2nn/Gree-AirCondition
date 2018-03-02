@@ -37,7 +37,6 @@ public class StartModel {
 	private static void startSend() {
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Start, "ok");
-
 	}
 
 }

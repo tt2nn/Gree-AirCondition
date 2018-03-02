@@ -104,6 +104,6 @@ public class MbReadWordModel {
 		Constant.Uart_Out_Buffer[dataLength + 6] = crc16[0];
 
 		UartModel.build(dataLength + 7);
-
 	}
+	
 }

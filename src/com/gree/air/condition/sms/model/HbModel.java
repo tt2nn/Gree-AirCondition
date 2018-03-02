@@ -74,6 +74,6 @@ public class HbModel {
 	private static void hbSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Hb);
-
 	}
+	
 }

@@ -17,7 +17,6 @@ public class FileModel {
 		byte[] valueBytes = value.getBytes();
 
 		writeFile(FileName, valueBytes);
-
 	}
 
 	/**
@@ -31,7 +30,6 @@ public class FileModel {
 		byte[] valueBytes = Utils.intToBytes(value);
 
 		writeFile(FileName, valueBytes);
-
 	}
 
 	/**
@@ -45,7 +43,6 @@ public class FileModel {
 		byte[] valueBytes = { value };
 
 		writeFile(FileName, valueBytes);
-
 	}
 
 	/**
@@ -67,7 +64,6 @@ public class FileModel {
 		}
 
 		FileConnection.writeFile(FileName);
-
 	}
 
 	/**
@@ -83,7 +79,6 @@ public class FileModel {
 		if (Constant.File_Buffer_Length > 0) {
 
 			return Utils.bytesToInt(Constant.File_Buffer, 0, 1);
-
 		}
 
 		return 0;
@@ -123,7 +118,6 @@ public class FileModel {
 		if (length > 0 && length < 5) {
 
 			return Utils.bytesToIntValue(Constant.File_Buffer, 2, length);
-
 		}
 
 		return 0;
@@ -149,7 +143,6 @@ public class FileModel {
 
 				e.printStackTrace();
 			}
-
 		}
 
 		return "";

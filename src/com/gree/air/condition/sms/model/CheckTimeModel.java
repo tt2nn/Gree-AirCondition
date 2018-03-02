@@ -63,6 +63,6 @@ public class CheckTimeModel {
 	private static void checkTimeSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Check_Time);
-
 	}
+	
 }

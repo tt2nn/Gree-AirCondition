@@ -116,6 +116,6 @@ public class UsronModel {
 	private static void usronSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Usron);
-
 	}
+	
 }

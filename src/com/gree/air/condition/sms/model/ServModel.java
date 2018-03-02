@@ -81,6 +81,6 @@ public class ServModel {
 	private static void servSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Serv);
-
 	}
+	
 }

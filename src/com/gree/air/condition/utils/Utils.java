@@ -47,7 +47,6 @@ public class Utils {
 
 				value[i] = (byte) ((src >> ((len - 1 - i) * 8)) & 0xFF);
 			}
-
 		}
 
 		return value;
@@ -86,25 +85,21 @@ public class Utils {
 
 			value = (int) (((src[start] & 0xFF) << 24) | ((src[start + 1] & 0xFF) << 16)
 					| ((src[start + 2] & 0xFF) << 8) | (src[start + 3] & 0xFF));
-
 			break;
 
 		case 3:
 
 			value = (int) (((src[start] & 0xFF) << 16) | ((src[start + 1] & 0xFF) << 8) | (src[start + 2] & 0xFF));
-
 			break;
 
 		case 2:
 
 			value = (int) (((src[start] & 0xFF) << 8) | (src[start + 1] & 0xFF));
-
 			break;
 
 		case 1:
 
 			value = (int) ((src[start] & 0xFF));
-
 			break;
 
 		}
@@ -238,7 +233,6 @@ public class Utils {
 		long time = d + h + m + s;
 
 		return time;
-
 	}
 
 	/**

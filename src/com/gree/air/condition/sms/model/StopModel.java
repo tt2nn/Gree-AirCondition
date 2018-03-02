@@ -37,6 +37,6 @@ public class StopModel {
 	private static void stopSend() {
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Stop, "ok");
-
 	}
+	
 }

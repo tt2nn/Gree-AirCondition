@@ -16,7 +16,6 @@ public class FileWriteModel extends FileModel {
 		Constant.Sms_Pwd = password;
 
 		writeFile(FileConstant.FILE_NAME_SMS_PASSWORD, password);
-
 	}
 
 	/**
@@ -31,7 +30,6 @@ public class FileWriteModel extends FileModel {
 		Constant.Tcp_Address_Port = port;
 
 		writeFile(FileConstant.FILE_NAME_TCP_ADDRESS, ip + FileConstant.FILE_STRING_SPLIP_SYMBOL + port);
-
 	}
 
 	/**
@@ -44,7 +42,6 @@ public class FileWriteModel extends FileModel {
 		Constant.Tcp_Heart_Beat_Period = hb;
 
 		writeFile(FileConstant.FILE_NAME_TCP_HEART_BEAT_PERIOD, hb);
-
 	}
 
 	/**
@@ -57,7 +54,6 @@ public class FileWriteModel extends FileModel {
 		Constant.Transmit_Error_Start_Time = errt;
 
 		writeFile(FileConstant.FILE_NAME_TRANSMIT_ERROR_START_TIME, errt);
-
 	}
 
 	/**
@@ -70,7 +66,6 @@ public class FileWriteModel extends FileModel {
 		Constant.Transmit_Error_End_Time = debt;
 
 		writeFile(FileConstant.FILE_NAME_TRANSMIT_ERROR_END_TIME, debt);
-
 	}
 
 	/**
@@ -83,7 +78,6 @@ public class FileWriteModel extends FileModel {
 		Constant.Transmit_Change_End_Time = healt;
 
 		writeFile(FileConstant.FILE_NAME_TRANSMIT_CHANGE_END_TIME, healt);
-
 	}
 
 	/**
@@ -96,7 +90,6 @@ public class FileWriteModel extends FileModel {
 		Constant.Transmit_Pushkey_End_Time = butt;
 
 		writeFile(FileConstant.FILE_NAME_TRANSMIT_PUSHKEY_END_TIME, butt);
-
 	}
 
 	/**
@@ -109,7 +102,6 @@ public class FileWriteModel extends FileModel {
 		Constant.Tcp_Sig_Period = sig;
 
 		writeFile(FileConstant.FILE_NAME_TCP_SIG_PERIOD, sig);
-
 	}
 
 	/**
@@ -122,7 +114,6 @@ public class FileWriteModel extends FileModel {
 		Constant.Transmit_Check_Period = checkPeriod;
 
 		writeFile(FileConstant.FILE_NAME_TRANSMIT_CHECK_PERIOD, checkPeriod);
-
 	}
 
 	/**
@@ -135,7 +126,6 @@ public class FileWriteModel extends FileModel {
 		Constant.Transmit_Check_End_Time = checkTime;
 
 		writeFile(FileConstant.FILE_NAME_TRANSMIT_CHECK_END_TIME, checkTime);
-
 	}
 
 	/**
@@ -145,7 +135,6 @@ public class FileWriteModel extends FileModel {
 
 		Constant.Transmit_Power_Type = Constant.TRANSMIT_TYPE_ALWAYS;
 		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_ALWAYS);
-
 	}
 
 	/**
@@ -155,7 +144,6 @@ public class FileWriteModel extends FileModel {
 
 		Constant.Transmit_Power_Type = Constant.TRANSMIT_TYPE_CHECK;
 		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_CHECK);
-
 	}
 
 	/**
@@ -174,7 +162,6 @@ public class FileWriteModel extends FileModel {
 	public static void setIsChoosed() {
 
 		writeFile(FileConstant.FILE_NAME_GPRS_CHOOSED, (byte) 0x01);
-
 	}
 
 	/**
@@ -183,7 +170,6 @@ public class FileWriteModel extends FileModel {
 	public static void setNotChoosed() {
 
 		writeFile(FileConstant.FILE_NAME_GPRS_CHOOSED, (byte) 0x00);
-
 	}
 
 	/**
@@ -194,7 +180,6 @@ public class FileWriteModel extends FileModel {
 	public static void setSpiAddress(int address) {
 
 		writeFile(FileConstant.FILE_NAME_SPI_WRITE_ADDRESS, Utils.intToBytes(address, 3));
-
 	}
 
 	/**
@@ -220,9 +205,7 @@ public class FileWriteModel extends FileModel {
 
 			writeFile(FileConstant.FILE_NAME_APN_CMCC, Constant.Apn_Cmcc + FileConstant.FILE_STRING_SPLIP_SYMBOL
 					+ Constant.Apn_Name + FileConstant.FILE_STRING_SPLIP_SYMBOL + Constant.Apn_Pwd);
-
 		}
-
 	}
 
 	/**
@@ -243,7 +226,6 @@ public class FileWriteModel extends FileModel {
 		}
 
 		writeFile(FileConstant.FILE_NAME_SMS_USER, stringBuffer.toString());
-
 	}
 
 	/**

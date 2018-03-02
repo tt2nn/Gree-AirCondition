@@ -77,7 +77,6 @@ public class FrockCheckModel {
 		}
 
 		UartModel.build(poi);
-
 	}
 
 }

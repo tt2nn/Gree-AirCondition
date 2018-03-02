@@ -41,7 +41,6 @@ public class TransmitModel {
 
 			localDay++;
 			localHour -= 24;
-
 		}
 
 		Constant.Tcp_Out_Buffer[22] = (byte) localDay;
@@ -50,7 +49,6 @@ public class TransmitModel {
 		Constant.Tcp_Out_Buffer[25] = (byte) calendar.get(Calendar.SECOND);
 
 		TcpModel.build(8, 26);
-
 	}
 
 	/**
@@ -62,7 +60,6 @@ public class TransmitModel {
 
 			ControlCenter.uploadData();
 		}
-
 	}
 
 	/**
@@ -74,7 +71,6 @@ public class TransmitModel {
 		Constant.Tcp_Out_Buffer[19] = (byte) 0x00;
 
 		TcpModel.build(2, 20);
-
 	}
 
 	/**
@@ -127,7 +123,6 @@ public class TransmitModel {
 
 			localDay++;
 			localHour -= 24;
-
 		}
 
 		Constant.Tcp_Out_Data_Buffer[21] = (byte) localDay;
@@ -207,7 +202,6 @@ public class TransmitModel {
 
 			Constant.Server_Data_Byte_Buffer[i] = Constant.Tcp_In_Buffer[i + 25];
 		}
-
 	}
 
 }

@@ -62,7 +62,6 @@ public class OntTwoModel {
 	private static void setSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Open_End);
-
 	}
 
 }

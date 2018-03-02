@@ -68,6 +68,6 @@ public class SigModel {
 	private static void sigSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_SIG);
-
 	}
+	
 }

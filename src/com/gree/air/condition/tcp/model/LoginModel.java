@@ -37,40 +37,27 @@ public class LoginModel {
 		byte[] imeiBytes = Constant.device.getImei().getBytes();
 		for (int i = 23; i < 38; i++) {
 
-			// Constant.Tcp_Out_Buffer[i] = (byte) 0x00;
 			Constant.Tcp_Out_Buffer[i] = imeiBytes[i - 23];
 		}
 		Constant.Tcp_Out_Buffer[38] = (byte) 0x00;
 
-		// 基站信息
-		// for (int i = 39; i < 45; i++) {
-		//
-		// Constant.Tcp_Out_Buffer[i] = (byte) 0x00;
-		// }
-
-		int mnc = 7;
-		byte[] mncBytes = Utils.intToBytes(mnc);
+		byte[] mncBytes = Utils.intToBytes(Constant.device.getMnc());
 		Constant.Tcp_Out_Buffer[39] = mncBytes[0];
 		Constant.Tcp_Out_Buffer[40] = mncBytes[1];
 
-		int lac = 4219;
-		byte[] lacBytes = Utils.intToBytes(lac);
+		byte[] lacBytes = Utils.intToBytes(Constant.device.getLac());
 		Constant.Tcp_Out_Buffer[41] = lacBytes[0];
 		Constant.Tcp_Out_Buffer[42] = lacBytes[1];
 
-		int cid = 127066758;
-		byte[] cidBytes = Utils.intToBytes(cid);
+		byte[] cidBytes = Utils.intToBytes(Constant.device.getMcc());
 		Constant.Tcp_Out_Buffer[43] = cidBytes[0];
 		Constant.Tcp_Out_Buffer[44] = cidBytes[1];
 
 		Constant.Tcp_Out_Buffer[45] = (byte) 0x00;
 
 		// 手机序列号
-		String ccid = "898600B10117F0186233";
-		byte[] ccidBytes = ccid.getBytes();
+		byte[] ccidBytes = Constant.device.getIccid().getBytes();
 		for (int i = 46; i < 66; i++) {
-
-			// Constant.Tcp_Out_Buffer[i] = (byte) 0x00;
 
 			if (i - 46 < ccidBytes.length) {
 
@@ -95,25 +82,12 @@ public class LoginModel {
 	 */
 	public static void loginResponse() {
 
-		// byte[] macCheck = Utils.intToBytes((Constant.Tcp_In_Buffer[9] & 0xFF) * 3
-		// + (Constant.Tcp_In_Buffer[10] & 0xFF) * 6 + (Constant.Tcp_In_Buffer[11] &
-		// 0xFF) * 0
-		// + (Constant.Tcp_In_Buffer[12] & 0xFF) * 9 + (Constant.Tcp_In_Buffer[13] &
-		// 0xFF) * 7
-		// + (Constant.Tcp_In_Buffer[14] & 0xFF) * 4 + (Constant.Tcp_In_Buffer[15] &
-		// 0xFF) * 10);
-
-		// if (Constant.Tcp_In_Buffer[19] == macCheck[0] && Constant.Tcp_In_Buffer[20]
-		// == macCheck[1]) {
-
 		for (int i = 9; i < 16; i++) {
 
 			Constant.Server_Mac[i - 9] = Constant.Tcp_In_Buffer[i];
 		}
 
-		// 登录成功
 		ControlCenter.heartBeat();
-		// }
-
 	}
+
 }

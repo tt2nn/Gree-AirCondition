@@ -31,7 +31,6 @@ public class MbWriteModel {
 			choose();
 
 			break;
-
 		}
 	}
 
@@ -93,7 +92,6 @@ public class MbWriteModel {
 
 		ControlCenter.setMarker(Constant.Uart_In_Buffer[30], Constant.Uart_In_Buffer[32], Constant.Uart_In_Buffer[34],
 				Constant.Uart_In_Buffer[16], Constant.Uart_In_Buffer[18]);
-
 	}
 
 	/**
@@ -111,7 +109,6 @@ public class MbWriteModel {
 		byte[] crc16 = CRC.crc16(Constant.Uart_Out_Buffer, 2, 8);
 		Constant.Uart_Out_Buffer[8] = crc16[1];
 		Constant.Uart_Out_Buffer[9] = crc16[0];
-
 	}
 
 }

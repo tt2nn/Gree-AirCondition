@@ -62,7 +62,6 @@ public class OfftOneModel {
 	private static void setSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Close_Start);
-
 	}
 
 }

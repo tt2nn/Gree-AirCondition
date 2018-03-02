@@ -22,8 +22,6 @@ public class SeveneModel {
 
 		if (Constant.Uart_In_Buffer[4] != (byte) 0x70 && Constant.Uart_In_Buffer[5] != (byte) 0xFF) {
 
-//			System.out.println("from or to address is error");
-
 			return;
 		}
 
@@ -41,7 +39,6 @@ public class SeveneModel {
 
 			break;
 		}
-
 	}
 
 	/**
@@ -75,7 +72,6 @@ public class SeveneModel {
 		Constant.Uart_Out_Buffer[94] = CRC.crc8(Constant.Uart_Out_Buffer, 2, 94);
 
 		UartModel.build(95);
-
 	}
 
 	/**
@@ -119,7 +115,6 @@ public class SeveneModel {
 		ControlCenter.setMarker(Utils.byteGetBit(Constant.Uart_In_Buffer[11], 0),
 				Utils.byteGetBit(Constant.Uart_In_Buffer[11], 1), Utils.byteGetBit(Constant.Uart_In_Buffer[11], 2),
 				Utils.byteGetBit(Constant.Uart_In_Buffer[10], 3), Utils.byteGetBit(Constant.Uart_In_Buffer[10], 4));
-
 	}
 
 	/**
@@ -188,7 +183,6 @@ public class SeveneModel {
 
 		// 信号强度
 		Constant.Uart_Out_Buffer[28] = (byte) DeviceConfigure.getNetworkSignalLevel();
-
 	}
 
 }

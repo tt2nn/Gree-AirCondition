@@ -207,7 +207,6 @@ public class SmsModel {
 		} else if (checkSmsType(SmsConstant.Sms_Type_Close_End)) {// 关机后置时间
 
 			OfftTwoModel.smsAnalyze();
-
 		}
 	}
 
