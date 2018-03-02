@@ -23,6 +23,8 @@ public class ControlTimer implements Runnable {
 	private long sleepTime = 1000L;
 	private long workTime = 0L;
 
+	private long systemResetTime = 0L;
+
 	/**
 	 * 启动Timer
 	 */
@@ -34,6 +36,7 @@ public class ControlTimer implements Runnable {
 	public void run() {
 
 		packageTime = Constant.System_Time;
+		systemResetTime = 0L;
 
 		while (true) {
 
@@ -41,6 +44,17 @@ public class ControlTimer implements Runnable {
 
 				Thread.sleep(sleepTime);
 				workTime = Constant.System_Time;
+
+				if (systemResetTime < 60) {
+
+					systemResetTime += 1;
+
+					if (Constant.System_Time - Push_Time >= 15 * 1000 && listensePush) {
+
+						// TODO 重置虚拟机
+						listensePush = false;
+					}
+				}
 
 				// 3秒更新信号灯
 				if (Constant.System_Time - packageTime >= 3 * 1000) {
@@ -128,7 +142,7 @@ public class ControlTimer implements Runnable {
 						}
 					}
 
-					if (Constant.GPRS_ERROR_TYPE == Constant.GPRS_ERROR_TYPE_NO) {
+					if (systemResetTime >= 60 && Constant.GPRS_ERROR_TYPE == Constant.GPRS_ERROR_TYPE_NO) {
 
 						// 判断进行按键上报
 						if (Constant.System_Time - Push_Time >= 3 * 1000 && listensePush
@@ -153,7 +167,6 @@ public class ControlTimer implements Runnable {
 
 						ControlCenter.recoverUpload();
 					}
-
 				}
 
 				sleepTime = Sleep_Time - (Constant.System_Time - workTime);

@@ -210,16 +210,19 @@ public class DataCenter implements Runnable {
 					} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHANGE
 							&& ControlCenter.getTransmit_Mark_Change()) {
 
+						ControlCenter.Arrive_Stop_Mark = true;
 						Data_Buffer_Out_End_Mark = -1;
 
 					} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_OPEN
 							&& ControlCenter.getTransmit_Mark_Open()) {
 
+						ControlCenter.Arrive_Stop_Mark = true;
 						Data_Buffer_Out_End_Mark = -1;
 
 					} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CLOSE
 							&& ControlCenter.getTransmit_Mark_Close()) {
 
+						ControlCenter.Arrive_Stop_Mark = true;
 						Data_Buffer_Out_End_Mark = -1;
 
 					} else {

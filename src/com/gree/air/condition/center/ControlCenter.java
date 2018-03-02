@@ -33,6 +33,8 @@ public class ControlCenter {
 
 	public static long Transmit_Period_Time = 0L;
 
+	public static boolean Arrive_Stop_Mark = false;
+
 	/**
 	 * 判断App是否可以工作
 	 * 
@@ -323,16 +325,34 @@ public class ControlCenter {
 
 		} else if (Transmit_Mark_Open == 0 && open == 1) {
 
+			Arrive_Stop_Mark = false;
 			DataCenter.openTransmit();
+
+		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_OPEN && Arrive_Stop_Mark && open == 0) {
+
+			Arrive_Stop_Mark = false;
+			stopUploadData();
 
 		} else if (Transmit_Mark_Close == 0 && close == 1) {
 
+			Arrive_Stop_Mark = false;
 			DataCenter.closeTransmit();
+
+		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CLOSE && Arrive_Stop_Mark && open == 0) {
+
+			Arrive_Stop_Mark = false;
+			stopUploadData();
 
 		} else if (Transmit_Mark_Change == 0 && change == 1) {
 
 			// 厂家参数变化标志位由0-1，启动参数变化上报
+			Arrive_Stop_Mark = false;
 			DataCenter.changeTransmit();
+
+		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHANGE && Arrive_Stop_Mark && change == 0) {
+
+			Arrive_Stop_Mark = false;
+			stopUploadData();
 
 		} else if (Transmit_Mark_Warning == 0 && warning == 1) {
 
@@ -349,7 +369,6 @@ public class ControlCenter {
 
 			// 缓存上报模式为亚健康上报，标志位为1，继续亚健康上报
 			DataCenter.warningTransmit();
-
 		}
 
 		Transmit_Mark_Error = error;
