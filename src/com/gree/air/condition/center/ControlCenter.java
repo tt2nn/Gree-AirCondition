@@ -1,13 +1,17 @@
 package com.gree.air.condition.center;
 
+import com.gree.air.condition.Run;
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.gpio.GpioPin;
+import com.gree.air.condition.sms.SmsServer;
 import com.gree.air.condition.tcp.TcpServer;
 import com.gree.air.condition.tcp.model.LoginModel;
 import com.gree.air.condition.tcp.model.ParamModel;
 import com.gree.air.condition.tcp.model.TimeModel;
 import com.gree.air.condition.tcp.model.TransmitModel;
+import com.gree.air.condition.uart.UartServer;
 import com.gree.air.condition.uart.model.DoChoose;
 
 /**
@@ -338,7 +342,7 @@ public class ControlCenter {
 			Arrive_Stop_Mark = false;
 			DataCenter.closeTransmit();
 
-		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CLOSE && Arrive_Stop_Mark && open == 0) {
+		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CLOSE && Arrive_Stop_Mark && close == 0) {
 
 			Arrive_Stop_Mark = false;
 			stopUploadData();
@@ -422,4 +426,16 @@ public class ControlCenter {
 		return false;
 	}
 
+	/**
+	 * 重置系统
+	 */
+	public static void resetSystem() {
+
+		Run.Running_State = false;
+		FileModel.deleteAllFile();
+		uploadData();
+		stopTcpServer();
+		SmsServer.stopServer();
+		UartServer.stopServer();
+	}
 }

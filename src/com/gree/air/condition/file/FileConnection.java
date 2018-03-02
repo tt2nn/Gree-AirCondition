@@ -154,7 +154,29 @@ public class FileConnection {
 			fileConn.close();
 			fileConn = null;
 		}
+	}
 
+	/**
+	 * Delete File
+	 * 
+	 * @param fileName
+	 */
+	public static void deleteFile(String fileName) {
+
+		try {
+
+			fileConn = (javax.microedition.io.file.FileConnection) Connector.open("file:///Phone/" + fileName);
+
+			if (fileConn.exists()) {
+
+				fileConn.delete();
+			}
+
+			closeFile();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public interface FileInterface {

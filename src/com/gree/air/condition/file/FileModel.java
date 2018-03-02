@@ -1,6 +1,7 @@
 package com.gree.air.condition.file;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.constant.FileConstant;
 import com.gree.air.condition.utils.Utils;
 
 public class FileModel {
@@ -152,6 +153,17 @@ public class FileModel {
 		}
 
 		return "";
+	}
+
+	/**
+	 * 清空所有的File
+	 */
+	public static void deleteAllFile() {
+
+		for (int i = 0; i < FileConstant.FILE_NAME_ARRAY.length; i++) {
+
+			FileConnection.deleteFile(FileConstant.FILE_NAME_ARRAY[i]);
+		}
 	}
 
 }

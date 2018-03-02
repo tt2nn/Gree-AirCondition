@@ -19,6 +19,7 @@ public class ControlTimer implements Runnable {
 	private static long Push_Time;
 
 	public static long packageTime = 0L;
+	public static long signTime = 0L;
 
 	private final long Sleep_Time = 1000L;
 	private long sleepTime = 1000L;
@@ -40,6 +41,7 @@ public class ControlTimer implements Runnable {
 	public void run() {
 
 		packageTime = Constant.System_Time;
+		signTime = Constant.System_Time;
 		systemResetTime = 0L;
 
 		while (Run.Running_State) {
@@ -49,20 +51,22 @@ public class ControlTimer implements Runnable {
 				Thread.sleep(sleepTime);
 				workTime = Constant.System_Time;
 
+				// 上电后前一分钟，响应重置操作
 				if (systemResetTime < 60) {
 
 					systemResetTime += 1;
 
 					if (Constant.System_Time - Push_Time >= 15 * 1000 && listensePush) {
 
-						// TODO 重置虚拟机
 						listensePush = false;
+						ControlCenter.resetSystem();
 					}
 				}
 
 				// 3秒更新信号灯
-				if (Constant.System_Time - packageTime >= 3 * 1000) {
+				if (Constant.System_Time - signTime >= 3 * 1000) {
 
+					signTime = Constant.System_Time;
 					GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
 				}
 

@@ -44,13 +44,14 @@ public class ParamModel {
 				"USRON*9:" + Constant.Sms_User_List[8], "USRON*10:" + Constant.Sms_User_List[9],
 				"ERRT:" + (Constant.Transmit_Error_Start_Time / 60), "DEBT:" + (Constant.Transmit_Error_End_Time / 60),
 				"BUTT:" + (Constant.Transmit_Pushkey_End_Time / 60),
-				"HEALT:" + (Constant.Transmit_Change_End_Time / 60),
-				"FTP:" + Constant.Tcp_Address_Ip + ":" + Constant.Tcp_Address_Port,
-				"SIG:" + (Constant.Tcp_Sig_Period / 60), "ONT1:" + (Constant.Transmit_Open_Start_Time / 60),
-				"ONT2:" + (Constant.Transmit_Open_End_Time / 60), "OFFT1:" + (Constant.Transmit_Close_Start_Time / 60),
+				"HEALT:" + (Constant.Transmit_Change_End_Time / 60), "SIG:" + (Constant.Tcp_Sig_Period / 60),
+				"ONT1:" + (Constant.Transmit_Open_Start_Time / 60), "ONT2:" + (Constant.Transmit_Open_End_Time / 60),
+				"OFFT1:" + (Constant.Transmit_Close_Start_Time / 60),
 				"OFFT2:" + (Constant.Transmit_Close_End_Time / 60),
 				"CHECKPERIOD:" + (Constant.Transmit_Check_Period / 60),
 				"CHECKTIME:" + (Constant.Transmit_Check_End_Time / 60) };
+
+		// "FTP:" + Constant.Tcp_Address_Ip + ":" + Constant.Tcp_Address_Port,
 
 		for (int i = 0; i < res.length; i++) {
 
