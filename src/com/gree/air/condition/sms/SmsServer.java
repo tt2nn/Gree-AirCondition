@@ -8,6 +8,7 @@ import javax.wireless.messaging.Message;
 import javax.wireless.messaging.MessageConnection;
 import javax.wireless.messaging.TextMessage;
 
+import com.gree.air.condition.Run;
 import com.gree.air.condition.constant.Constant;
 
 /**
@@ -18,16 +19,19 @@ import com.gree.air.condition.constant.Constant;
  */
 public class SmsServer implements Runnable {
 
-	private MessageConnection msgconn;
+	private static MessageConnection msgconn;
 	private Message message;
 	private static String Sms_Address = "";
+
+	private static Thread smsThread;
 
 	/**
 	 * 启动短信服务
 	 */
 	public static void startServer() {
 
-		new Thread(new SmsServer()).start();
+		smsThread = new Thread(new SmsServer());
+		smsThread.start();
 	}
 
 	public void run() {
@@ -37,7 +41,7 @@ public class SmsServer implements Runnable {
 			String address = "sms://:0";
 			msgconn = (MessageConnection) Connector.open(address);
 
-			while (true) {
+			while (Run.Running_State) {
 
 				/* gets message object */
 				message = msgconn.receive();
@@ -109,6 +113,28 @@ public class SmsServer implements Runnable {
 			}
 
 		}).start();
+	}
+
+	/**
+	 * 停止server
+	 */
+	public static void stopServer() {
+
+		if (msgconn != null) {
+
+			try {
+
+				msgconn.close();
+
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static Thread getSmsThread() {
+		return smsThread;
 	}
 
 }

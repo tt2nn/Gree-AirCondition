@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 
+import com.gree.air.condition.Run;
 import com.gree.air.condition.constant.Constant;
 
 /**
@@ -25,40 +26,45 @@ public class UartServer implements Runnable {
 	private static int start = 0;
 	private static int end = 0;
 
+	private static Thread uartThread;
+
 	/**
 	 * 启动串口通信
 	 */
 	public static void startServer() {
 
 		UartServer uartServer = new UartServer();
-		Thread uartThread = new Thread(uartServer);
+		uartThread = new Thread(uartServer);
 		uartThread.start();
 
 	}
 
 	public void run() {
 
-		try {
+		while (Run.Running_State) {
 
-			String host = "comm:COM1;baudrate=9600";
+			try {
 
-			streamConnect = (StreamConnection) Connector.open(host);
+				String host = "comm:COM1;baudrate=9600";
 
-			inputStream = streamConnect.openInputStream();
-			outputStream = streamConnect.openOutputStream();
+				streamConnect = (StreamConnection) Connector.open(host);
 
-			System.out.println("========================= start uart server ============================");
+				inputStream = streamConnect.openInputStream();
+				outputStream = streamConnect.openOutputStream();
 
-			receiveData();
+				System.out.println("========================= start uart server ============================");
 
-		} catch (IOException ioe) {
+				receiveData();
 
-			ioe.printStackTrace();
+			} catch (IOException ioe) {
 
-		} finally {
+				ioe.printStackTrace();
 
-			stopServer();
-			clearStream();
+			} finally {
+
+				stopServer();
+				clearStream();
+			}
 		}
 	}
 
@@ -209,7 +215,10 @@ public class UartServer implements Runnable {
 	public static void stopServer() {
 
 		closeStream();
+	}
 
+	public static Thread getUartThread() {
+		return uartThread;
 	}
 
 }

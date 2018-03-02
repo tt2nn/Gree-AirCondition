@@ -31,6 +31,8 @@ public class TcpServer implements Runnable {
 
 	private static int Server_ReConnect_Num = 0;
 
+	private static Thread tcpThread;
+
 	/**
 	 * 启动服务器
 	 */
@@ -41,7 +43,8 @@ public class TcpServer implements Runnable {
 
 		TcpServer tcpServer = new TcpServer();
 
-		new Thread(tcpServer).start();
+		tcpThread = new Thread(tcpServer);
+		tcpThread.start();
 
 		// 启动服务 延迟3s进行登录
 		new Thread(new Runnable() {
@@ -198,7 +201,7 @@ public class TcpServer implements Runnable {
 			if (outputStream != null) {
 
 				outputStream.write(Constant.Tcp_Out_Data_Buffer, 0, length);
-//				Server_ReConnect_Num = 0;
+				// Server_ReConnect_Num = 0;
 			}
 
 		} catch (IOException e) {
@@ -265,6 +268,10 @@ public class TcpServer implements Runnable {
 
 	public static boolean isServerWorking() {
 		return serverWorking;
+	}
+
+	public static Thread getTcpThread() {
+		return tcpThread;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.gree.air.condition.center;
 
+import com.gree.air.condition.Run;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.file.FileReadModel;
 import com.gree.air.condition.file.FileWriteModel;
@@ -58,6 +59,8 @@ public class DataCenter implements Runnable {
 	private static byte[] Lzo_Buffer = new byte[1792];
 
 	private static byte[] Data_Out_Success_Array = new byte[256];
+
+	private static Thread dataCenterThread;
 
 	/**
 	 * 初始化
@@ -156,7 +159,8 @@ public class DataCenter implements Runnable {
 	 */
 	public static void startUploadData() {
 
-		new Thread(dataCenter).start();
+		dataCenterThread = new Thread(dataCenter);
+		dataCenterThread.start();
 	}
 
 	/**
@@ -177,7 +181,7 @@ public class DataCenter implements Runnable {
 	 */
 	public void run() {
 
-		while (true) {
+		while (Run.Running_State) {
 
 			try {
 
@@ -700,4 +704,8 @@ public class DataCenter implements Runnable {
 
 	}
 
+	public static Thread getDataCenterThread() {
+		return dataCenterThread;
+	}
+	
 }

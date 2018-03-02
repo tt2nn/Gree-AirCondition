@@ -1,5 +1,6 @@
 package com.gree.air.condition.center;
 
+import com.gree.air.condition.Run;
 import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.gpio.GpioPin;
@@ -25,12 +26,15 @@ public class ControlTimer implements Runnable {
 
 	private long systemResetTime = 0L;
 
+	private static Thread controlTimerThread;
+
 	/**
 	 * 启动Timer
 	 */
 	public static void startTimer() {
 
-		new Thread(new ControlTimer()).start();
+		controlTimerThread = new Thread(new ControlTimer());
+		controlTimerThread.start();
 	}
 
 	public void run() {
@@ -38,7 +42,7 @@ public class ControlTimer implements Runnable {
 		packageTime = Constant.System_Time;
 		systemResetTime = 0L;
 
-		while (true) {
+		while (Run.Running_State) {
 
 			try {
 
@@ -195,6 +199,10 @@ public class ControlTimer implements Runnable {
 	public static void pushUp() {
 
 		listensePush = false;
+	}
+
+	public static Thread getControlTimerThread() {
+		return controlTimerThread;
 	}
 
 }

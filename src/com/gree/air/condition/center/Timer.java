@@ -1,5 +1,6 @@
 package com.gree.air.condition.center;
 
+import com.gree.air.condition.Run;
 import com.gree.air.condition.constant.Constant;
 
 /**
@@ -12,19 +13,22 @@ public class Timer implements Runnable {
 
 	private long synchronizedTime = 0L;
 
+	private static Thread timerThread;
+
 	/**
 	 * 启动Timer
 	 */
 	public static void startTimer() {
 
-		new Thread(new Timer()).start();
+		timerThread = new Thread(new Timer());
+		timerThread.start();
 	}
 
 	public void run() {
 
 		synchronizedTime = Constant.System_Time;
 
-		while (true) {
+		while (Run.Running_State) {
 
 			try {
 
@@ -47,4 +51,9 @@ public class Timer implements Runnable {
 
 		}
 	}
+
+	public static Thread getTimerThread() {
+		return timerThread;
+	}
+
 }

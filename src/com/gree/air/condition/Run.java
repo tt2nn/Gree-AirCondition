@@ -11,6 +11,7 @@ import com.gree.air.condition.gpio.GpioPin;
 import com.gree.air.condition.gpio.GpioTool;
 import com.gree.air.condition.sms.SmsServer;
 import com.gree.air.condition.spi.SpiTool;
+import com.gree.air.condition.tcp.TcpServer;
 import com.gree.air.condition.uart.UartServer;
 import com.gree.air.condition.utils.Utils;
 
@@ -22,9 +23,13 @@ import com.gree.air.condition.utils.Utils;
  */
 public class Run {
 
+	public static boolean Running_State = true;
+
 	public static void main(String[] args) {
 
 		System.out.println("============================ start run ===============================");
+
+		Running_State = true;
 
 		Configure.init();
 
@@ -81,6 +86,27 @@ public class Run {
 			e.printStackTrace();
 		}
 
+		// 等待所有线程销毁
+		destoryThread(Timer.getTimerThread());
+		destoryThread(ControlTimer.getControlTimerThread());
+		destoryThread(UartServer.getUartThread());
+		destoryThread(SmsServer.getSmsThread());
+		destoryThread(TcpServer.getTcpThread());
+		destoryThread(DataCenter.getDataCenterThread());
+
+	}
+
+	/**
+	 * 验证线程销毁
+	 * 
+	 * @param runThread
+	 */
+	private static void destoryThread(Thread runThread) {
+
+		if (runThread != null) {
+
+			runThread.interrupt();
+		}
 	}
 
 }
