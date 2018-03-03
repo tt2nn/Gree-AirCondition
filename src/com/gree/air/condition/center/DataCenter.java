@@ -103,7 +103,6 @@ public class DataCenter implements Runnable {
 
 			Write_Data_Buffer_Poi = Constant.Uart_In_Buffer_Length + Write_Data_Buffer_Poi;
 		}
-
 	}
 
 	/**
@@ -191,7 +190,6 @@ public class DataCenter implements Runnable {
 					synchronized (dataCenter) {
 
 						dataCenter.wait();
-
 					}
 				}
 
@@ -199,7 +197,8 @@ public class DataCenter implements Runnable {
 				if (Data_Buffer_Out_Mark == Data_Buffer_Out_End_Mark) {
 
 					// 判断上电上报切换
-					if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER) {
+					if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER
+							|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHOOSE) {
 
 						if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_CHECK) {
 
@@ -211,20 +210,12 @@ public class DataCenter implements Runnable {
 							ControlCenter.stopUploadData();
 						}
 
-					} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHANGE
-							&& ControlCenter.getTransmit_Mark_Change()) {
-
-						ControlCenter.Arrive_Stop_Mark = true;
-						Data_Buffer_Out_End_Mark = -1;
-
-					} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_OPEN
-							&& ControlCenter.getTransmit_Mark_Open()) {
-
-						ControlCenter.Arrive_Stop_Mark = true;
-						Data_Buffer_Out_End_Mark = -1;
-
-					} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CLOSE
-							&& ControlCenter.getTransmit_Mark_Close()) {
+					} else if ((Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHANGE
+							&& ControlCenter.getTransmit_Mark_Change())
+							|| (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_OPEN
+									&& ControlCenter.getTransmit_Mark_Open())
+							|| (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CLOSE
+									&& ControlCenter.getTransmit_Mark_Close())) {
 
 						ControlCenter.Arrive_Stop_Mark = true;
 						Data_Buffer_Out_End_Mark = -1;
@@ -704,5 +695,5 @@ public class DataCenter implements Runnable {
 	public static Thread getDataCenterThread() {
 		return dataCenterThread;
 	}
-	
+
 }

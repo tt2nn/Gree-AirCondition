@@ -37,7 +37,11 @@ public class ControlCenter {
 
 	public static long Transmit_Period_Time = 0L;
 
+	// 上报达到停止标志位
 	public static boolean Arrive_Stop_Mark = false;
+
+	// 判断模块是否登录
+	public static boolean Gprs_Login = false;
 
 	/**
 	 * 判断App是否可以工作
@@ -94,6 +98,7 @@ public class ControlCenter {
 			return;
 		}
 
+		Gprs_Login = true;
 		TimeModel.heart();
 	}
 
@@ -126,6 +131,12 @@ public class ControlCenter {
 			return;
 		}
 
+		if (!Gprs_Login) {
+
+			waittingHeart = true;
+			return;
+		}
+
 		waittingHeart = false;
 		TransmitModel.start();
 	}
@@ -138,7 +149,6 @@ public class ControlCenter {
 		Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NO;
 		waittingHeart = true;
 		login();
-
 	}
 
 	/**
@@ -182,7 +192,6 @@ public class ControlCenter {
 		Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NO;
 		FileWriteModel.setNotChoosed();
 		destoryUploadData();
-
 	}
 
 	/**
@@ -220,7 +229,6 @@ public class ControlCenter {
 	public static void pushKeyTransmit() {
 
 		DataCenter.pushKeyTransmit();
-
 	}
 
 	/**
@@ -279,6 +287,7 @@ public class ControlCenter {
 
 		DataCenter.stopUploadData();
 		stopTcpServer();
+		Gprs_Login = false;
 	}
 
 	/**
@@ -288,7 +297,9 @@ public class ControlCenter {
 
 		DataCenter.destoryUploadData();
 		stopTcpServer();
+		Gprs_Login = false;
 		FileWriteModel.setStopTransm();
+		Constant.Transmit_Power_Type = Constant.TRANSMIT_TYPE_STOP;
 	}
 
 	/**
@@ -412,9 +423,10 @@ public class ControlCenter {
 	public static void resetSystem() {
 
 		Run.Running_State = false;
+		GpioPin.closeAllLight();
 		FileModel.deleteAllFile();
 		uploadData();
-		stopTcpServer();
+		destoryUploadData();
 		SmsServer.stopServer();
 		UartServer.stopServer();
 	}

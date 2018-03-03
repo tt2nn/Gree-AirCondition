@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 
+import com.gree.air.condition.Run;
 import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.constant.Constant;
 
@@ -45,44 +46,11 @@ public class TcpServer implements Runnable {
 
 		tcpThread = new Thread(tcpServer);
 		tcpThread.start();
-
-		// 启动服务 延迟3s进行登录
-		new Thread(new Runnable() {
-
-			public void run() {
-
-				try {
-
-					Thread.sleep(3 * 1000);
-
-				} catch (InterruptedException e) {
-
-					e.printStackTrace();
-				}
-
-				while (!TcpServer.isServerNormal()) {
-
-					try {
-
-						Thread.sleep(3 * 1000);
-
-					} catch (InterruptedException e) {
-
-						e.printStackTrace();
-					}
-				}
-
-				ControlCenter.login();
-
-			}
-
-		}).start();
-
 	}
 
 	public void run() {
 
-		while (serverWorking) {
+		while (Run.Running_State && serverWorking) {
 
 			try {
 
@@ -95,6 +63,11 @@ public class TcpServer implements Runnable {
 
 				System.out.println("=================== start tcp server =========================");
 				serverNormal = true;
+
+				if (!ControlCenter.Gprs_Login) {
+
+					ControlCenter.login();
+				}
 
 				receiveData();
 

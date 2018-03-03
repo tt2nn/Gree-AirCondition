@@ -86,20 +86,13 @@ public class Run {
 			e.printStackTrace();
 		}
 
-		try {
-			Thread.sleep(10 * 1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
 		// 等待所有线程销毁
-		destoryThread(Timer.getTimerThread());
-		destoryThread(ControlTimer.getControlTimerThread());
-		destoryThread(UartServer.getUartThread());
-		destoryThread(SmsServer.getSmsThread());
-		destoryThread(TcpServer.getTcpThread());
-		destoryThread(DataCenter.getDataCenterThread());
-
+		waitThread(Timer.getTimerThread());
+		waitThread(ControlTimer.getControlTimerThread());
+		waitThread(DataCenter.getDataCenterThread());
+		waitThread(TcpServer.getTcpThread());
+		waitThread(SmsServer.getSmsThread());
+		waitThread(UartServer.getUartThread());
 	}
 
 	/**
@@ -107,11 +100,15 @@ public class Run {
 	 * 
 	 * @param runThread
 	 */
-	private static void destoryThread(Thread runThread) {
+	private static void waitThread(Thread runThread) {
 
 		if (runThread != null) {
 
-			runThread.interrupt();
+			try {
+				runThread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

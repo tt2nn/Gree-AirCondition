@@ -25,7 +25,8 @@ public class ControlTimer implements Runnable {
 	private long sleepTime = 1000L;
 	private long workTime = 0L;
 
-	private long systemResetTime = 0L;
+	private static int systemResetTime = 0;
+	private static int systemResetPushTime = 0;
 
 	private static Thread controlTimerThread;
 
@@ -42,7 +43,8 @@ public class ControlTimer implements Runnable {
 
 		packageTime = Constant.System_Time;
 		signTime = Constant.System_Time;
-		systemResetTime = 0L;
+		systemResetTime = 0;
+		systemResetPushTime = 0;
 
 		while (Run.Running_State) {
 
@@ -56,10 +58,11 @@ public class ControlTimer implements Runnable {
 
 					systemResetTime += 1;
 
-					if (Constant.System_Time - Push_Time >= 15 * 1000 && listensePush) {
+					if (systemResetTime - systemResetPushTime >= 15 && listensePush) {
 
 						listensePush = false;
 						ControlCenter.resetSystem();
+						return;
 					}
 				}
 
@@ -185,13 +188,17 @@ public class ControlTimer implements Runnable {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	/**
 	 * 按下
 	 */
 	public static void pushDown() {
+
+		if (systemResetTime < 60) {
+
+			systemResetPushTime = systemResetTime;
+		}
 
 		Push_Time = Constant.System_Time;
 		listensePush = true;
