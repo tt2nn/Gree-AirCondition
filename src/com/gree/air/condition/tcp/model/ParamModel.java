@@ -24,14 +24,7 @@ public class ParamModel {
 
 		int poi = 19;
 
-		String apn = "APN:";
-		if (Device.getInstance().getMnc() == 1) {
-
-			apn += Constant.Apn_Cucc;
-		} else {
-
-			apn += Constant.Apn_Cmcc;
-		}
+		String apn = "APN:" + DeviceConfigure.getApn().getApnName();
 
 		String[] res = { "PWD:" + Constant.Sms_Pwd, apn, "APNU:" + Constant.Apn_Name, "APNP:" + Constant.Apn_Pwd,
 				"IP:" + Constant.Tcp_Address_Ip, "PORT:" + Constant.Tcp_Address_Port, "IPR:" + Constant.BAUD_RATE,

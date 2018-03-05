@@ -4,6 +4,7 @@ import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.FileConstant;
 import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.utils.Utils;
+import com.gree.air.condition.variable.Variable;
 
 public class FileWriteModel extends FileModel {
 
@@ -189,6 +190,8 @@ public class FileWriteModel extends FileModel {
 	 * @param serv
 	 */
 	public static void setApn(String apn, String name, String pwd) {
+
+		Variable.Change_Vpn = true;
 
 		Constant.Apn_Name = name;
 		Constant.Apn_Pwd = pwd;

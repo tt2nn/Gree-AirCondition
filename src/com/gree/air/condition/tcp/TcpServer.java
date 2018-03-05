@@ -9,7 +9,11 @@ import javax.microedition.io.StreamConnection;
 
 import com.gree.air.condition.Run;
 import com.gree.air.condition.center.ControlCenter;
+import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.entity.Apn;
+import com.gree.air.condition.utils.Utils;
+import com.gree.air.condition.variable.Variable;
 
 /**
  * TCP服务
@@ -38,6 +42,14 @@ public class TcpServer implements Runnable {
 	 * 启动服务器
 	 */
 	public static void startServer() {
+
+		if (Variable.Change_Vpn) {
+
+			Variable.Change_Vpn = false;
+			
+			Apn apn = Utils.getApn();
+			DeviceConfigure.setApn(apn);
+		}
 
 		serverWorking = true;
 		Server_ReConnect_Num = 0;

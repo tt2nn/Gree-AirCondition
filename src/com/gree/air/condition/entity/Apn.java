@@ -1,7 +1,7 @@
 package com.gree.air.condition.entity;
 
 public class Apn {
-
+	
 	private String apnName = "greeac.gd";
 	private String userName = "GPRS";
 	private String password = "GPRS";

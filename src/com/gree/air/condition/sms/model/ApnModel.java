@@ -1,8 +1,9 @@
 package com.gree.air.condition.sms.model;
 
+import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
-import com.gree.air.condition.entity.Device;
+import com.gree.air.condition.entity.Apn;
 import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.sms.SmsModel;
 
@@ -47,19 +48,10 @@ public class ApnModel {
 	 */
 	private static void apnQuerySend() {
 
-		String apn = "";
+		Apn apn = DeviceConfigure.getApn();
 
-		if (Device.getInstance().getMnc() == 1) {
-
-			apn = Constant.Apn_Cucc;
-
-		} else {
-
-			apn = Constant.Apn_Cmcc;
-		}
-
-		String smsValue = apn + SmsConstant.Sms_Split_Value_Symbol + Constant.Apn_Name
-				+ SmsConstant.Sms_Split_Value_Symbol + Constant.Apn_Pwd;
+		String smsValue = apn.getApnName() + SmsConstant.Sms_Split_Value_Symbol + apn.getUserName()
+				+ SmsConstant.Sms_Split_Value_Symbol + apn.getPassword();
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Apn, smsValue);
 	}
@@ -98,5 +90,5 @@ public class ApnModel {
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Apn);
 
 	}
-	
+
 }

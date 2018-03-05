@@ -46,24 +46,16 @@ public class Run {
 
 		try {
 
-			Thread.sleep(30 * 1000);
+			Thread.sleep(25 * 1000);
 
 			while (!DeviceConfigure.deviceInit()) {
 
-				Thread.sleep(10 * 1000);
+				Thread.sleep(5 * 1000);
 			}
 
 			DeviceConfigure.deviceInfo();
 
-			Apn apn = new Apn();
-			if (Device.getInstance().getMnc() == 1) {
-
-				apn.setApnName(Constant.Apn_Cucc);
-
-			} else if (Device.getInstance().getMnc() == 0) {
-
-				apn.setApnName(Constant.Apn_Cmcc);
-			}
+			Apn apn = Utils.getApn();
 			DeviceConfigure.setApn(apn);
 
 			GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());

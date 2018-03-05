@@ -1,5 +1,8 @@
 package com.gree.air.condition.utils;
 
+import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.entity.Apn;
+import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.entity.Time;
 
 /**
@@ -365,6 +368,30 @@ public class Utils {
 		}
 
 		return false;
+	}
+
+	/**
+	 * 获取APN
+	 * 
+	 * @return
+	 */
+	public static Apn getApn() {
+
+		Apn apn = new Apn();
+
+		if (Device.getInstance().getMnc() == 1) {
+
+			apn.setApnName(Constant.Apn_Cucc);
+
+		} else if (Device.getInstance().getMnc() == 0) {
+
+			apn.setApnName(Constant.Apn_Cmcc);
+		}
+
+		apn.setUserName(Constant.Apn_Name);
+		apn.setPassword(Constant.Apn_Pwd);
+
+		return apn;
 	}
 
 }

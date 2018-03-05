@@ -7,14 +7,11 @@ public class Device {
 	private Device() {
 	};
 
-	public static Device getInstance() {
+	public static synchronized Device getInstance() {
 
 		if (device == null) {
 
-			synchronized (Device.class) {
-
-				device = new Device();
-			}
+			device = new Device();
 		}
 
 		return device;
