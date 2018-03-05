@@ -1,5 +1,6 @@
 package com.gree.air.condition.tcp;
 
+import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.tcp.model.LoginModel;
 import com.gree.air.condition.tcp.model.ParamModel;
@@ -41,6 +42,11 @@ public class TcpModel {
 		// 判断功能码
 		switch (Constant.Tcp_In_Buffer[18]) {
 
+		case (byte) 0x72:
+
+			ControlCenter.resetSystem();
+			break;
+
 		case (byte) 0x90: // 登录 响应
 
 			LoginModel.loginResponse();
@@ -62,7 +68,7 @@ public class TcpModel {
 		case (byte) 0x93: // 进行实时监控 请求
 
 			TransmitModel.monitorResponse();
-			
+
 			break;
 
 		case (byte) 0x94: // 修改GPRS模块 请求

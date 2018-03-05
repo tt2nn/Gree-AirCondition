@@ -1,5 +1,6 @@
 package com.gree.air.condition.sms.model;
 
+import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
@@ -25,8 +26,9 @@ public class RstModel {
 	 * 
 	 */
 	private static void rstReceive() {
-		
+
 		rstSend();
+		ControlCenter.resetSystem();
 	}
 
 	/**
@@ -37,5 +39,5 @@ public class RstModel {
 		String smsValue = "ok";
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Rst, smsValue);
 	}
-	
+
 }

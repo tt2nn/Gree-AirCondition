@@ -250,21 +250,6 @@ public class ControlCenter {
 	}
 
 	/**
-	 * 判断是否进行打卡上报
-	 * 
-	 * @return
-	 */
-	public static boolean isCheckTransmit() {
-
-		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHECK) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * 上传数据
 	 */
 	public static void uploadData() {

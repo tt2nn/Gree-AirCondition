@@ -12,34 +12,9 @@ import com.gree.air.condition.utils.Utils;
  * @author lihaotian
  *
  */
-public class AdmModel {
+public class AdmModel extends SmsBaseModel {
 
-	/**
-	 * 解析收到的短信
-	 */
-	public static void smsAnalyze() {
-
-		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
-
-			admQueryReceive();
-
-		} else {
-
-			admSetReceive();
-		}
-	}
-
-	/**
-	 * 服务器 查询 GPRS 管理员号码 解析短信
-	 */
-	private static void admQueryReceive() {
-		admQuerySend();
-	}
-
-	/**
-	 * 服务器 查询 GPRS 管理员号码 回复服务器短信
-	 */
-	private static void admQuerySend() {
+	void queryParams() {
 
 		StringBuffer stringBuffer = new StringBuffer();
 
@@ -58,10 +33,7 @@ public class AdmModel {
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Adm, stringBuffer.toString());
 	}
 
-	/**
-	 * 服务器 设置 GPRS 管理员号码 解析短信
-	 */
-	private static void admSetReceive() {
+	void setParams() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
@@ -92,7 +64,6 @@ public class AdmModel {
 					start = end + 1;
 					isPhone = false;
 					isChange = true;
-
 				}
 			}
 		}
@@ -102,15 +73,7 @@ public class AdmModel {
 			FileWriteModel.setSmsAdmin();
 		}
 
-		admSetSend();
-	}
-
-	/**
-	 * 服务器 设置 GPRS 管理员号码 回复服务器短信
-	 */
-	private static void admSetSend() {
-
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Adm);
 	}
-	
+
 }

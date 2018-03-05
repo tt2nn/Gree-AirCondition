@@ -11,38 +11,9 @@ import com.gree.air.condition.sms.SmsModel;
  * @author lihaotian
  *
  */
-public class HbModel {
+public class HbModel extends SmsBaseModel {
 
-	/**
-	 * 解析收到的短信
-	 * 
-	 */
-	public static void smsAnalyze() {
-
-		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
-
-			hbQueryReceive();
-
-		} else {
-
-			hbSetReceive();
-		}
-	}
-
-	/**
-	 * 服务器 查询 GPRS 心跳间隔 解析短信
-	 * 
-	 */
-	private static void hbQueryReceive() {
-
-		hbQuerySend();
-	}
-
-	/**
-	 * 服务器 查询 GPRS 心跳间隔 回复服务器短信
-	 * 
-	 */
-	private static void hbQuerySend() {
+	void queryParams() {
 
 		String value1 = "heart,0,";
 		String smsValue = value1 + Constant.Tcp_Heart_Beat_Period;
@@ -50,11 +21,7 @@ public class HbModel {
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Hb, smsValue);
 	}
 
-	/**
-	 * 服务器 设置 GPRS 心跳间隔 解析短信
-	 * 
-	 */
-	private static void hbSetReceive() {
+	void setParams() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
@@ -65,15 +32,7 @@ public class HbModel {
 
 		FileWriteModel.setSmsHb(Integer.parseInt(second));
 
-		hbSetSend();
-	}
-
-	/**
-	 * 服务器 设置 GPRS 心跳间隔 回复服务器短信
-	 */
-	private static void hbSetSend() {
-
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Hb);
 	}
-	
+
 }

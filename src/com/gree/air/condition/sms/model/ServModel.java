@@ -11,48 +11,15 @@ import com.gree.air.condition.sms.SmsModel;
  * @author lihaotian
  *
  */
-public class ServModel {
+public class ServModel extends SmsBaseModel {
 
-	/**
-	 * 解析收到的短信
-	 * 
-	 */
-	public static void smsAnalyze() {
-
-		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
-
-			servQueryReceive();
-
-		} else {
-
-			servSetReceive();
-		}
-	}
-
-	/**
-	 * 服务器 查询 GPRS 域名、IP，端口 解析短信
-	 * 
-	 */
-	private static void servQueryReceive() {
-
-		servQuerySend();
-	}
-
-	/**
-	 * 服务器 查询 GPRS 域名、IP，端口 回复服务器短信
-	 * 
-	 */
-	private static void servQuerySend() {
+	void queryParams() {
 
 		String smsValue = Constant.Tcp_Address_Ip + SmsConstant.Sms_Split_Value_Symbol + Constant.Tcp_Address_Port;
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Serv, smsValue);
 	}
 
-	/**
-	 * 服务器 设置 GPRS 域名、IP，端口 解析短信
-	 * 
-	 */
-	private static void servSetReceive() {
+	void setParams() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
@@ -69,18 +36,9 @@ public class ServModel {
 			Constant.Tcp_Address_Port = smsValue.substring(start, end);
 
 			FileWriteModel.setSmsServ(Constant.Tcp_Address_Ip, Constant.Tcp_Address_Port);
-
 		}
-
-		servSetSend();
-	}
-
-	/**
-	 * 服务器 设置 GPRS 域名、IP，端口 回复服务器短信
-	 */
-	private static void servSetSend() {
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Serv);
 	}
-	
+
 }

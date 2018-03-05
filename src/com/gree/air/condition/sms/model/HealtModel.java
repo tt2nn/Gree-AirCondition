@@ -11,63 +11,22 @@ import com.gree.air.condition.sms.SmsModel;
  * @author lihaotian
  *
  */
-public class HealtModel {
+public class HealtModel extends SmsBaseModel {
 
-	/**
-	 * 解析收到的短信
-	 * 
-	 */
-	public static void smsAnalyze() {
-
-		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
-
-			healtQueryReceive();
-
-		} else {
-
-			healtSetReceive();
-		}
-	}
-
-	/**
-	 * 服务器 查询 GPRS 厂家参数改变前传输结束时间 解析短信
-	 * 
-	 */
-	private static void healtQueryReceive() {
-
-		healtQuerySend();
-	}
-
-	/**
-	 * 服务器 查询 GPRS 厂家参数改变前传输结束时间 回复服务器短信
-	 * 
-	 */
-	private static void healtQuerySend() {
+	void queryParams() {
 
 		String smsValue = Constant.Transmit_Change_End_Time / 60 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Healt, smsValue);
 	}
 
-	/**
-	 * 服务器 设置 GPRS 厂家参数改变前传输结束时间 解析短信
-	 * 
-	 */
-	private static void healtSetReceive() {
+	void setParams() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
 		FileWriteModel.setSmsHealt(Integer.parseInt(smsValue) * 60);
 
-		healtSetSend();
-	}
-
-	/**
-	 * 服务器 设置 GPRS 厂家参数改变前传输结束时间 回复服务器短信
-	 */
-	private static void healtSetSend() {
-
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Healt);
 	}
-	
+
 }

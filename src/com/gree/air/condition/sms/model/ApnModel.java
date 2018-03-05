@@ -13,40 +13,9 @@ import com.gree.air.condition.sms.SmsModel;
  * @author lihaotian
  *
  */
-public class ApnModel {
+public class ApnModel extends SmsBaseModel {
 
-	/**
-	 * 解析收到的短信
-	 * 
-	 * @param sms
-	 */
-	public static void smsAnalyze() {
-
-		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
-
-			apnQueryReceive();
-
-		} else {
-
-			apnSetReceive();
-		}
-	}
-
-	/**
-	 * 服务器 查询 GPRS 接入点 解析短信
-	 * 
-	 * @param sms
-	 */
-	private static void apnQueryReceive() {
-
-		apnQuerySend();
-	}
-
-	/**
-	 * 服务器 查询 GPRS 接入点 回复服务器短信
-	 * 
-	 */
-	private static void apnQuerySend() {
+	void queryParams() {
 
 		Apn apn = DeviceConfigure.getApn();
 
@@ -56,12 +25,7 @@ public class ApnModel {
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Apn, smsValue);
 	}
 
-	/**
-	 * 服务器 设置 GPRS 接入点 解析短信
-	 * 
-	 * @param sms
-	 */
-	private static void apnSetReceive() {
+	void setParams() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
@@ -79,16 +43,7 @@ public class ApnModel {
 
 		FileWriteModel.setApn(apn, Constant.Apn_Name, Constant.Apn_Pwd);
 
-		apnSetSend();
-	}
-
-	/**
-	 * 服务器 设置 GPRS 接入点 回复服务器短信
-	 */
-	private static void apnSetSend() {
-
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Apn);
-
 	}
 
 }

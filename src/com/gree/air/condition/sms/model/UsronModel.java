@@ -12,38 +12,9 @@ import com.gree.air.condition.utils.Utils;
  * @author lihaotian
  *
  */
-public class UsronModel {
+public class UsronModel extends SmsBaseModel {
 
-	/**
-	 * 解析收到的短信
-	 * 
-	 */
-	public static void smsAnalyze() {
-
-		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
-
-			usronQueryReceive();
-
-		} else {
-
-			usronSetReceive();
-		}
-	}
-
-	/**
-	 * 服务器 查询 GPRS 普通手机账号 解析短信
-	 * 
-	 */
-	private static void usronQueryReceive() {
-
-		usronQuerySend();
-	}
-
-	/**
-	 * 服务器 查询 GPRS 普通手机账号 回复服务器短信
-	 * 
-	 */
-	private static void usronQuerySend() {
+	void queryParams() {
 
 		StringBuffer stringBuffer = new StringBuffer();
 
@@ -62,11 +33,7 @@ public class UsronModel {
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Usron, stringBuffer.toString());
 	}
 
-	/**
-	 * 服务器 设置 GPRS 普通手机账号 解析短信
-	 * 
-	 */
-	private static void usronSetReceive() {
+	void setParams() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
@@ -107,15 +74,7 @@ public class UsronModel {
 			FileWriteModel.setSmsUser();
 		}
 
-		usronSetSend();
-	}
-
-	/**
-	 * 服务器 设置 GPRS 普通手机账号 回复服务器短信
-	 */
-	private static void usronSetSend() {
-
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Usron);
 	}
-	
+
 }

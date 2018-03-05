@@ -240,7 +240,6 @@ public class DataCenter implements Runnable {
 
 					Upload_Data_Interval_Time = Constant.System_Time;
 					ControlCenter.sendGprsSignal();
-
 				}
 
 				// 正在进行上电上报，如果缓存了实时上报，切换为实时上报
@@ -261,7 +260,7 @@ public class DataCenter implements Runnable {
 
 						length = Utils.bytesToInt(Constant.Data_SPI_Buffer, 2, 3);
 
-						if (length > 0 && length < 1792) {
+						if (length > 0 && length < 1792) { //验证数据是否正确
 
 							time = Utils.bytesToLong(Constant.Data_SPI_Buffer, 4);
 
@@ -273,14 +272,12 @@ public class DataCenter implements Runnable {
 						} else {
 
 							outMarkAdd();
-
 							continue;
 						}
 
 					} else {
 
 						outMarkAdd();
-
 						continue;
 					}
 				}
@@ -293,7 +290,6 @@ public class DataCenter implements Runnable {
 					SpiTool.writeData((Data_Buffer_Out_Mark * 2 * 1024 + 1792), Data_Out_Success_Array);
 
 					outMarkAdd();
-
 					Thread.sleep(500);
 
 				} else {
@@ -330,7 +326,6 @@ public class DataCenter implements Runnable {
 
 			// 重置静默时间
 			Constant.Stop_Time = 0;
-
 			convertUploadData();
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_ALWAYS;
@@ -404,7 +399,7 @@ public class DataCenter implements Runnable {
 	}
 
 	/**
-	 * 开机上报
+	 * 关机上报
 	 */
 	public static void closeTransmit() {
 
@@ -491,7 +486,6 @@ public class DataCenter implements Runnable {
 
 			ControlCenter.requestStartUpload();
 		}
-
 	}
 
 	/**
@@ -520,7 +514,6 @@ public class DataCenter implements Runnable {
 	public static void powerTransmit() {
 
 		Constant.Stop_Time = 0L;
-
 		convertUploadData();
 
 		// 重置发送游标，选举上报持续发送5分钟数据
@@ -531,7 +524,6 @@ public class DataCenter implements Runnable {
 		Transmit_Level = TRANSMIT_LEVEL_POWER;
 
 		ControlCenter.requestStartUpload();
-
 	}
 
 	/**

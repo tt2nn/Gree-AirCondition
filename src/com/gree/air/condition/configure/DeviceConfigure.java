@@ -7,7 +7,6 @@ import org.joshvm.j2me.cellular.CellInfo;
 import org.joshvm.j2me.cellular.CellularDeviceInfo;
 import org.joshvm.j2me.cellular.NetworkInfo;
 
-import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.entity.Apn;
 import com.gree.air.condition.entity.Device;
 

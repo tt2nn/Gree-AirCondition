@@ -1,5 +1,6 @@
 package com.gree.air.condition.sms.model;
 
+import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
 
@@ -25,7 +26,7 @@ public class VerModel {
 	 * 
 	 */
 	private static void verQueryReceive() {
-		
+
 		verQuerySend();
 	}
 
@@ -35,7 +36,7 @@ public class VerModel {
 	 */
 	private static void verQuerySend() {
 
-		SmsModel.buildMessage(SmsConstant.Sms_Type_Ver, "");
+		SmsModel.buildMessage(SmsConstant.Sms_Type_Ver, Constant.APP_VERSION);
 	}
 
 }

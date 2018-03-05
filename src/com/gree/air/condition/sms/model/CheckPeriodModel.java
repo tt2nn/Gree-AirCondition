@@ -11,58 +11,22 @@ import com.gree.air.condition.sms.SmsModel;
  * @author zhangzhuang
  *
  */
-public class CheckPeriodModel {
+public class CheckPeriodModel extends SmsBaseModel {
 
-	/**
-	 * 解析收到的短信
-	 */
-	public static void smsAnalyze() {
-
-		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
-
-			checkPeriodQueryReceive();
-
-		} else {
-
-			checkPeriodSetReceive();
-		}
-	}
-
-	/**
-	 * 服务器 查询 GPRS 打卡上报周期 解析短信
-	 */
-	private static void checkPeriodQueryReceive() {
-		checkPeriodQuerySend();
-	}
-
-	/**
-	 * 服务器 查询 GPRS 打卡上报周期 回复服务器短信
-	 */
-	private static void checkPeriodQuerySend() {
+	void queryParams() {
 
 		String smsValue = Constant.Transmit_Check_Period / 60 + "";
 
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Check_Period, smsValue);
 	}
 
-	/**
-	 * 服务器 设置 GPRS 打卡上报周期 解析短信
-	 */
-	private static void checkPeriodSetReceive() {
+	void setParams() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
 
 		FileWriteModel.setSmsCheckPeriod(Integer.parseInt(smsValue) * 60);
 
-		checkPeriodSetSend();
-	}
-
-	/**
-	 * 服务器 设置 GPRS 打卡上报周期 回复服务器短信
-	 */
-	private static void checkPeriodSetSend() {
-
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Check_Period);
-
 	}
+
 }
