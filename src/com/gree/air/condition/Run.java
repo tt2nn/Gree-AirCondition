@@ -7,6 +7,7 @@ import com.gree.air.condition.configure.Configure;
 import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.entity.Apn;
+import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.gpio.GpioPin;
 import com.gree.air.condition.gpio.GpioTool;
 import com.gree.air.condition.sms.SmsServer;
@@ -55,11 +56,11 @@ public class Run {
 			DeviceConfigure.deviceInfo();
 
 			Apn apn = new Apn();
-			if (Constant.device.getMnc() == 1) {
+			if (Device.getInstance().getMnc() == 1) {
 
 				apn.setApnName(Constant.Apn_Cucc);
 
-			} else if (Constant.device.getMnc() == 0) {
+			} else if (Device.getInstance().getMnc() == 0) {
 
 				apn.setApnName(Constant.Apn_Cmcc);
 			}
@@ -67,13 +68,13 @@ public class Run {
 
 			GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
 
-			Constant.Gprs_Mac[0] = Utils.stringToByte(Constant.device.getImei().substring(1, 3));
-			Constant.Gprs_Mac[1] = Utils.stringToByte(Constant.device.getImei().substring(3, 5));
-			Constant.Gprs_Mac[2] = Utils.stringToByte(Constant.device.getImei().substring(5, 7));
-			Constant.Gprs_Mac[3] = Utils.stringToByte(Constant.device.getImei().substring(7, 9));
-			Constant.Gprs_Mac[4] = Utils.stringToByte(Constant.device.getImei().substring(9, 11));
-			Constant.Gprs_Mac[5] = Utils.stringToByte(Constant.device.getImei().substring(11, 13));
-			Constant.Gprs_Mac[6] = Utils.stringToByte(Constant.device.getImei().substring(13, 15));
+			Constant.Gprs_Mac[0] = Utils.stringToByte(Device.getInstance().getImei().substring(1, 3));
+			Constant.Gprs_Mac[1] = Utils.stringToByte(Device.getInstance().getImei().substring(3, 5));
+			Constant.Gprs_Mac[2] = Utils.stringToByte(Device.getInstance().getImei().substring(5, 7));
+			Constant.Gprs_Mac[3] = Utils.stringToByte(Device.getInstance().getImei().substring(7, 9));
+			Constant.Gprs_Mac[4] = Utils.stringToByte(Device.getInstance().getImei().substring(9, 11));
+			Constant.Gprs_Mac[5] = Utils.stringToByte(Device.getInstance().getImei().substring(11, 13));
+			Constant.Gprs_Mac[6] = Utils.stringToByte(Device.getInstance().getImei().substring(13, 15));
 
 			Constant.Init_Success = true;
 

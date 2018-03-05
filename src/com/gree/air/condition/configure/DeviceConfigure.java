@@ -9,6 +9,7 @@ import org.joshvm.j2me.cellular.NetworkInfo;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.entity.Apn;
+import com.gree.air.condition.entity.Device;
 
 /**
  * 
@@ -59,21 +60,21 @@ public class DeviceConfigure {
 
 		try {
 
-			Constant.device.setImei(devices[0].getIMEI());
-			Constant.device.setImsi(devices[0].getIMSI());
-			Constant.device.setIccid(devices[0].getICCID());
+			Device.getInstance().setImei(devices[0].getIMEI());
+			Device.getInstance().setImsi(devices[0].getIMSI());
+			Device.getInstance().setIccid(devices[0].getICCID());
 
 			NetworkInfo networkInfo = devices[0].getNetworkInfo();
 			if (networkInfo != null) {
 
-				Constant.device.setMnc(networkInfo.getMNC());
-				Constant.device.setMcc(networkInfo.getMCC());
+				Device.getInstance().setMnc(networkInfo.getMNC());
+				Device.getInstance().setMcc(networkInfo.getMCC());
 			}
 
 			CellInfo cellInfo = devices[0].getCellInfo();
 			if (cellInfo != null) {
 
-				Constant.device.setLac(cellInfo.getLAC());
+				Device.getInstance().setLac(cellInfo.getLAC());
 			}
 
 		} catch (IOException e) {

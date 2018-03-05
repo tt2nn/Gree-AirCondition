@@ -2,6 +2,7 @@ package com.gree.air.condition.file;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.FileConstant;
+import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.utils.Utils;
 
 public class FileWriteModel extends FileModel {
@@ -192,7 +193,7 @@ public class FileWriteModel extends FileModel {
 		Constant.Apn_Name = name;
 		Constant.Apn_Pwd = pwd;
 
-		if (Constant.device.getMnc() == 1) {
+		if (Device.getInstance().getMnc() == 1) {
 
 			Constant.Apn_Cucc = apn;
 

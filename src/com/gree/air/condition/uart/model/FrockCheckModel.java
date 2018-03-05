@@ -1,6 +1,7 @@
 package com.gree.air.condition.uart.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.uart.UartModel;
 import com.gree.air.condition.utils.Utils;
 
@@ -35,7 +36,7 @@ public class FrockCheckModel {
 		}
 
 		/* IMEI码 */
-		byte[] imei = Constant.device.getImei().getBytes();
+		byte[] imei = Device.getInstance().getImei().getBytes();
 		for (int i = 0; i < imei.length; i++) {
 
 			Constant.Uart_Out_Buffer[poi] = imei[i];
@@ -48,7 +49,7 @@ public class FrockCheckModel {
 			Constant.Uart_Out_Buffer[poi] = imsiHeard[i];
 			poi++;
 		}
-		byte[] imsi = Constant.device.getImsi().getBytes();
+		byte[] imsi = Device.getInstance().getImsi().getBytes();
 		for (int i = 0; i < imsi.length; i++) {
 
 			Constant.Uart_Out_Buffer[poi] = imsi[i];

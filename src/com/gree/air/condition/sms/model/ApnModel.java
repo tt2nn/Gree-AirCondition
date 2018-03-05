@@ -2,6 +2,7 @@ package com.gree.air.condition.sms.model;
 
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
+import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.sms.SmsModel;
 
@@ -48,7 +49,7 @@ public class ApnModel {
 
 		String apn = "";
 
-		if (Constant.device.getMnc() == 1) {
+		if (Device.getInstance().getMnc() == 1) {
 
 			apn = Constant.Apn_Cucc;
 

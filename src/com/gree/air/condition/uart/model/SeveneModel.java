@@ -3,6 +3,7 @@ package com.gree.air.condition.uart.model;
 import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.uart.UartModel;
 import com.gree.air.condition.utils.CRC;
 import com.gree.air.condition.utils.Utils;
@@ -45,7 +46,7 @@ public class SeveneModel {
 	 * 选举
 	 */
 	private static void choose() {
-		
+
 		if (!Constant.Init_Success) {
 
 			return;
@@ -150,7 +151,7 @@ public class SeveneModel {
 		// 机组数据从第6位开始
 		Constant.Uart_Out_Buffer[9] = Constant.GPRS_MODEL;
 
-		byte[] imeiBytes = Constant.device.getImei().getBytes();
+		byte[] imeiBytes = Device.getInstance().getImei().getBytes();
 		for (int i = 0; i < imeiBytes.length; i++) {
 
 			Constant.Uart_Out_Buffer[i + 10] = imeiBytes[i];

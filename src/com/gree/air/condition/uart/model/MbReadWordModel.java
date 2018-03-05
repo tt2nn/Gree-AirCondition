@@ -1,6 +1,7 @@
 package com.gree.air.condition.uart.model;
 
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.uart.UartModel;
 import com.gree.air.condition.utils.CRC;
 import com.gree.air.condition.utils.Utils;
@@ -17,7 +18,7 @@ public class MbReadWordModel {
 	 * 处理
 	 */
 	public static void analyze() {
-		
+
 		if (!Constant.Init_Success) {
 
 			return;
@@ -40,7 +41,7 @@ public class MbReadWordModel {
 		Constant.Uart_Out_Buffer[6] = Constant.GPRS_MODEL;
 
 		// word1~8
-		byte[] imeiBytes = Constant.device.getImei().getBytes();
+		byte[] imeiBytes = Device.getInstance().getImei().getBytes();
 		for (int i = 7; i < 7 + imeiBytes.length; i++) {
 
 			Constant.Uart_Out_Buffer[i] = imeiBytes[i - 7];
@@ -105,5 +106,5 @@ public class MbReadWordModel {
 
 		UartModel.build(dataLength + 7);
 	}
-	
+
 }

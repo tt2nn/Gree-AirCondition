@@ -2,6 +2,7 @@ package com.gree.air.condition.tcp.model;
 
 import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.tcp.TcpModel;
 import com.gree.air.condition.utils.Utils;
 
@@ -34,29 +35,29 @@ public class LoginModel {
 		Constant.Tcp_Out_Buffer[22] = (byte) 0x00;
 
 		// IMEI
-		byte[] imeiBytes = Constant.device.getImei().getBytes();
+		byte[] imeiBytes = Device.getInstance().getImei().getBytes();
 		for (int i = 23; i < 38; i++) {
 
 			Constant.Tcp_Out_Buffer[i] = imeiBytes[i - 23];
 		}
 		Constant.Tcp_Out_Buffer[38] = (byte) 0x00;
 
-		byte[] mncBytes = Utils.intToBytes(Constant.device.getMnc());
+		byte[] mncBytes = Utils.intToBytes(Device.getInstance().getMnc());
 		Constant.Tcp_Out_Buffer[39] = mncBytes[0];
 		Constant.Tcp_Out_Buffer[40] = mncBytes[1];
 
-		byte[] lacBytes = Utils.intToBytes(Constant.device.getLac());
+		byte[] lacBytes = Utils.intToBytes(Device.getInstance().getLac());
 		Constant.Tcp_Out_Buffer[41] = lacBytes[0];
 		Constant.Tcp_Out_Buffer[42] = lacBytes[1];
 
-		byte[] cidBytes = Utils.intToBytes(Constant.device.getMcc());
+		byte[] cidBytes = Utils.intToBytes(Device.getInstance().getMcc());
 		Constant.Tcp_Out_Buffer[43] = cidBytes[0];
 		Constant.Tcp_Out_Buffer[44] = cidBytes[1];
 
 		Constant.Tcp_Out_Buffer[45] = (byte) 0x00;
 
 		// 手机序列号
-		byte[] ccidBytes = Constant.device.getIccid().getBytes();
+		byte[] ccidBytes = Device.getInstance().getIccid().getBytes();
 		for (int i = 46; i < 66; i++) {
 
 			if (i - 46 < ccidBytes.length) {
@@ -74,7 +75,6 @@ public class LoginModel {
 		Constant.Tcp_Out_Buffer[67] = Constant.GPRS_MODEL;
 
 		TcpModel.build(50, 68);
-
 	}
 
 	/**

@@ -2,6 +2,24 @@ package com.gree.air.condition.entity;
 
 public class Device {
 
+	private static Device device;
+
+	private Device() {
+	};
+
+	public static Device getInstance() {
+
+		if (device == null) {
+
+			synchronized (Device.class) {
+
+				device = new Device();
+			}
+		}
+
+		return device;
+	}
+
 	/**
 	 * 硬件序列号
 	 */

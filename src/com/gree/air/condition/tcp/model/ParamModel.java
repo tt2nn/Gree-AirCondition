@@ -2,6 +2,7 @@ package com.gree.air.condition.tcp.model;
 
 import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.tcp.TcpModel;
 import com.gree.air.condition.utils.Utils;
@@ -24,7 +25,7 @@ public class ParamModel {
 		int poi = 19;
 
 		String apn = "APN:";
-		if (Constant.device.getMnc() == 1) {
+		if (Device.getInstance().getMnc() == 1) {
 
 			apn += Constant.Apn_Cucc;
 		} else {
@@ -332,7 +333,7 @@ public class ParamModel {
 		Constant.Tcp_Out_Buffer[19] = (byte) 0x02;
 
 		// 模块序列号
-		byte[] imeiBytes = Constant.device.getImei().getBytes();
+		byte[] imeiBytes = Device.getInstance().getImei().getBytes();
 		for (int i = 20; i < 20 + imeiBytes.length; i++) {
 
 			Constant.Tcp_Out_Buffer[i] = imeiBytes[i - 20];
