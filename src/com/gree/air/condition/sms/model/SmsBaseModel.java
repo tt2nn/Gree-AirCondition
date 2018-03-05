@@ -17,7 +17,7 @@ public abstract class SmsBaseModel {
 
 		} else {
 
-			if (!SmsModel.isAdmin()) {
+			if (SmsModel.isAdmin()) {
 
 				setParams();
 			}
