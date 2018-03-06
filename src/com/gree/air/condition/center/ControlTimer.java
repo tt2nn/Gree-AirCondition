@@ -67,7 +67,7 @@ public class ControlTimer implements Runnable {
 				}
 
 				// 3秒更新信号灯
-				if (Constant.System_Time - signTime >= 3 * 1000) {
+				if (Constant.System_Time - signTime >= 1 * 1000) {
 
 					signTime = Constant.System_Time;
 					GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
