@@ -68,6 +68,11 @@ public class MbWriteModel {
 		buildSendBuffer();
 
 		UartModel.build(10);
+		
+		if (!Constant.Init_Success) {
+
+			return;
+		}
 
 		if (!Constant.Gprs_Choosed && DoChoose.isChooseResp()) {
 

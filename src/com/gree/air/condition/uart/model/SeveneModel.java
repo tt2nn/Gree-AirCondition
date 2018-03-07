@@ -51,8 +51,8 @@ public class SeveneModel {
 
 			ControlCenter.chooseRest();
 		}
-
-		if (!DoChoose.choose()) {
+		
+		if (!Constant.Init_Success) {
 
 			return;
 		}
@@ -91,6 +91,11 @@ public class SeveneModel {
 		Constant.Uart_Out_Buffer[94] = CRC.crc8(Constant.Uart_Out_Buffer, 2, 94);
 
 		UartModel.build(95);
+
+		if (!Constant.Init_Success) {
+
+			return;
+		}
 
 		// 选举上报
 		if (!Constant.Gprs_Choosed && DoChoose.isChooseResp()) {

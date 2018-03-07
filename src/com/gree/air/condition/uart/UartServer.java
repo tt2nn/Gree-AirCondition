@@ -9,6 +9,7 @@ import javax.microedition.io.StreamConnection;
 
 import com.gree.air.condition.Run;
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.utils.Logger;
 
 /**
  * 串口服务
@@ -52,7 +53,7 @@ public class UartServer implements Runnable {
 				inputStream = streamConnect.openInputStream();
 				outputStream = streamConnect.openOutputStream();
 
-				System.out.println("========================= start uart server ============================");
+				Logger.log("Uart Server", "Start Uart Server");
 
 				receiveData();
 
