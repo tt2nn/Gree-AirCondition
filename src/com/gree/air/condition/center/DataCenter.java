@@ -196,21 +196,7 @@ public class DataCenter implements Runnable {
 				// 达到上报标志位
 				if (Data_Buffer_Out_Mark == Data_Buffer_Out_End_Mark) {
 
-					// 判断上电上报切换
-					if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER
-							|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHOOSE) {
-
-						if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_CHECK) {
-
-							convertUploadData();
-							ControlCenter.periodCheckTransmit();
-
-						} else {
-
-							ControlCenter.stopUploadData();
-						}
-
-					} else if ((Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHANGE
+					if ((Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHANGE
 							&& ControlCenter.getTransmit_Mark_Change())
 							|| (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_OPEN
 									&& ControlCenter.getTransmit_Mark_Open())
@@ -260,7 +246,7 @@ public class DataCenter implements Runnable {
 
 						length = Utils.bytesToInt(Constant.Data_SPI_Buffer, 2, 3);
 
-						if (length > 0 && length < 1792) { //验证数据是否正确
+						if (length > 0 && length < 1792) { // 验证数据是否正确
 
 							time = Utils.bytesToLong(Constant.Data_SPI_Buffer, 4);
 
