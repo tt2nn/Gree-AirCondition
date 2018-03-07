@@ -65,20 +65,22 @@ public class MbWriteModel {
 			return;
 		}
 
-		if (DoChoose.isChooseResp()) {
+		buildSendBuffer();
+
+		UartModel.build(10);
+
+		if (!Constant.Gprs_Choosed && DoChoose.isChooseResp()) {
 
 			ControlCenter.chooseGprs();
+			return;
 		}
 
 		// 判断是否是 上电是状态为选中
 		if (!DoChoose.isChooseResp()) {
 
 			ControlCenter.powerCall();
+			return;
 		}
-
-		buildSendBuffer();
-
-		UartModel.build(10);
 
 		ControlCenter.setMarker(Constant.Uart_In_Buffer[30], Constant.Uart_In_Buffer[32], Constant.Uart_In_Buffer[34],
 				Constant.Uart_In_Buffer[16], Constant.Uart_In_Buffer[18]);

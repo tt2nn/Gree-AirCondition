@@ -80,17 +80,6 @@ public class SeveneModel {
 			return;
 		}
 
-		if (DoChoose.isChooseResp()) {
-
-			ControlCenter.chooseGprs();
-		}
-
-		// 判断是否是 上电是状态为选中
-		if (!DoChoose.isChooseResp()) {
-
-			ControlCenter.powerCall();
-		}
-
 		buildSendBufferHeader();
 		buildSendDataHeader();
 
@@ -102,6 +91,20 @@ public class SeveneModel {
 		Constant.Uart_Out_Buffer[94] = CRC.crc8(Constant.Uart_Out_Buffer, 2, 94);
 
 		UartModel.build(95);
+
+		// 选举上报
+		if (!Constant.Gprs_Choosed && DoChoose.isChooseResp()) {
+
+			ControlCenter.chooseGprs();
+			return;
+		}
+
+		// 上电上报
+		if (!DoChoose.isChooseResp()) {
+
+			ControlCenter.powerCall();
+			return;
+		}
 
 		ControlCenter.setMarker(Utils.byteGetBit(Constant.Uart_In_Buffer[11], 0),
 				Utils.byteGetBit(Constant.Uart_In_Buffer[11], 1), Utils.byteGetBit(Constant.Uart_In_Buffer[11], 2),

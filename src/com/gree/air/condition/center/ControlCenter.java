@@ -202,12 +202,7 @@ public class ControlCenter {
 		Constant.Gprs_Choosed = true;
 		GpioPin.communicationLight();
 		FileWriteModel.setIsChoosed();
-
-		if (canWorking()) {
-
-			DoChoose.reset();
-			DataCenter.chooseTransmit();
-		}
+		DataCenter.chooseTransmit();
 	}
 
 	/**
@@ -303,7 +298,7 @@ public class ControlCenter {
 	 */
 	public static void setMarker(int error, int warning, int change, int open, int close) {
 
-		if (!canWorking()) {
+		if (!Constant.Init_Success) {
 
 			return;
 		}
