@@ -47,11 +47,6 @@ public class SeveneModel {
 	 */
 	private static void choose() {
 
-		if (!Constant.Init_Success) {
-
-			return;
-		}
-
 		if (Constant.Gprs_Choosed) {
 
 			ControlCenter.chooseRest();
@@ -80,17 +75,12 @@ public class SeveneModel {
 	 */
 	private static void call() {
 
-		if (!Constant.Init_Success) {
-
-			return;
-		}
-
 		if (!Constant.Gprs_Choosed && !DoChoose.isChooseResp()) {
 
 			return;
 		}
 
-		if (!Constant.Gprs_Choosed && DoChoose.isChooseResp()) {
+		if (DoChoose.isChooseResp()) {
 
 			ControlCenter.chooseGprs();
 		}
@@ -173,13 +163,26 @@ public class SeveneModel {
 		}
 
 		// 故障代码
-		if (Constant.GPRS_ERROR_TYPE == Constant.GPRS_ERROR_TYPE_NETWORK) {
+		switch (Constant.GPRS_ERROR_TYPE) {
 
-			Constant.Uart_Out_Buffer[27] = (byte) 0x03;
-
-		} else {
+		case Constant.GPRS_ERROR_TYPE_SIM:
 
 			Constant.Uart_Out_Buffer[27] = (byte) 0x00;
+			break;
+
+		case Constant.GPRS_ERROR_TYPE_NETWORK:
+
+			Constant.Uart_Out_Buffer[27] = (byte) 0x01;
+			break;
+
+		case Constant.GPRS_ERROR_TYPE_SERVER:
+
+			Constant.Uart_Out_Buffer[27] = (byte) 0x03;
+			break;
+
+		default:
+			Constant.Uart_Out_Buffer[27] = (byte) 0x00;
+			break;
 		}
 
 		// 信号强度

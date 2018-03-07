@@ -18,11 +18,6 @@ public class MbReadBitModel {
 	 */
 	public static void analyze() {
 
-		if (!Constant.Init_Success) {
-
-			return;
-		}
-
 		if (!Constant.Gprs_Choosed && !DoChoose.isChooseResp()) {
 
 			return;
@@ -48,5 +43,5 @@ public class MbReadBitModel {
 
 		UartModel.build(dataLength + 7);
 	}
-	
+
 }

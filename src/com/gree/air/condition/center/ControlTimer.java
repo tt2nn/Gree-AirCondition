@@ -66,6 +66,22 @@ public class ControlTimer implements Runnable {
 					}
 				}
 
+				if (systemResetTime > 35) {
+
+					if (!DeviceConfigure.hasSim()) {
+
+						Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_SIM;
+
+					} else if (!DeviceConfigure.hasNetwork()) {
+
+						Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NETWORK;
+
+					} else if (Constant.GPRS_ERROR_TYPE != Constant.GPRS_ERROR_TYPE_SERVER) {
+
+						Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NO;
+					}
+				}
+
 				// 3秒更新信号灯
 				if (Constant.System_Time - signTime >= 1 * 1000) {
 

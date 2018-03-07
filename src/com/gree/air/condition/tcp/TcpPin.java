@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 
+import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.variable.ConfigureVariable;
 import com.gree.air.condition.variable.Variable;
 
@@ -48,6 +49,8 @@ public class TcpPin implements Runnable {
 
 				Variable.tcpAddressPublic();
 			}
+
+			Constant.Init_Success = true;
 
 		} catch (IOException e) {
 

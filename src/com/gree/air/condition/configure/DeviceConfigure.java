@@ -21,32 +21,25 @@ public class DeviceConfigure {
 	private static CellularDeviceInfo[] devices;
 
 	/**
-	 * 查看设备初始化是否成功，主要是网络 <br>
-	 * 
-	 * mcc 460 中国 <br>
-	 * mnc 0移动 1联通 <br>
+	 * Init Device
 	 * 
 	 * @return
 	 */
-	public static boolean deviceInit() {
+	public static void deviceInit() {
 
-		try {
+		devices = CellularDeviceInfo.listCellularDevices();
+	}
 
-			devices = CellularDeviceInfo.listCellularDevices();
+	/**
+	 * Check Device
+	 * 
+	 * @return
+	 */
+	public static boolean hasDevice() {
 
-			if (devices != null && devices.length > 0) {
+		if (devices != null && devices.length > 0) {
 
-				NetworkInfo networkInfo = devices[0].getNetworkInfo();
-
-				if (networkInfo.getMCC() == 460 && devices[0].getIMSI().length() > 1) {
-
-					return true;
-				}
-			}
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
+			return true;
 		}
 
 		return false;
@@ -59,21 +52,24 @@ public class DeviceConfigure {
 
 		try {
 
-			Device.getInstance().setImei(devices[0].getIMEI());
-			Device.getInstance().setImsi(devices[0].getIMSI());
-			Device.getInstance().setIccid(devices[0].getICCID());
+			if (hasDevice()) {
 
-			NetworkInfo networkInfo = devices[0].getNetworkInfo();
-			if (networkInfo != null) {
+				Device.getInstance().setImei(devices[0].getIMEI());
+				Device.getInstance().setImsi(devices[0].getIMSI());
+				Device.getInstance().setIccid(devices[0].getICCID());
 
-				Device.getInstance().setMnc(networkInfo.getMNC());
-				Device.getInstance().setMcc(networkInfo.getMCC());
-			}
+				NetworkInfo networkInfo = devices[0].getNetworkInfo();
+				if (networkInfo != null) {
 
-			CellInfo cellInfo = devices[0].getCellInfo();
-			if (cellInfo != null) {
+					Device.getInstance().setMnc(networkInfo.getMNC());
+					Device.getInstance().setMcc(networkInfo.getMCC());
+				}
 
-				Device.getInstance().setLac(cellInfo.getLAC());
+				CellInfo cellInfo = devices[0].getCellInfo();
+				if (cellInfo != null) {
+
+					Device.getInstance().setLac(cellInfo.getLAC());
+				}
 			}
 
 		} catch (IOException e) {
@@ -91,7 +87,10 @@ public class DeviceConfigure {
 
 		try {
 
-			return devices[0].getNetworkSignalLevel();
+			if (hasDevice()) {
+
+				return devices[0].getNetworkSignalLevel();
+			}
 
 		} catch (IOException e) {
 
@@ -110,8 +109,11 @@ public class DeviceConfigure {
 
 		try {
 
-			AccessPoint accessPoint = new AccessPoint(apn.getApnName(), apn.getUserName(), apn.getPassword());
-			devices[0].setAPN(accessPoint);
+			if (hasDevice()) {
+
+				AccessPoint accessPoint = new AccessPoint(apn.getApnName(), apn.getUserName(), apn.getPassword());
+				devices[0].setAPN(accessPoint);
+			}
 
 		} catch (IOException e) {
 
@@ -130,10 +132,13 @@ public class DeviceConfigure {
 
 		try {
 
-			AccessPoint accessPoint = devices[0].getCurrentAPNSetting();
-			apn.setApnName(accessPoint.getName());
-			apn.setUserName(accessPoint.getUserName());
-			apn.setPassword(accessPoint.getPassword());
+			if (hasDevice()) {
+
+				AccessPoint accessPoint = devices[0].getCurrentAPNSetting();
+				apn.setApnName(accessPoint.getName());
+				apn.setUserName(accessPoint.getUserName());
+				apn.setPassword(accessPoint.getPassword());
+			}
 
 		} catch (IOException e) {
 
@@ -141,6 +146,60 @@ public class DeviceConfigure {
 		}
 
 		return apn;
+	}
+
+	/**
+	 * Check Network
+	 * 
+	 * @return
+	 */
+	public static boolean hasNetwork() {
+
+		try {
+
+			if (hasDevice()) {
+
+				NetworkInfo networkInfo = devices[0].getNetworkInfo();
+
+				if (networkInfo.getMCC() == 460 && devices[0].getIMSI().length() > 1) {
+
+					return true;
+				}
+			}
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check Sim
+	 * 
+	 * @return
+	 */
+	public static boolean hasSim() {
+
+		try {
+
+			if (hasDevice()) {
+
+				NetworkInfo networkInfo = devices[0].getNetworkInfo();
+
+				if (networkInfo.getMCC() == 460 && devices[0].getIMSI().length() > 1) {
+
+					return true;
+				}
+			}
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
 }

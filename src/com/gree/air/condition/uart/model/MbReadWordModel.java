@@ -1,5 +1,6 @@
 package com.gree.air.condition.uart.model;
 
+import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.uart.UartModel;
@@ -18,11 +19,6 @@ public class MbReadWordModel {
 	 * 处理
 	 */
 	public static void analyze() {
-
-		if (!Constant.Init_Success) {
-
-			return;
-		}
 
 		if (!Constant.Gprs_Choosed && !DoChoose.isChooseResp()) {
 
@@ -66,19 +62,32 @@ public class MbReadWordModel {
 
 		// word10
 		Constant.Uart_Out_Buffer[25] = (byte) 0x00;
+		// 故障代码
+		switch (Constant.GPRS_ERROR_TYPE) {
 
-		if (Constant.GPRS_ERROR_TYPE == Constant.GPRS_ERROR_TYPE_NETWORK) {
-
-			Constant.Uart_Out_Buffer[26] = (byte) 0x03;
-
-		} else {
+		case Constant.GPRS_ERROR_TYPE_SIM:
 
 			Constant.Uart_Out_Buffer[26] = (byte) 0x00;
+			break;
+
+		case Constant.GPRS_ERROR_TYPE_NETWORK:
+
+			Constant.Uart_Out_Buffer[26] = (byte) 0x01;
+			break;
+
+		case Constant.GPRS_ERROR_TYPE_SERVER:
+
+			Constant.Uart_Out_Buffer[26] = (byte) 0x03;
+			break;
+
+		default:
+			Constant.Uart_Out_Buffer[26] = (byte) 0x00;
+			break;
 		}
 
 		// word11
 		Constant.Uart_Out_Buffer[27] = (byte) 0x00;
-		Constant.Uart_Out_Buffer[28] = (byte) 0x10;
+		Constant.Uart_Out_Buffer[28] = (byte) DeviceConfigure.getNetworkSignalLevel();
 
 		// word12
 		Constant.Uart_Out_Buffer[29] = (byte) 0x00;

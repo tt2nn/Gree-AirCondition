@@ -38,11 +38,6 @@ public class MbWriteModel {
 	 * 选举
 	 */
 	private static void choose() {
-		
-		if (!Constant.Init_Success) {
-
-			return;
-		}
 
 		if (Constant.Gprs_Choosed) {
 
@@ -64,18 +59,13 @@ public class MbWriteModel {
 	 * 点名
 	 */
 	private static void call() {
-		
-		if (!Constant.Init_Success) {
-
-			return;
-		}
 
 		if (!Constant.Gprs_Choosed && !DoChoose.isChooseResp()) {
 
 			return;
 		}
 
-		if (!Constant.Gprs_Choosed && DoChoose.isChooseResp()) {
+		if (DoChoose.isChooseResp()) {
 
 			ControlCenter.chooseGprs();
 		}
