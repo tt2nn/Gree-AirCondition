@@ -4,6 +4,7 @@ import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.center.DataCenter;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.tcp.TcpModel;
+import com.gree.air.condition.utils.Logger;
 import com.gree.air.condition.utils.Utils;
 
 /**
@@ -40,7 +41,7 @@ public class TimeModel {
 		Constant.Heart_Beat_Time = Constant.System_Time;
 		Constant.System_Delta_Time = Constant.System_Time - System.currentTimeMillis();
 
-		System.out.println("-----------------------" + Constant.System_Time);
+		Logger.log("Tcp Heart Time", Constant.System_Time + "");
 
 		ControlCenter.heartBeatResp();
 	}

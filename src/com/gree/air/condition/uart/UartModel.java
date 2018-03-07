@@ -8,6 +8,7 @@ import com.gree.air.condition.uart.model.MbReadWordModel;
 import com.gree.air.condition.uart.model.MbWriteModel;
 import com.gree.air.condition.uart.model.SeveneModel;
 import com.gree.air.condition.utils.CRC;
+import com.gree.air.condition.utils.Logger;
 import com.gree.air.condition.utils.Utils;
 
 /**
@@ -110,7 +111,7 @@ public class UartModel {
 
 					return;
 				}
-				
+
 				byte[] crc04 = CRC.crc16(Constant.Uart_In_Buffer, 6);
 
 				if (Utils.bytesToInt(Constant.Uart_In_Buffer, 4, 5) <= 123 && Constant.Uart_In_Buffer[6] == crc04[1]
@@ -124,7 +125,7 @@ public class UartModel {
 				return;
 
 			case (byte) 0x02:// 读bit
-				
+
 				if (Constant.Uart_In_Buffer_Length > 8) {
 
 					return;
@@ -156,14 +157,7 @@ public class UartModel {
 		Constant.Uart_Out_Buffer[0] = (byte) 0xFA;
 		Constant.Uart_Out_Buffer[1] = (byte) 0xFB;
 
-		// StringBuffer stringBuffer = new StringBuffer();
-		// for (int i = 0; i < length; i++) {
-		//
-		// stringBuffer.append(" " + Integer.toHexString(Constant.Uart_Out_Buffer[i] &
-		// 0xFF));
-		// }
-		//
-		// System.out.println("send uart message ---" + stringBuffer.toString());
+		// Logger.log("Uart Send Message", Constant.Uart_Out_Buffer , 0 , length);
 
 		UartServer.sendData(length);
 	}
@@ -173,13 +167,7 @@ public class UartModel {
 	 */
 	private static void logBuffer() {
 
-		StringBuffer stringBuffer = new StringBuffer();
-		for (int i = 0; i < Constant.Uart_In_Buffer_Length; i++) {
-
-			stringBuffer.append(" " + Integer.toHexString(Constant.Uart_In_Buffer[i] & 0xFF));
-		}
-
-		System.out.println("new messsage ======== " + stringBuffer.toString());
+		Logger.log("Uart Get Message", Constant.Uart_In_Buffer, 0, Constant.Uart_In_Buffer_Length);
 	}
 
 }

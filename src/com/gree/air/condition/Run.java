@@ -15,6 +15,7 @@ import com.gree.air.condition.spi.SpiTool;
 import com.gree.air.condition.tcp.TcpPin;
 import com.gree.air.condition.tcp.TcpServer;
 import com.gree.air.condition.uart.UartServer;
+import com.gree.air.condition.utils.Logger;
 import com.gree.air.condition.utils.Utils;
 
 /**
@@ -29,7 +30,7 @@ public class Run {
 
 	public static void main(String[] args) {
 
-		System.out.println("============================ start run ===============================");
+		Logger.log("System Running", "Start Run");
 
 		Running_State = true;
 

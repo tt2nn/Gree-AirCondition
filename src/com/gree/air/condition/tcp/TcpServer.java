@@ -12,6 +12,7 @@ import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.entity.Apn;
+import com.gree.air.condition.utils.Logger;
 import com.gree.air.condition.utils.Utils;
 import com.gree.air.condition.variable.Variable;
 
@@ -73,7 +74,8 @@ public class TcpServer implements Runnable {
 				outputStream = streamConnect.openOutputStream();
 				inputStream = streamConnect.openInputStream();
 
-				System.out.println("=================== start tcp server =========================");
+				Logger.log("Tcp Server", "Start Tcp Server");
+
 				serverNormal = true;
 
 				if (!ControlCenter.Gprs_Login) {
@@ -91,7 +93,7 @@ public class TcpServer implements Runnable {
 
 				if (serverWorking) {
 
-					System.out.println("=================== tcp server error =========================");
+					Logger.log("Tcp Server", "Tcp Server Error");
 
 					try {
 
@@ -121,8 +123,7 @@ public class TcpServer implements Runnable {
 					}
 
 				} else {
-
-					System.out.println("=================== tcp server close =========================");
+					Logger.log("Tcp Server", "Tcp Server Stop");
 				}
 
 				clearStream();
@@ -142,13 +143,7 @@ public class TcpServer implements Runnable {
 				int total = 0;
 				while ((total = inputStream.read(Constant.Tcp_In_Buffer)) != -1) {
 
-					StringBuffer stringBuffer = new StringBuffer();
-					for (int i = 0; i < total; i++) {
-
-						stringBuffer.append(" " + Integer.toHexString(Constant.Tcp_In_Buffer[i] & 0xFF));
-					}
-
-					System.out.println("new message tcp ---" + stringBuffer.toString());
+					Logger.log("Tcp Get Message", Constant.Tcp_In_Buffer, 0, total);
 
 					TcpModel.analyze();
 				}
@@ -189,7 +184,6 @@ public class TcpServer implements Runnable {
 			if (outputStream != null) {
 
 				outputStream.write(Constant.Tcp_Out_Data_Buffer, 0, length);
-				// Server_ReConnect_Num = 0;
 			}
 
 		} catch (IOException e) {
@@ -223,7 +217,6 @@ public class TcpServer implements Runnable {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
