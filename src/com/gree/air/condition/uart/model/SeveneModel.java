@@ -52,7 +52,7 @@ public class SeveneModel {
 			ControlCenter.chooseRest();
 		}
 		
-		if (!Constant.Init_Success) {
+		if (!DoChoose.choose()) {
 
 			return;
 		}

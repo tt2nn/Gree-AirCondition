@@ -72,7 +72,7 @@ public class ControlTimer implements Runnable {
 
 						Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_SIM;
 
-					} else if (!DeviceConfigure.hasNetwork()) {
+					} else if ((systemResetTime >= 60 && !Constant.Init_Success) || !DeviceConfigure.hasNetwork()) {
 
 						Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NETWORK;
 
