@@ -108,7 +108,7 @@ public class TcpServer implements Runnable {
 						if (Server_ReConnect_Num == 5) {
 
 							Server_ReConnect_Num = 0;
-							ControlCenter.chooseRest();
+							ControlCenter.stopUploadData();
 
 						} else {
 

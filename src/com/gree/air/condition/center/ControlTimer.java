@@ -82,6 +82,20 @@ public class ControlTimer implements Runnable {
 					}
 				}
 
+				// 异常状态下 异常灯亮 通讯灯灭
+				if (Constant.GPRS_ERROR_TYPE != Constant.GPRS_ERROR_TYPE_NO) {
+
+					if (!GpioTool.getErrorValue()) {
+
+						GpioPin.errorLight();
+					}
+
+					if (GpioTool.getCommunicationValue()) {
+
+						GpioPin.communicationDark();
+					}
+				}
+
 				// 3秒更新信号灯
 				if (Constant.System_Time - signTime >= 1 * 1000) {
 
@@ -91,48 +105,37 @@ public class ControlTimer implements Runnable {
 
 				if (ControlCenter.canWorking()) {
 
-					// 上传数据时灯闪烁
-					if (Constant.GPRS_ERROR_TYPE == Constant.GPRS_ERROR_TYPE_NO
-							&& Constant.Transmit_Type != Constant.TRANSMIT_TYPE_STOP) {
+					if (Constant.GPRS_ERROR_TYPE == Constant.GPRS_ERROR_TYPE_NO) {
 
-						if (GpioTool.getErrorValue()) {
+						// 上传数据时灯闪烁
+						if (Constant.Transmit_Type != Constant.TRANSMIT_TYPE_STOP) {
 
-							GpioPin.errorDark();
-						}
+							if (GpioTool.getErrorValue()) {
 
-						if (GpioTool.getCommunicationValue()) {
+								GpioPin.errorDark();
+							}
 
-							GpioPin.communicationDark();
+							if (GpioTool.getCommunicationValue()) {
+
+								GpioPin.communicationDark();
+
+							} else {
+
+								GpioPin.communicationLight();
+							}
 
 						} else {
 
-							GpioPin.communicationLight();
-						}
+							// 空闲时 异常灯灭 通讯灯常亮
+							if (GpioTool.getErrorValue()) {
 
-					} else if (Constant.GPRS_ERROR_TYPE != Constant.GPRS_ERROR_TYPE_NO) {
+								GpioPin.errorDark();
+							}
 
-						// 异常状态下 异常灯亮 通讯灯灭
-						if (!GpioTool.getErrorValue()) {
+							if (!GpioTool.getCommunicationValue()) {
 
-							GpioPin.errorLight();
-						}
-
-						if (GpioTool.getCommunicationValue()) {
-
-							GpioPin.communicationDark();
-						}
-
-					} else {
-
-						// 空闲时 异常灯灭 通讯灯常亮
-						if (GpioTool.getErrorValue()) {
-
-							GpioPin.errorDark();
-						}
-
-						if (!GpioTool.getCommunicationValue()) {
-
-							GpioPin.communicationLight();
+								GpioPin.communicationLight();
+							}
 						}
 					}
 
