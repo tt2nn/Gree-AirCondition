@@ -26,7 +26,6 @@ public class TcpModel {
 		// 检验引导码
 		if (Constant.Tcp_In_Buffer[0] != (byte) 0x7E || Constant.Tcp_In_Buffer[1] != (byte) 0x7E) {
 
-			System.out.println("TCP 7E7E Error");
 			return;
 		}
 
@@ -34,8 +33,6 @@ public class TcpModel {
 		int dataLength = Utils.bytesToInt(Constant.Tcp_In_Buffer, 16, 17);
 
 		if (Constant.Tcp_In_Buffer[18 + dataLength] != CRC.crc8(Constant.Tcp_In_Buffer, 2, 18 + dataLength)) {
-
-			System.out.println("TCP CRC8 Error");
 
 			return;
 		}
