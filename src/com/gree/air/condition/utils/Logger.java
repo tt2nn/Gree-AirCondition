@@ -1,7 +1,5 @@
 package com.gree.air.condition.utils;
 
-import com.gree.air.condition.constant.Constant;
-
 public class Logger {
 
 	/**
@@ -28,7 +26,7 @@ public class Logger {
 		StringBuffer stringBuffer = new StringBuffer();
 		for (int i = start; i < length; i++) {
 
-			stringBuffer.append(" " + Integer.toHexString(Constant.Tcp_In_Buffer[i] & 0xFF));
+			stringBuffer.append(" " + Integer.toHexString(message[i] & 0xFF));
 		}
 
 		System.out.println("Logger Title ==== : " + title + " ;  Logger Message ==== : " + stringBuffer.toString());

@@ -17,7 +17,7 @@ public class Variable {
 		Tcp_Address_Private = true;
 
 		Tcp_Address_Ip = ConfigureVariable.Tcp_Address_Ip_Private;
-		Tcp_Address_Port = ConfigureVariable.Tcp_Address_Port_Public;
+		Tcp_Address_Port = ConfigureVariable.Tcp_Address_Port_Private;
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class Variable {
 
 		Tcp_Address_Private = false;
 
-		Tcp_Address_Ip = ConfigureVariable.Tcp_Address_Ip_Private;
+		Tcp_Address_Ip = ConfigureVariable.Tcp_Address_Ip_Public;
 		Tcp_Address_Port = ConfigureVariable.Tcp_Address_Port_Public;
 	}
 
