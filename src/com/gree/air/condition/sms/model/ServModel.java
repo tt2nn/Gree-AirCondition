@@ -4,6 +4,7 @@ import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.sms.SmsModel;
+import com.gree.air.condition.variable.Variable;
 
 /**
  * 域名、IP，端口
@@ -15,7 +16,7 @@ public class ServModel extends SmsBaseModel {
 
 	void queryParams() {
 
-		String smsValue = Constant.Tcp_Address_Ip + SmsConstant.Sms_Split_Value_Symbol + Constant.Tcp_Address_Port;
+		String smsValue = Variable.Tcp_Address_Ip + SmsConstant.Sms_Split_Value_Symbol + Variable.Tcp_Address_Port;
 		SmsModel.buildMessage(SmsConstant.Sms_Type_Serv, smsValue);
 	}
 
@@ -28,14 +29,14 @@ public class ServModel extends SmsBaseModel {
 
 		if (end < smsValue.length()) {
 
-			Constant.Tcp_Address_Ip = smsValue.substring(start, end);
+			String ip = smsValue.substring(start, end);
 
 			start = end + 1;
 			end = smsValue.length();
 
-			Constant.Tcp_Address_Port = smsValue.substring(start, end);
+			String port = smsValue.substring(start, end);
 
-			FileWriteModel.setSmsServ(Constant.Tcp_Address_Ip, Constant.Tcp_Address_Port);
+			FileWriteModel.setSmsServ(ip, port);
 		}
 
 		SmsModel.buildMessageOk(SmsConstant.Sms_Type_Serv);

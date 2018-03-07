@@ -6,6 +6,7 @@ import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.tcp.TcpModel;
 import com.gree.air.condition.utils.Utils;
+import com.gree.air.condition.variable.Variable;
 
 /**
  * 参数
@@ -27,7 +28,7 @@ public class ParamModel {
 		String apn = "APN:" + DeviceConfigure.getApn().getApnName();
 
 		String[] res = { "PWD:" + Constant.Sms_Pwd, apn, "APNU:" + Constant.Apn_Name, "APNP:" + Constant.Apn_Pwd,
-				"IP:" + Constant.Tcp_Address_Ip, "PORT:" + Constant.Tcp_Address_Port, "IPR:" + Constant.BAUD_RATE,
+				"IP:" + Variable.Tcp_Address_Ip, "PORT:" + Variable.Tcp_Address_Port, "IPR:" + Constant.BAUD_RATE,
 				"WT:" + Constant.Tcp_Heart_Beat_Period, "ADM*1:" + Constant.Sms_Admin_List[0],
 				"ADM*2:" + Constant.Sms_Admin_List[1], "ADM*3:" + Constant.Sms_Admin_List[2],
 				"ADM*4:" + Constant.Sms_Admin_List[3], "ADM*5:" + Constant.Sms_Admin_List[4],
@@ -303,7 +304,7 @@ public class ParamModel {
 		// save ip
 		if (Utils.isNotEmpty(ip) && Utils.isNotEmpty(port)) {
 
-			if (!ip.equals(Constant.Tcp_Address_Ip) || !port.equals(Constant.Tcp_Address_Port)) {
+			if (!ip.equals(Variable.Tcp_Address_Ip) || !port.equals(Variable.Tcp_Address_Port)) {
 
 				FileWriteModel.setSmsServ(ip, port);
 			}

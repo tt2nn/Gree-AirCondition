@@ -97,9 +97,6 @@ public class Constant {
 	// 手机短信
 	public static String Sms_Pwd = "123456";
 
-	// 域名IP、port
-	public static String Tcp_Address_Ip = "192.13.182.157";
-	public static String Tcp_Address_Port = "7005";
 	// 心跳间隔
 	public static int Tcp_Heart_Beat_Period = 5 * 60;
 	// 故障点前传输时间

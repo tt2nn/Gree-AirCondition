@@ -4,6 +4,7 @@ import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.FileConstant;
 import com.gree.air.condition.entity.Device;
 import com.gree.air.condition.utils.Utils;
+import com.gree.air.condition.variable.ConfigureVariable;
 import com.gree.air.condition.variable.Variable;
 
 public class FileWriteModel extends FileModel {
@@ -28,10 +29,23 @@ public class FileWriteModel extends FileModel {
 	 */
 	public static void setSmsServ(String ip, String port) {
 
-		Constant.Tcp_Address_Ip = ip;
-		Constant.Tcp_Address_Port = port;
+		Variable.Tcp_Address_Ip = ip;
+		Variable.Tcp_Address_Port = port;
 
-		writeFile(FileConstant.FILE_NAME_TCP_ADDRESS, ip + FileConstant.FILE_STRING_SPLIP_SYMBOL + port);
+		if (Variable.Tcp_Address_Private) {
+
+			ConfigureVariable.Tcp_Address_Ip_Private = ip;
+			ConfigureVariable.Tcp_Address_Port_Private = port;
+
+			writeFile(FileConstant.FILE_NAME_TCP_ADDRESS_PRIVATE, ip + FileConstant.FILE_STRING_SPLIP_SYMBOL + port);
+
+		} else {
+
+			ConfigureVariable.Tcp_Address_Ip_Public = ip;
+			ConfigureVariable.Tcp_Address_Port_Public = port;
+
+			writeFile(FileConstant.FILE_NAME_TCP_ADDRESS_PUBLIC, ip + FileConstant.FILE_STRING_SPLIP_SYMBOL + port);
+		}
 	}
 
 	/**

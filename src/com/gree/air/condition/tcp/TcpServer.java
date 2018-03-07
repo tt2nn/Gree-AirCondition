@@ -46,7 +46,7 @@ public class TcpServer implements Runnable {
 		if (Variable.Change_Vpn) {
 
 			Variable.Change_Vpn = false;
-			
+
 			Apn apn = Utils.getApn();
 			DeviceConfigure.setApn(apn);
 		}
@@ -66,7 +66,7 @@ public class TcpServer implements Runnable {
 
 			try {
 
-				String host = "socket://" + Constant.Tcp_Address_Ip + ":" + Constant.Tcp_Address_Port;
+				String host = "socket://" + Variable.Tcp_Address_Ip + ":" + Variable.Tcp_Address_Port;
 
 				streamConnect = (StreamConnection) Connector.open(host);
 

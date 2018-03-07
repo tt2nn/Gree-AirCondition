@@ -4,6 +4,7 @@ import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.FileConstant;
 import com.gree.air.condition.file.FileReadModel;
 import com.gree.air.condition.utils.Utils;
+import com.gree.air.condition.variable.ConfigureVariable;
 
 /**
  * 配置
@@ -24,7 +25,8 @@ public class Configure extends FileReadModel {
 
 		getTransmType();
 
-		getTcpAddress();
+		getTcpPublicAddress();
+		getTcpPrivateAddress();
 
 		getTcpHb();
 
@@ -95,11 +97,11 @@ public class Configure extends FileReadModel {
 	}
 
 	/**
-	 * 获取存储的TCP地址
+	 * get file tcp public address
 	 */
-	private static void getTcpAddress() {
+	private static void getTcpPublicAddress() {
 
-		String address = readFileString(FileConstant.FILE_NAME_TCP_ADDRESS);
+		String address = readFileString(FileConstant.FILE_NAME_TCP_ADDRESS_PUBLIC);
 
 		if (Utils.isNotEmpty(address)) {
 
@@ -108,12 +110,36 @@ public class Configure extends FileReadModel {
 
 			if (end < address.length()) {
 
-				Constant.Tcp_Address_Ip = address.substring(start, end);
+				ConfigureVariable.Tcp_Address_Ip_Public = address.substring(start, end);
 
 				start = end + 1;
 				end = address.length();
 
-				Constant.Tcp_Address_Port = address.substring(start, end);
+				ConfigureVariable.Tcp_Address_Port_Public = address.substring(start, end);
+			}
+		}
+	}
+
+	/**
+	 * get file tcp private address
+	 */
+	private static void getTcpPrivateAddress() {
+
+		String address = readFileString(FileConstant.FILE_NAME_TCP_ADDRESS_PRIVATE);
+
+		if (Utils.isNotEmpty(address)) {
+
+			int start = 0;
+			int end = address.indexOf(FileConstant.FILE_STRING_SPLIP_SYMBOL, start);
+
+			if (end < address.length()) {
+
+				ConfigureVariable.Tcp_Address_Ip_Private = address.substring(start, end);
+
+				start = end + 1;
+				end = address.length();
+
+				ConfigureVariable.Tcp_Address_Port_Private = address.substring(start, end);
 			}
 		}
 	}
