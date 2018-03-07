@@ -7,6 +7,7 @@ import com.gree.air.condition.tcp.model.ParamModel;
 import com.gree.air.condition.tcp.model.TimeModel;
 import com.gree.air.condition.tcp.model.TransmitModel;
 import com.gree.air.condition.utils.CRC;
+import com.gree.air.condition.utils.Logger;
 import com.gree.air.condition.utils.Utils;
 
 /**
@@ -157,13 +158,7 @@ public class TcpModel {
 		// crc8校验码
 		Constant.Tcp_Out_Buffer[crcPosition] = CRC.crc8(Constant.Tcp_Out_Buffer, 2, crcPosition);
 
-		String s = "";
-		for (int i = 0; i < crcPosition + 1; i++) {
-
-			s = s + " " + Integer.toHexString(Constant.Tcp_Out_Buffer[i] & 0xFF);
-		}
-
-		System.out.println("tcp send message ---" + s);
+		Logger.log("Tcp Send Message", Constant.Tcp_Out_Buffer, 0, crcPosition + 1);
 
 		TcpServer.sendData(crcPosition + 1);
 	}
@@ -190,11 +185,8 @@ public class TcpModel {
 				Thread.sleep(1000);
 
 			} catch (InterruptedException e) {
-
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 
 		// 引导码
@@ -221,13 +213,7 @@ public class TcpModel {
 		// crc8校验码
 		Constant.Tcp_Out_Data_Buffer[crcPosition] = CRC.crc8(Constant.Tcp_Out_Data_Buffer, 2, crcPosition);
 
-		String s = "";
-		for (int i = 0; i < crcPosition + 1; i++) {
-
-			s = s + " " + Integer.toHexString(Constant.Tcp_Out_Data_Buffer[i] & 0xFF);
-		}
-
-		System.out.println("tcp send transm message ---" + s);
+		Logger.log("Tcp Send Message", Constant.Tcp_Out_Data_Buffer, 0, crcPosition + 1);
 
 		TcpServer.sendDataForTransm(crcPosition + 1);
 	}
