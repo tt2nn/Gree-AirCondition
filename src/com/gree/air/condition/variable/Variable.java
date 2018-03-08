@@ -1,5 +1,7 @@
 package com.gree.air.condition.variable;
 
+import com.gree.air.condition.constant.Constant;
+
 public class Variable {
 
 	public static boolean Change_Vpn = false;
@@ -8,6 +10,10 @@ public class Variable {
 	public static String Tcp_Address_Port = "";
 
 	public static boolean Tcp_Address_Private = false;
+
+	public static boolean Transmit_Choose_Or_Power = false;
+
+	public static byte Transmit_Cache_Type = Constant.TRANSMIT_TYPE_CHECK;
 
 	/**
 	 * set private ip

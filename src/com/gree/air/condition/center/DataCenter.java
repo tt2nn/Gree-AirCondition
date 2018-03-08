@@ -9,6 +9,7 @@ import com.gree.air.condition.lzo.lzo_uintp;
 import com.gree.air.condition.spi.SpiTool;
 import com.gree.air.condition.tcp.TcpServer;
 import com.gree.air.condition.utils.Utils;
+import com.gree.air.condition.variable.Variable;
 
 /**
  * 数据中心
@@ -31,9 +32,7 @@ public class DataCenter implements Runnable {
 	private static final int TRANSMIT_LEVEL_DEBUG = 9;
 	private static final int TRANSMIT_LEVEL_ALWAYS = 10;
 	private static int Transmit_Level = TRANSMIT_LEVEL_STOP;
-
-	// 缓存数据传输模式
-	public static boolean Transmit_Cache_Warning = false;
+	private static int Transmit_Cache_Level = TRANSMIT_LEVEL_STOP;
 
 	// 数据使用游标 由 0-2047
 	private static int Data_Buffer_Mark = 0;
@@ -229,10 +228,51 @@ public class DataCenter implements Runnable {
 				}
 
 				// 正在进行上电上报，如果缓存了实时上报，切换为实时上报
-				if (Constant.Transmit_Power_Type == Constant.TRANSMIT_TYPE_ALWAYS
-						&& Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER) {
+				if (!Variable.Transmit_Choose_Or_Power
+						&& (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHOOSE
+								|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER)
+						&& Transmit_Cache_Level > Transmit_Level) {
 
-					alwaysTransmit();
+					switch (Variable.Transmit_Cache_Type) {
+					case Constant.TRANSMIT_TYPE_ALWAYS:
+
+						alwaysTransmit();
+						break;
+
+					case Constant.TRANSMIT_TYPE_ERROR:
+
+						errorTransmit();
+						break;
+
+					case Constant.TRANSMIT_TYPE_OPEN:
+
+						openTransmit();
+						break;
+
+					case Constant.TRANSMIT_TYPE_CLOSE:
+
+						closeTransmit();
+						break;
+
+					case Constant.TRANSMIT_TYPE_CHANGE:
+
+						changeTransmit();
+						break;
+
+					case Constant.TRANSMIT_TYPE_PUSHKEY:
+
+						pushKeyTransmit();
+						break;
+
+					case Constant.TRANSMIT_TYPE_WARNING:
+
+						warningTransmit();
+						break;
+					}
+
+					Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_CHECK;
+					Variable.Transmit_Choose_Or_Power = true;
+
 					continue;
 				}
 
@@ -308,6 +348,14 @@ public class DataCenter implements Runnable {
 	 */
 	public static void alwaysTransmit() {
 
+		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level < TRANSMIT_LEVEL_ALWAYS) {
+
+			Transmit_Cache_Level = TRANSMIT_LEVEL_ALWAYS;
+			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_ALWAYS;
+
+			return;
+		}
+
 		if (Transmit_Level < TRANSMIT_LEVEL_ALWAYS) {
 
 			// 重置静默时间
@@ -328,6 +376,14 @@ public class DataCenter implements Runnable {
 	 * 故障上报
 	 */
 	public static void errorTransmit() {
+
+		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level < TRANSMIT_LEVEL_ERROR) {
+
+			Transmit_Cache_Level = TRANSMIT_LEVEL_ERROR;
+			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_ERROR;
+
+			return;
+		}
 
 		if (Constant.System_Time > Constant.Stop_Time) {
 
@@ -359,6 +415,14 @@ public class DataCenter implements Runnable {
 	 */
 	public static void openTransmit() {
 
+		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level <= TRANSMIT_LEVEL_OPEN_CLOSE) {
+
+			Transmit_Cache_Level = TRANSMIT_LEVEL_OPEN_CLOSE;
+			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_OPEN;
+
+			return;
+		}
+
 		if (Constant.System_Time > Constant.Stop_Time) {
 
 			// 正在开机上报，向后延时
@@ -388,6 +452,14 @@ public class DataCenter implements Runnable {
 	 * 关机上报
 	 */
 	public static void closeTransmit() {
+
+		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level <= TRANSMIT_LEVEL_OPEN_CLOSE) {
+
+			Transmit_Cache_Level = TRANSMIT_LEVEL_OPEN_CLOSE;
+			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_CLOSE;
+
+			return;
+		}
 
 		if (Constant.System_Time > Constant.Stop_Time) {
 
@@ -419,6 +491,14 @@ public class DataCenter implements Runnable {
 	 */
 	public static void changeTransmit() {
 
+		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level < TRANSMIT_LEVEL_CHANGE) {
+
+			Transmit_Cache_Level = TRANSMIT_LEVEL_CHANGE;
+			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_CHANGE;
+
+			return;
+		}
+
 		if (Transmit_Level < TRANSMIT_LEVEL_CHANGE && Constant.System_Time > Constant.Stop_Time) {
 
 			convertUploadData();
@@ -439,6 +519,14 @@ public class DataCenter implements Runnable {
 	 */
 	public static void pushKeyTransmit() {
 
+		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level < TRANSMIT_LEVEL_PUSHKEY) {
+
+			Transmit_Cache_Level = TRANSMIT_LEVEL_PUSHKEY;
+			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_PUSHKEY;
+
+			return;
+		}
+
 		if (Transmit_Level < TRANSMIT_LEVEL_PUSHKEY && Constant.System_Time > Constant.Stop_Time) {
 
 			convertUploadData();
@@ -458,11 +546,19 @@ public class DataCenter implements Runnable {
 	 */
 	public static void warningTransmit() {
 
+		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level < TRANSMIT_LEVEL_WARNING) {
+
+			Transmit_Cache_Level = TRANSMIT_LEVEL_WARNING;
+			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_WARNING;
+
+			return;
+		}
+
 		if (Transmit_Level < TRANSMIT_LEVEL_WARNING && Constant.System_Time > Constant.Stop_Time) {
 
 			convertUploadData();
 
-			Transmit_Cache_Warning = true;
+			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_WARNING;
 
 			// 重置发送游标
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
@@ -549,7 +645,7 @@ public class DataCenter implements Runnable {
 		}
 
 		// 判断缓存上报状态
-		if (Constant.Transmit_Power_Type != Constant.TRANSMIT_TYPE_CHECK || Transmit_Cache_Warning) {
+		if (Variable.Transmit_Cache_Type != Constant.TRANSMIT_TYPE_CHECK) {
 
 			return;
 		}
@@ -666,8 +762,6 @@ public class DataCenter implements Runnable {
 
 		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
 		Transmit_Level = TRANSMIT_LEVEL_STOP;
-
-		Transmit_Cache_Warning = false;
 	}
 
 	public static Thread getDataCenterThread() {

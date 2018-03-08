@@ -5,6 +5,7 @@ import com.gree.air.condition.constant.FileConstant;
 import com.gree.air.condition.file.FileReadModel;
 import com.gree.air.condition.utils.Utils;
 import com.gree.air.condition.variable.ConfigureVariable;
+import com.gree.air.condition.variable.Variable;
 
 /**
  * 配置
@@ -92,7 +93,7 @@ public class Configure extends FileReadModel {
 
 		if (length == 1) {
 
-			Constant.Transmit_Power_Type = Constant.File_Buffer[2];
+			Variable.Transmit_Cache_Type = Constant.File_Buffer[2];
 		}
 	}
 

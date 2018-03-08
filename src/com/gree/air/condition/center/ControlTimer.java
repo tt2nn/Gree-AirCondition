@@ -6,6 +6,7 @@ import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.gpio.GpioPin;
 import com.gree.air.condition.gpio.GpioTool;
 import com.gree.air.condition.tcp.TcpServer;
+import com.gree.air.condition.variable.Variable;
 
 /**
  * Timer
@@ -30,6 +31,8 @@ public class ControlTimer implements Runnable {
 
 	private static Thread controlTimerThread;
 
+	public static boolean chooseTransmit = false;
+
 	/**
 	 * 启动Timer
 	 */
@@ -53,10 +56,13 @@ public class ControlTimer implements Runnable {
 				Thread.sleep(sleepTime);
 				workTime = Constant.System_Time;
 
+				if (systemResetTime < 100) {
+
+					systemResetTime++;
+				}
+
 				// 上电后前一分钟，响应重置操作
 				if (systemResetTime < 60) {
-
-					systemResetTime += 1;
 
 					if (systemResetTime - systemResetPushTime >= 15 && listensePush) {
 
@@ -101,6 +107,16 @@ public class ControlTimer implements Runnable {
 
 					signTime = Constant.System_Time;
 					GpioTool.setSignLevel(DeviceConfigure.getNetworkSignalLevel());
+				}
+
+				/**
+				 * 90s选举上报
+				 */
+				if (systemResetTime >= 90 && Constant.Gprs_Choosed && !chooseTransmit
+						&& !Variable.Transmit_Choose_Or_Power) {
+
+					chooseTransmit = true;
+					ControlCenter.chooseTransmit();
 				}
 
 				if (ControlCenter.canWorking()) {

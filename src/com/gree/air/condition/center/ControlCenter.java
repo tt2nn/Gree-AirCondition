@@ -13,6 +13,7 @@ import com.gree.air.condition.tcp.model.TimeModel;
 import com.gree.air.condition.tcp.model.TransmitModel;
 import com.gree.air.condition.uart.UartServer;
 import com.gree.air.condition.uart.model.DoChoose;
+import com.gree.air.condition.variable.Variable;
 
 /**
  * 工作中心
@@ -202,6 +203,15 @@ public class ControlCenter {
 		Constant.Gprs_Choosed = true;
 		GpioPin.communicationLight();
 		FileWriteModel.setIsChoosed();
+		Variable.Transmit_Choose_Or_Power = false;
+		ControlTimer.chooseTransmit = false;
+	}
+
+	/**
+	 * 选举上报
+	 */
+	public static void chooseTransmit() {
+
 		DataCenter.chooseTransmit();
 	}
 
@@ -284,7 +294,6 @@ public class ControlCenter {
 		stopTcpServer();
 		Gprs_Login = false;
 		FileWriteModel.setStopTransm();
-		Constant.Transmit_Power_Type = Constant.TRANSMIT_TYPE_STOP;
 	}
 
 	/**
@@ -347,10 +356,10 @@ public class ControlCenter {
 		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_WARNING && warning == 0) {
 
 			// 亚健康标志位由1-0，停止亚健康上报
-			DataCenter.Transmit_Cache_Warning = false;
+			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_CHECK;
 			DataCenter.stopUploadData();
 
-		} else if (DataCenter.Transmit_Cache_Warning && warning == 1) {
+		} else if (Variable.Transmit_Cache_Type == Constant.TRANSMIT_TYPE_CHECK && warning == 1) {
 
 			// 缓存上报模式为亚健康上报，标志位为1，继续亚健康上报
 			DataCenter.warningTransmit();

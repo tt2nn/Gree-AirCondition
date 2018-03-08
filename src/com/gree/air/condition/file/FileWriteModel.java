@@ -149,7 +149,7 @@ public class FileWriteModel extends FileModel {
 	 */
 	public static void setAlwaysTransm() {
 
-		Constant.Transmit_Power_Type = Constant.TRANSMIT_TYPE_ALWAYS;
+		Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_ALWAYS;
 		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_ALWAYS);
 	}
 
@@ -158,7 +158,7 @@ public class FileWriteModel extends FileModel {
 	 */
 	public static void setCheckTransm() {
 
-		Constant.Transmit_Power_Type = Constant.TRANSMIT_TYPE_CHECK;
+		Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_CHECK;
 		writeFile(FileConstant.FILE_NAME_DATA_TRANSM, Constant.TRANSMIT_TYPE_CHECK);
 	}
 

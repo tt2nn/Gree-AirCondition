@@ -131,7 +131,7 @@ public class Constant {
 	// 记录GPRS模块是否被选中
 	public static boolean Gprs_Choosed = false;
 
-	public static byte Transmit_Power_Type = TRANSMIT_TYPE_CHECK;
+//	public static byte Transmit_Power_Type = TRANSMIT_TYPE_CHECK;
 
 	// ================== about gprs info =================================
 	// Mac地址
