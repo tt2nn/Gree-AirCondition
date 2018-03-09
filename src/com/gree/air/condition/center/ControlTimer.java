@@ -5,6 +5,7 @@ import com.gree.air.condition.configure.DeviceConfigure;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.gpio.GpioPin;
 import com.gree.air.condition.gpio.GpioTool;
+import com.gree.air.condition.tcp.TcpPin;
 import com.gree.air.condition.tcp.TcpServer;
 import com.gree.air.condition.variable.Variable;
 
@@ -25,6 +26,7 @@ public class ControlTimer implements Runnable {
 	private final long Sleep_Time = 1000L;
 	private long sleepTime = 1000L;
 	private long workTime = 0L;
+	private long pinTime = 0L;
 
 	private static int systemResetTime = 0;
 	private static int systemResetPushTime = 0;
@@ -46,6 +48,7 @@ public class ControlTimer implements Runnable {
 
 		packageTime = Constant.System_Time;
 		signTime = Constant.System_Time;
+		pinTime = Constant.System_Time;
 		systemResetTime = 0;
 		systemResetPushTime = 0;
 
@@ -86,6 +89,14 @@ public class ControlTimer implements Runnable {
 
 						Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NO;
 					}
+				}
+
+				if (!Constant.Init_Success && pinTime + 60 * 1000 <= Constant.System_Time) {
+
+					pinTime = Constant.System_Time;
+
+					new TcpPin().startPin(true);
+					new TcpPin().startPin(false);
 				}
 
 				// 异常状态下 异常灯亮 通讯灯灭

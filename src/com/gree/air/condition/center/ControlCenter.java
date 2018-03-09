@@ -317,6 +317,10 @@ public class ControlCenter {
 
 			DataCenter.debugTransmit();
 
+		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_DEBUG && debug == 0) {
+
+			stopUploadData();
+
 		} else if (Transmit_Mark_Error == 0 && error == 1) {
 
 			// 故障标志位由0-1，启动故障上报
