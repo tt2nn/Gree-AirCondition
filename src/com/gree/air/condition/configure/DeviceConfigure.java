@@ -161,7 +161,7 @@ public class DeviceConfigure {
 
 				NetworkInfo networkInfo = devices[0].getNetworkInfo();
 
-				if (networkInfo.getMCC() == 460 && devices[0].getIMSI().length() > 1) {
+				if (networkInfo.getMCC() == 460) {
 
 					return true;
 				}
@@ -186,9 +186,7 @@ public class DeviceConfigure {
 
 			if (hasDevice()) {
 
-				NetworkInfo networkInfo = devices[0].getNetworkInfo();
-
-				if (networkInfo.getMCC() == 460 && devices[0].getIMSI().length() > 1) {
+				if (devices[0].getIMSI().length() > 1) {
 
 					return true;
 				}
