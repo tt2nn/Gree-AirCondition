@@ -10,7 +10,7 @@ public class Logger {
 	 */
 	public static void log(String title, String message) {
 
-		System.out.println("====== Title == : " + title + " ;  ====== Message == : " + message);
+		System.out.println("======T== : " + title + " ;  ======M== : " + message);
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class Logger {
 			stringBuffer.append(" " + Integer.toHexString(message[i] & 0xFF));
 		}
 
-		System.out.println("====== Title == : " + title + " ;  ====== Message == : " + stringBuffer.toString());
+		System.out.println("======T== : " + title + " ;  ======M== : " + stringBuffer.toString());
 	}
 
 }
