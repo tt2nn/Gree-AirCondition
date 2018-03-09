@@ -200,6 +200,7 @@ public class ControlCenter {
 	 */
 	public static void chooseGprs() {
 
+		ControlTimer.Choose_Prower_Time = 0;
 		Constant.Gprs_Choosed = true;
 		GpioPin.communicationLight();
 		FileWriteModel.setIsChoosed();
@@ -212,7 +213,7 @@ public class ControlCenter {
 	 */
 	public static void chooseTransmit() {
 
-		ControlTimer.Choose_Prower_Time = Constant.System_Time;
+		ControlTimer.Choose_Prower_Time = 0;
 		DataCenter.chooseTransmit();
 	}
 
@@ -229,7 +230,7 @@ public class ControlCenter {
 	 */
 	public static void powerCall() {
 
-		ControlTimer.Choose_Prower_Time = Constant.System_Time;
+		ControlTimer.Choose_Prower_Time = 0;
 		DoChoose.choosed();
 		GpioPin.communicationLight();
 		DataCenter.powerTransmit();

@@ -35,7 +35,7 @@ public class ControlTimer implements Runnable {
 
 	public static boolean chooseTransmit = false;
 
-	public static long Choose_Prower_Time = 0L;
+	public static int Choose_Prower_Time = 0;
 
 	/**
 	 * 启动Timer
@@ -66,6 +66,11 @@ public class ControlTimer implements Runnable {
 					systemResetTime++;
 				}
 
+				if (Choose_Prower_Time < 100) {
+
+					Choose_Prower_Time++;
+				}
+
 				// 上电后前一分钟，响应重置操作
 				if (systemResetTime < 60) {
 
@@ -87,8 +92,7 @@ public class ControlTimer implements Runnable {
 
 						Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NETWORK;
 
-					} else if (Choose_Prower_Time > 0 && (Choose_Prower_Time + 90 * 1000) < Constant.System_Time
-							&& Constant.Gprs_Choosed && !Variable.Transmit_Choose_Or_Power) {
+					} else if (Choose_Prower_Time > 90 && Constant.Gprs_Choosed && !Variable.Transmit_Choose_Or_Power) {
 
 						Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NETWORK;
 
