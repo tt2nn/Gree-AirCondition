@@ -228,17 +228,19 @@ public class DataCenter implements Runnable {
 				}
 
 				// 正在进行上电上报，如果缓存了实时上报，切换为实时上报
-				if (!Variable.Transmit_Choose_Or_Power
-						&& (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHOOSE
-								|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER)
-						&& Transmit_Cache_Level > Transmit_Level) {
+				if (!Variable.Transmit_Choose_Or_Power && (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHOOSE
+						|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER)) {
 
-					switch (Variable.Transmit_Cache_Type) {
-					case Constant.TRANSMIT_TYPE_ALWAYS:
+					if (Transmit_Cache_Level > Transmit_Level) {
 
-						alwaysTransmit();
-						break;
+						switch (Variable.Transmit_Cache_Type) {
+						case Constant.TRANSMIT_TYPE_ALWAYS:
+
+							alwaysTransmit();
+							break;
+						}
 					}
+
 					Variable.Transmit_Choose_Or_Power = true;
 
 					continue;
