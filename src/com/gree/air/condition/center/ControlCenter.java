@@ -212,6 +212,7 @@ public class ControlCenter {
 	 */
 	public static void chooseTransmit() {
 
+		ControlTimer.Choose_Prower_Time = Constant.System_Time;
 		DataCenter.chooseTransmit();
 	}
 
@@ -228,6 +229,7 @@ public class ControlCenter {
 	 */
 	public static void powerCall() {
 
+		ControlTimer.Choose_Prower_Time = Constant.System_Time;
 		DoChoose.choosed();
 		GpioPin.communicationLight();
 		DataCenter.powerTransmit();
@@ -309,6 +311,11 @@ public class ControlCenter {
 	public static void setMarker(int debug, int error, int warning, int change, int open, int close) {
 
 		if (!Constant.Init_Success) {
+
+			return;
+		}
+
+		if (!Variable.Transmit_Choose_Or_Power) {
 
 			return;
 		}

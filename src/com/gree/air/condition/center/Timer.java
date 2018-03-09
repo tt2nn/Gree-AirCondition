@@ -34,7 +34,7 @@ public class Timer implements Runnable {
 
 				Thread.sleep(500);
 
-				if (Constant.System_Delta_Time != 0 && Constant.System_Time - synchronizedTime >= 60 * 1000) {
+				if (Constant.System_Delta_Time != 0 && Constant.System_Time - synchronizedTime >= 30 * 1000) {
 
 					Constant.System_Time = System.currentTimeMillis() + Constant.System_Delta_Time;
 					synchronizedTime = Constant.System_Time;

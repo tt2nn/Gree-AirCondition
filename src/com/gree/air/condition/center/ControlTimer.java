@@ -35,6 +35,8 @@ public class ControlTimer implements Runnable {
 
 	public static boolean chooseTransmit = false;
 
+	public static long Choose_Prower_Time = 0L;
+
 	/**
 	 * 启动Timer
 	 */
@@ -85,13 +87,19 @@ public class ControlTimer implements Runnable {
 
 						Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NETWORK;
 
+					} else if (Choose_Prower_Time > 0 && (Choose_Prower_Time + 90 * 1000) < Constant.System_Time
+							&& Constant.Gprs_Choosed && !Variable.Transmit_Choose_Or_Power) {
+
+						Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NETWORK;
+
 					} else if (Constant.GPRS_ERROR_TYPE != Constant.GPRS_ERROR_TYPE_SERVER) {
 
 						Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NO;
+
 					}
 				}
 
-				if (!Constant.Init_Success && pinTime + 60 * 1000 <= Constant.System_Time) {
+				if (!Constant.Init_Success && pinTime + 90 * 1000 <= Constant.System_Time) {
 
 					pinTime = Constant.System_Time;
 
@@ -110,6 +118,13 @@ public class ControlTimer implements Runnable {
 					if (GpioTool.getCommunicationValue()) {
 
 						GpioPin.communicationDark();
+					}
+
+				} else {
+
+					if (GpioTool.getErrorValue()) {
+
+						GpioPin.errorDark();
 					}
 				}
 
@@ -137,11 +152,6 @@ public class ControlTimer implements Runnable {
 						// 上传数据时灯闪烁
 						if (Constant.Transmit_Type != Constant.TRANSMIT_TYPE_STOP) {
 
-							if (GpioTool.getErrorValue()) {
-
-								GpioPin.errorDark();
-							}
-
 							if (GpioTool.getCommunicationValue()) {
 
 								GpioPin.communicationDark();
@@ -152,12 +162,6 @@ public class ControlTimer implements Runnable {
 							}
 
 						} else {
-
-							// 空闲时 异常灯灭 通讯灯常亮
-							if (GpioTool.getErrorValue()) {
-
-								GpioPin.errorDark();
-							}
 
 							if (!GpioTool.getCommunicationValue()) {
 

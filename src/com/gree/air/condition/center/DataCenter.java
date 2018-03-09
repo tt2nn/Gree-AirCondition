@@ -238,44 +238,7 @@ public class DataCenter implements Runnable {
 
 						alwaysTransmit();
 						break;
-
-					case Constant.TRANSMIT_TYPE_DEBUG:
-
-						debugTransmit();
-						break;
-
-					case Constant.TRANSMIT_TYPE_ERROR:
-
-						errorTransmit();
-						break;
-
-					case Constant.TRANSMIT_TYPE_OPEN:
-
-						openTransmit();
-						break;
-
-					case Constant.TRANSMIT_TYPE_CLOSE:
-
-						closeTransmit();
-						break;
-
-					case Constant.TRANSMIT_TYPE_CHANGE:
-
-						changeTransmit();
-						break;
-
-					case Constant.TRANSMIT_TYPE_PUSHKEY:
-
-						pushKeyTransmit();
-						break;
-
-					case Constant.TRANSMIT_TYPE_WARNING:
-
-						warningTransmit();
-						break;
 					}
-
-					Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_CHECK;
 					Variable.Transmit_Choose_Or_Power = true;
 
 					continue;
@@ -382,14 +345,6 @@ public class DataCenter implements Runnable {
 	 */
 	public static void debugTransmit() {
 
-		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level < TRANSMIT_LEVEL_DEBUG) {
-
-			Transmit_Cache_Level = TRANSMIT_LEVEL_DEBUG;
-			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_DEBUG;
-
-			return;
-		}
-
 		if (Constant.System_Time > Constant.Stop_Time && Transmit_Level < TRANSMIT_LEVEL_DEBUG) {
 
 			convertUploadData();
@@ -406,14 +361,6 @@ public class DataCenter implements Runnable {
 	 * 故障上报
 	 */
 	public static void errorTransmit() {
-
-		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level < TRANSMIT_LEVEL_ERROR) {
-
-			Transmit_Cache_Level = TRANSMIT_LEVEL_ERROR;
-			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_ERROR;
-
-			return;
-		}
 
 		if (Constant.System_Time > Constant.Stop_Time) {
 
@@ -445,14 +392,6 @@ public class DataCenter implements Runnable {
 	 */
 	public static void openTransmit() {
 
-		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level <= TRANSMIT_LEVEL_OPEN_CLOSE) {
-
-			Transmit_Cache_Level = TRANSMIT_LEVEL_OPEN_CLOSE;
-			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_OPEN;
-
-			return;
-		}
-
 		if (Constant.System_Time > Constant.Stop_Time) {
 
 			// 正在开机上报，向后延时
@@ -482,14 +421,6 @@ public class DataCenter implements Runnable {
 	 * 关机上报
 	 */
 	public static void closeTransmit() {
-
-		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level <= TRANSMIT_LEVEL_OPEN_CLOSE) {
-
-			Transmit_Cache_Level = TRANSMIT_LEVEL_OPEN_CLOSE;
-			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_CLOSE;
-
-			return;
-		}
 
 		if (Constant.System_Time > Constant.Stop_Time) {
 
@@ -521,14 +452,6 @@ public class DataCenter implements Runnable {
 	 */
 	public static void changeTransmit() {
 
-		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level < TRANSMIT_LEVEL_CHANGE) {
-
-			Transmit_Cache_Level = TRANSMIT_LEVEL_CHANGE;
-			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_CHANGE;
-
-			return;
-		}
-
 		if (Transmit_Level < TRANSMIT_LEVEL_CHANGE && Constant.System_Time > Constant.Stop_Time) {
 
 			convertUploadData();
@@ -549,14 +472,6 @@ public class DataCenter implements Runnable {
 	 */
 	public static void pushKeyTransmit() {
 
-		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level < TRANSMIT_LEVEL_PUSHKEY) {
-
-			Transmit_Cache_Level = TRANSMIT_LEVEL_PUSHKEY;
-			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_PUSHKEY;
-
-			return;
-		}
-
 		if (Transmit_Level < TRANSMIT_LEVEL_PUSHKEY && Constant.System_Time > Constant.Stop_Time) {
 
 			convertUploadData();
@@ -575,14 +490,6 @@ public class DataCenter implements Runnable {
 	 * 亚健康上报
 	 */
 	public static void warningTransmit() {
-
-		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level < TRANSMIT_LEVEL_WARNING) {
-
-			Transmit_Cache_Level = TRANSMIT_LEVEL_WARNING;
-			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_WARNING;
-
-			return;
-		}
 
 		if (Transmit_Level < TRANSMIT_LEVEL_WARNING && Constant.System_Time > Constant.Stop_Time) {
 
