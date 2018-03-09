@@ -68,7 +68,7 @@ public class MbWriteModel {
 		buildSendBuffer();
 
 		UartModel.build(10);
-		
+
 		if (!Constant.Init_Success) {
 
 			return;
@@ -87,8 +87,8 @@ public class MbWriteModel {
 			return;
 		}
 
-		ControlCenter.setMarker(Constant.Uart_In_Buffer[30], Constant.Uart_In_Buffer[32], Constant.Uart_In_Buffer[34],
-				Constant.Uart_In_Buffer[16], Constant.Uart_In_Buffer[18]);
+		ControlCenter.setMarker(0, Constant.Uart_In_Buffer[30], Constant.Uart_In_Buffer[32],
+				Constant.Uart_In_Buffer[34], Constant.Uart_In_Buffer[16], Constant.Uart_In_Buffer[18]);
 	}
 
 	/**

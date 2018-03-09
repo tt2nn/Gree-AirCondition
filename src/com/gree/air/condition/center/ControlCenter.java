@@ -299,20 +299,25 @@ public class ControlCenter {
 	/**
 	 * 设置标志位
 	 * 
+	 * @param debug
 	 * @param error
 	 * @param warning
 	 * @param change
 	 * @param open
 	 * @param close
 	 */
-	public static void setMarker(int error, int warning, int change, int open, int close) {
+	public static void setMarker(int debug, int error, int warning, int change, int open, int close) {
 
 		if (!Constant.Init_Success) {
 
 			return;
 		}
 
-		if (Transmit_Mark_Error == 0 && error == 1) {
+		if (Constant.Transmit_Type != Constant.TRANSMIT_TYPE_DEBUG && debug == 1) {
+
+			DataCenter.debugTransmit();
+
+		} else if (Transmit_Mark_Error == 0 && error == 1) {
 
 			// 故障标志位由0-1，启动故障上报
 			DataCenter.errorTransmit();

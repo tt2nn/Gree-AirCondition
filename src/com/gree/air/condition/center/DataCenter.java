@@ -239,6 +239,11 @@ public class DataCenter implements Runnable {
 						alwaysTransmit();
 						break;
 
+					case Constant.TRANSMIT_TYPE_DEBUG:
+
+						debugTransmit();
+						break;
+
 					case Constant.TRANSMIT_TYPE_ERROR:
 
 						errorTransmit();
@@ -366,6 +371,31 @@ public class DataCenter implements Runnable {
 			Transmit_Level = TRANSMIT_LEVEL_ALWAYS;
 
 			FileWriteModel.setAlwaysTransm();
+
+			Data_Buffer_Out_Mark = Data_Buffer_Mark;
+			ControlCenter.requestStartUpload();
+		}
+	}
+
+	/**
+	 * 实时传输
+	 */
+	public static void debugTransmit() {
+
+		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level < TRANSMIT_LEVEL_DEBUG) {
+
+			Transmit_Cache_Level = TRANSMIT_LEVEL_DEBUG;
+			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_DEBUG;
+
+			return;
+		}
+
+		if (Constant.System_Time > Constant.Stop_Time && Transmit_Level < TRANSMIT_LEVEL_DEBUG) {
+
+			convertUploadData();
+
+			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_DEBUG;
+			Transmit_Level = TRANSMIT_LEVEL_DEBUG;
 
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
 			ControlCenter.requestStartUpload();
