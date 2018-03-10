@@ -90,7 +90,7 @@ public class DataCenter implements Runnable {
 
 		synchronized (lock) {
 
-			if (Write_Data_Buffer_Poi + Constant.Uart_In_Buffer_Length >= Lzo_Buffer.length) {
+			if (Write_Data_Buffer_Poi + Constant.Uart_In_Buffer_Length >= Constant.Data_Cache_Buffer.length) {
 
 				ControlCenter.packageData();
 			}
@@ -117,6 +117,12 @@ public class DataCenter implements Runnable {
 		synchronized (lock) {
 
 			lzo.compress(Constant.Data_Cache_Buffer, 0, Write_Data_Buffer_Poi, Lzo_Buffer, 0, lzo_uintp);
+
+			if (lzo_uintp.value > Constant.Data_Buffer.length - 12) {
+
+				Write_Data_Buffer_Poi = 0;
+				return;
+			}
 
 			for (int i = 0; i < lzo_uintp.value; i++) {
 
