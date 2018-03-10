@@ -177,6 +177,7 @@ public class ControlCenter {
 	public static void stopTcpServer() {
 
 		TcpServer.stopServer();
+		Gprs_Login = false;
 	}
 
 	/* =========== 数据中心控制相关 ============== */
@@ -285,7 +286,6 @@ public class ControlCenter {
 
 		DataCenter.stopUploadData();
 		stopTcpServer();
-		Gprs_Login = false;
 	}
 
 	/**
@@ -295,7 +295,6 @@ public class ControlCenter {
 
 		DataCenter.destoryUploadData();
 		stopTcpServer();
-		Gprs_Login = false;
 		FileWriteModel.setStopTransm();
 	}
 
