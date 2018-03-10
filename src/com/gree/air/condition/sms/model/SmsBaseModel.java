@@ -3,6 +3,7 @@ package com.gree.air.condition.sms.model;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.constant.SmsConstant;
 import com.gree.air.condition.sms.SmsModel;
+import com.gree.air.condition.utils.Utils;
 
 public abstract class SmsBaseModel {
 
@@ -11,7 +12,7 @@ public abstract class SmsBaseModel {
 	 */
 	public void smsAnalyze() {
 
-		if (Constant.Sms_Receive.endsWith(SmsConstant.Sms_Query_Symbol)) {
+		if (Utils.stringContains(Constant.Sms_Receive, SmsConstant.Sms_Query_Symbol)) {
 
 			queryParams();
 
