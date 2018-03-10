@@ -14,7 +14,7 @@ public class DoChoose {
 	// 选举计数
 	private static int chooseNum = -1;
 	private static boolean chooseResp = false;
-	private static int chooseRandom = 3;
+	private static int chooseRandom = 2;
 
 	/**
 	 * 选举
@@ -31,11 +31,11 @@ public class DoChoose {
 
 			if (chooseRandom > 10) {
 
-				chooseRandom = 3;
+				chooseRandom = 10;
 
 			} else {
 
-				chooseRandom += 3;
+				chooseRandom += 2;
 			}
 		}
 
@@ -62,7 +62,7 @@ public class DoChoose {
 	public static void reset() {
 
 		chooseNum = -1;
-		chooseRandom = 3;
+		chooseRandom = 2;
 		chooseResp = false;
 	}
 
