@@ -452,7 +452,7 @@ public class ControlCenter {
 			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_CHECK;
 			DataCenter.stopUploadData();
 
-		} else if (Variable.Transmit_Cache_Type == Constant.TRANSMIT_TYPE_CHECK && warning == 1) {
+		} else if (Variable.Transmit_Cache_Type == Constant.TRANSMIT_TYPE_WARNING && warning == 1) {
 
 			// 缓存上报模式为亚健康上报，标志位为1，继续亚健康上报
 			DataCenter.warningTransmit();
