@@ -1,7 +1,6 @@
 package com.gree.air.condition.tcp.model;
 
 import com.gree.air.condition.center.ControlCenter;
-import com.gree.air.condition.center.DataCenter;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.tcp.TcpModel;
 import com.gree.air.condition.utils.Logger;
@@ -81,9 +80,9 @@ public class TimeModel {
 		Constant.Stop_Time = Utils.getTime(year, month, date, hour, min, sec);
 
 		if (Constant.System_Time < Constant.Stop_Time) {
-			// 如果当前时间 小于静默时间 则 停止传输
 
-			DataCenter.destoryUploadData();
+			// 如果当前时间 小于静默时间 则 停止传输
+			ControlCenter.destoryUploadData();
 		}
 
 		stopTime();

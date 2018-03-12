@@ -293,7 +293,7 @@ public class ControlCenter {
 	 */
 	public static void destoryUploadData() {
 
-		DataCenter.destoryUploadData();
+		DataCenter.stopUploadData();
 		stopTcpServer();
 		FileWriteModel.setStopTransm();
 	}
@@ -326,7 +326,36 @@ public class ControlCenter {
 
 		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_DEBUG && debug == 0) {
 
-			stopUploadData();
+			Arrive_Stop_Mark = false;
+			DataCenter.stopUploadData();
+
+			if (Transmit_Mark_Error == 0 && error == 1) {
+
+				// 故障标志位由0-1，启动故障上报
+				DataCenter.errorTransmit();
+
+			} else if (Transmit_Mark_Open == 0 && open == 1) {
+
+				DataCenter.openTransmit();
+
+			} else if (Transmit_Mark_Close == 0 && close == 1) {
+
+				DataCenter.closeTransmit();
+
+			} else if (Transmit_Mark_Change == 0 && change == 1) {
+
+				// 厂家参数变化标志位由0-1，启动参数变化上报
+				DataCenter.changeTransmit();
+
+			} else if (Transmit_Mark_Warning == 0 && warning == 1) {
+
+				// 亚健康标志位由0-1，启动亚健康上报
+				DataCenter.warningTransmit();
+
+			} else {
+
+				stopUploadData();
+			}
 
 		} else if (Transmit_Mark_Error == 0 && error == 1) {
 
@@ -341,7 +370,26 @@ public class ControlCenter {
 		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_OPEN && Arrive_Stop_Mark && open == 0) {
 
 			Arrive_Stop_Mark = false;
-			stopUploadData();
+			DataCenter.stopUploadData();
+
+			if (Transmit_Mark_Close == 0 && close == 1) {
+
+				DataCenter.closeTransmit();
+
+			} else if (Transmit_Mark_Change == 0 && change == 1) {
+
+				// 厂家参数变化标志位由0-1，启动参数变化上报
+				DataCenter.changeTransmit();
+
+			} else if (Transmit_Mark_Warning == 0 && warning == 1) {
+
+				// 亚健康标志位由0-1，启动亚健康上报
+				DataCenter.warningTransmit();
+
+			} else {
+
+				stopUploadData();
+			}
 
 		} else if (Transmit_Mark_Close == 0 && close == 1) {
 
@@ -351,7 +399,26 @@ public class ControlCenter {
 		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CLOSE && Arrive_Stop_Mark && close == 0) {
 
 			Arrive_Stop_Mark = false;
-			stopUploadData();
+			DataCenter.stopUploadData();
+
+			if (Transmit_Mark_Open == 0 && open == 1) {
+
+				DataCenter.openTransmit();
+
+			} else if (Transmit_Mark_Change == 0 && change == 1) {
+
+				// 厂家参数变化标志位由0-1，启动参数变化上报
+				DataCenter.changeTransmit();
+
+			} else if (Transmit_Mark_Warning == 0 && warning == 1) {
+
+				// 亚健康标志位由0-1，启动亚健康上报
+				DataCenter.warningTransmit();
+
+			} else {
+
+				stopUploadData();
+			}
 
 		} else if (Transmit_Mark_Change == 0 && change == 1) {
 
@@ -362,7 +429,17 @@ public class ControlCenter {
 		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHANGE && Arrive_Stop_Mark && change == 0) {
 
 			Arrive_Stop_Mark = false;
-			stopUploadData();
+			DataCenter.stopUploadData();
+
+			if (Transmit_Mark_Warning == 0 && warning == 1) {
+
+				// 亚健康标志位由0-1，启动亚健康上报
+				DataCenter.warningTransmit();
+
+			} else {
+
+				stopUploadData();
+			}
 
 		} else if (Transmit_Mark_Warning == 0 && warning == 1) {
 

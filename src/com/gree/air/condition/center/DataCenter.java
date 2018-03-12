@@ -336,7 +336,7 @@ public class DataCenter implements Runnable {
 
 			// 重置静默时间
 			Constant.Stop_Time = 0;
-			convertUploadData();
+			stopUploadData();
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_ALWAYS;
 			Transmit_Level = TRANSMIT_LEVEL_ALWAYS;
@@ -355,7 +355,7 @@ public class DataCenter implements Runnable {
 
 		if (Constant.System_Time > Constant.Stop_Time && Transmit_Level < TRANSMIT_LEVEL_DEBUG) {
 
-			convertUploadData();
+			stopUploadData();
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_DEBUG;
 			Transmit_Level = TRANSMIT_LEVEL_DEBUG;
@@ -381,7 +381,7 @@ public class DataCenter implements Runnable {
 
 			if (Transmit_Level < TRANSMIT_LEVEL_ERROR) {
 
-				convertUploadData();
+				stopUploadData();
 
 				// 重置发送游标，上报故障点前30分钟到后5分钟数据
 				checkOutStartMark(Constant.Transmit_Error_Start_Time);
@@ -411,7 +411,7 @@ public class DataCenter implements Runnable {
 
 			if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CLOSE || Transmit_Level < TRANSMIT_LEVEL_OPEN_CLOSE) {
 
-				convertUploadData();
+				stopUploadData();
 
 				// 重置发送游标
 				checkOutStartMark(Constant.Transmit_Open_Start_Time);
@@ -441,7 +441,7 @@ public class DataCenter implements Runnable {
 
 			if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_OPEN || Transmit_Level < TRANSMIT_LEVEL_OPEN_CLOSE) {
 
-				convertUploadData();
+				stopUploadData();
 
 				// 重置发送游标
 				checkOutStartMark(Constant.Transmit_Close_Start_Time);
@@ -462,7 +462,7 @@ public class DataCenter implements Runnable {
 
 		if (Transmit_Level < TRANSMIT_LEVEL_CHANGE && Constant.System_Time > Constant.Stop_Time) {
 
-			convertUploadData();
+			stopUploadData();
 
 			// 重置发送游标，上报变化点前5分钟到后1分钟数据
 			checkOutStartMark(5 * 60);
@@ -482,7 +482,7 @@ public class DataCenter implements Runnable {
 
 		if (Transmit_Level < TRANSMIT_LEVEL_PUSHKEY && Constant.System_Time > Constant.Stop_Time) {
 
-			convertUploadData();
+			stopUploadData();
 
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
 			checkOutEndMark(Constant.Transmit_Pushkey_End_Time);
@@ -501,7 +501,7 @@ public class DataCenter implements Runnable {
 
 		if (Transmit_Level < TRANSMIT_LEVEL_WARNING && Constant.System_Time > Constant.Stop_Time) {
 
-			convertUploadData();
+			stopUploadData();
 
 			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_WARNING;
 
@@ -522,7 +522,7 @@ public class DataCenter implements Runnable {
 
 		if (Transmit_Level < TRANSMIT_LEVEL_CHOOSE && Constant.System_Time > Constant.Stop_Time) {
 
-			convertUploadData();
+			stopUploadData();
 
 			// 重置发送游标，选举上报持续发送5分钟数据
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
@@ -541,7 +541,7 @@ public class DataCenter implements Runnable {
 	public static void powerTransmit() {
 
 		Constant.Stop_Time = 0L;
-		convertUploadData();
+		stopUploadData();
 
 		// 重置发送游标，选举上报持续发送5分钟数据
 		Data_Buffer_Out_Mark = Data_Buffer_Mark;
@@ -566,7 +566,7 @@ public class DataCenter implements Runnable {
 		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP
 				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS) {
 
-			convertUploadData();
+			stopUploadData();
 
 			FileWriteModel.setCheckTransm();
 		}
@@ -666,18 +666,6 @@ public class DataCenter implements Runnable {
 	}
 
 	/**
-	 * 用于转换数据上报时调用
-	 */
-	private static void convertUploadData() {
-
-		Can_Upload_Data = false;
-		Data_Buffer_Out_End_Mark = -1;
-
-		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
-		Transmit_Level = TRANSMIT_LEVEL_STOP;
-	}
-
-	/**
 	 * 暂停上报
 	 */
 	public static void pauseUploadData() {
@@ -689,18 +677,6 @@ public class DataCenter implements Runnable {
 	 * 停止数据上报
 	 */
 	public static void stopUploadData() {
-
-		Can_Upload_Data = false;
-		Data_Buffer_Out_End_Mark = -1;
-
-		Constant.Transmit_Type = Constant.TRANSMIT_TYPE_STOP;
-		Transmit_Level = TRANSMIT_LEVEL_STOP;
-	}
-
-	/**
-	 * 销毁数据上报
-	 */
-	public static void destoryUploadData() {
 
 		Can_Upload_Data = false;
 		Data_Buffer_Out_End_Mark = -1;
