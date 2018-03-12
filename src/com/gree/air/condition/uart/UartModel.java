@@ -167,7 +167,7 @@ public class UartModel {
 	 */
 	private static void logBuffer() {
 
-		Logger.log("Uart Get Message", Constant.Uart_In_Buffer, 0, Constant.Uart_In_Buffer_Length);
+		Logger.log(Constant.Uart_In_Buffer, Constant.Uart_In_Buffer_Length);
 	}
 
 }
