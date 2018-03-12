@@ -25,6 +25,7 @@ import com.gree.air.condition.sms.model.StartModel;
 import com.gree.air.condition.sms.model.StopModel;
 import com.gree.air.condition.sms.model.UsronModel;
 import com.gree.air.condition.sms.model.VerModel;
+import com.gree.air.condition.utils.Logger;
 import com.gree.air.condition.utils.Utils;
 
 public class SmsModel {
@@ -37,6 +38,8 @@ public class SmsModel {
 	 * 解析由服务器发送的短信，判断短信的功能，交给对应的模块进行处理
 	 */
 	public static void analyze(String phoneAddress) {
+
+		Logger.log("SMS Get", Constant.Sms_Receive);
 
 		if (!Constant.Gprs_Choosed || !Constant.Init_Success) {
 
