@@ -20,9 +20,18 @@ public class AdmModel extends SmsBaseModel {
 
 		for (int i = 0; i < Constant.Sms_Admin_List.length; i++) {
 
-			stringBuffer.append(i + 1);
-			stringBuffer.append(SmsConstant.Sms_Split_Value_Symbol);
-			stringBuffer.append(Constant.Sms_Admin_List[i]);
+			String string = (i + 1) + SmsConstant.Sms_Split_Value_Symbol + Constant.Sms_Admin_List[i];
+
+			if (stringBuffer.length() + string.length() > 70) {
+
+				stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+
+				SmsModel.buildMessage(SmsConstant.Sms_Type_Adm, stringBuffer.toString());
+
+				stringBuffer = new StringBuffer();
+			}
+
+			stringBuffer.append(string);
 
 			if (i < Constant.Sms_Admin_List.length - 1) {
 
@@ -36,6 +45,15 @@ public class AdmModel extends SmsBaseModel {
 	void setParams() {
 
 		String smsValue = SmsModel.smsGetValue(Constant.Sms_Receive);
+
+		if (!Utils.isNotEmpty(smsValue)) {
+
+			SmsModel.buildMessageError(SmsConstant.Sms_Type_Adm);
+
+			return;
+		}
+
+		smsValue = smsValue + SmsConstant.Sms_Split_Value_Symbol;
 
 		int start = 0;
 		int end = 0;
@@ -57,14 +75,15 @@ public class AdmModel extends SmsBaseModel {
 
 				String phone = smsValue.substring(start, end);
 
-				if (Utils.isNotEmpty(phone) && num > 0 && num < Constant.Sms_Admin_List.length) {
+				if (Utils.isNotEmpty(phone) && num > 0 && num < Constant.Sms_Admin_List.length && phone.length() >= 5
+						&& phone.length() <= 24) {
 
 					Constant.Sms_Admin_List[num] = phone;
-
-					start = end + 1;
-					isPhone = false;
 					isChange = true;
 				}
+
+				start = end + 1;
+				isPhone = false;
 			}
 		}
 

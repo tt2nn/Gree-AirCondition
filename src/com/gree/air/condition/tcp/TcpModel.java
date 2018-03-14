@@ -210,7 +210,7 @@ public class TcpModel {
 		// crc8校验码
 		Constant.Tcp_Out_Data_Buffer[crcPosition] = CRC.crc8(Constant.Tcp_Out_Data_Buffer, 2, crcPosition);
 
-		Logger.log("Tcp Send Message", Constant.Tcp_Out_Data_Buffer, 0, crcPosition + 1);
+//		Logger.log("Tcp Send Message", Constant.Tcp_Out_Data_Buffer, 0, crcPosition + 1);
 
 		TcpServer.sendDataForTransm(crcPosition + 1);
 	}

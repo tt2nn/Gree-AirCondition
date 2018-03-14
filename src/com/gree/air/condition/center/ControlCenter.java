@@ -519,7 +519,7 @@ public class ControlCenter {
 		FileModel.deleteAllFile();
 		uploadData();
 		destoryUploadData();
-		SmsServer.stopServer();
+		SmsServer.closeConnect();
 		UartServer.stopServer();
 	}
 }

@@ -10,6 +10,7 @@ import javax.wireless.messaging.TextMessage;
 
 import com.gree.air.condition.Run;
 import com.gree.air.condition.constant.Constant;
+import com.gree.air.condition.utils.Logger;
 
 /**
  * 短信服务
@@ -25,6 +26,8 @@ public class SmsServer implements Runnable {
 
 	private static Thread smsThread;
 
+	private static Object lock = new Object();
+
 	/**
 	 * 启动短信服务
 	 */
@@ -36,12 +39,14 @@ public class SmsServer implements Runnable {
 
 	public void run() {
 
-		try {
+		while (Run.Running_State) {
 
-			String address = "sms://:0";
-			msgconn = (MessageConnection) Connector.open(address);
+			Logger.log("Sms Server", "Server Start");
 
-			while (Run.Running_State) {
+			try {
+
+				String address = "sms://:0";
+				msgconn = (MessageConnection) Connector.open(address);
 
 				/* gets message object */
 				message = msgconn.receive();
@@ -68,11 +73,13 @@ public class SmsServer implements Runnable {
 						SmsModel.analyze(Sms_Address);
 					}
 				}
+
+				closeConnect();
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
 			}
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
 		}
 	}
 
@@ -81,25 +88,29 @@ public class SmsServer implements Runnable {
 	 * 
 	 * @param message
 	 */
-	public static void sendMessage() {
+	public static void sendMessage(final String message) {
 
 		new Thread(new Runnable() {
 			public void run() {
 
 				try {
 
-					/* to open message connection */
-					MessageConnection msgconnSend = (MessageConnection) Connector.open(Sms_Address);
+					synchronized (lock) {
 
-					// sending text message
-					TextMessage textmsg = (TextMessage) msgconnSend.newMessage(MessageConnection.TEXT_MESSAGE);
+						/* to open message connection */
+						MessageConnection msgconnSend = (MessageConnection) Connector.open(Sms_Address);
 
-					/* pay load text passed here */
-					textmsg.setPayloadText(Constant.Sms_Send);
-					/* send the text message */
-					msgconnSend.send(textmsg);
+						// sending text message
+						TextMessage textmsg = (TextMessage) msgconnSend.newMessage(MessageConnection.TEXT_MESSAGE);
 
-					msgconnSend.close();
+						/* pay load text passed here */
+						textmsg.setPayloadText(message);
+						/* send the text message */
+						msgconnSend.send(textmsg);
+
+						msgconnSend.close();
+						closeConnect();
+					}
 
 				} catch (IOException e) {
 
@@ -113,13 +124,14 @@ public class SmsServer implements Runnable {
 	/**
 	 * 停止server
 	 */
-	public static void stopServer() {
+	public static void closeConnect() {
 
 		if (msgconn != null) {
 
 			try {
 
 				msgconn.close();
+				msgconn = null;
 
 			} catch (IOException e) {
 

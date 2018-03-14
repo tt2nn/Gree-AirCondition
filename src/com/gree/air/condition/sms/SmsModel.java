@@ -40,7 +40,7 @@ public class SmsModel {
 	public static void analyze(String phoneAddress) {
 
 		Logger.log("SMS Get", Constant.Sms_Receive);
-
+		
 		if (!Constant.Gprs_Choosed || !Constant.Init_Success) {
 
 			return;
@@ -251,11 +251,19 @@ public class SmsModel {
 	 */
 	public static String smsGetPwd(String sms) {
 
-		int start = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, 0);
-		int end = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, start + 1);
-		String smsPwd = sms.substring(start + 1, end);
+		try {
 
-		return smsPwd;
+			int start = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, 0);
+			int end = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, start + 1);
+			String smsPwd = sms.substring(start + 1, end);
+
+			return smsPwd;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "";
 	}
 
 	/**
@@ -266,20 +274,28 @@ public class SmsModel {
 	 */
 	public static String smsGetValue(String sms) {
 
-		int start = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, 0);
-		start = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, start + 1);
-		start = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, start + 1);
+		try {
 
-		int end = 0;
-		int poi = start;
-		while ((poi = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, poi + 1)) != -1) {
+			int start = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, 0);
+			start = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, start + 1);
+			start = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, start + 1);
 
-			end = poi;
+			int end = 0;
+			int poi = start;
+			while ((poi = sms.indexOf(SmsConstant.Sms_Split_Key_Symbol, poi + 1)) != -1) {
+
+				end = poi;
+			}
+
+			String smsValue = sms.substring(start + 1, end);
+
+			return smsValue;
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
-		String smsValue = sms.substring(start + 1, end);
-
-		return smsValue;
+		return "";
 	}
 
 	/**
@@ -292,7 +308,9 @@ public class SmsModel {
 	 */
 	public static void buildMessage(String smsType, String smsValue) {
 
-		Constant.Sms_Send = smsType + smsValue + SmsConstant.Sms_Split_Key_Symbol;
+		String message = smsType + smsValue + SmsConstant.Sms_Split_Key_Symbol;
+
+		SmsServer.sendMessage(message);
 	}
 
 	/**
@@ -303,7 +321,9 @@ public class SmsModel {
 	 */
 	public static void buildMessageOk(String smsType) {
 
-		Constant.Sms_Send = smsType + SmsConstant.Sms_Set_Ok + SmsConstant.Sms_Split_Key_Symbol;
+		String message = smsType + SmsConstant.Sms_Set_Ok + SmsConstant.Sms_Split_Key_Symbol;
+
+		SmsServer.sendMessage(message);
 	}
 
 	/**
@@ -312,9 +332,11 @@ public class SmsModel {
 	 * @param smsType
 	 *            消息类型
 	 */
-	protected static void buildMessageError(String smsType) {
+	public static void buildMessageError(String smsType) {
 
-		Constant.Sms_Send = smsType + SmsConstant.Sms_Message_Error + SmsConstant.Sms_Split_Key_Symbol;
+		String message = smsType + SmsConstant.Sms_Message_Error + SmsConstant.Sms_Split_Key_Symbol;
+
+		SmsServer.sendMessage(message);
 	}
 
 	/**
@@ -325,7 +347,9 @@ public class SmsModel {
 	 */
 	public static void buildMessageEmpty(String smsType) {
 
-		Constant.Sms_Send = smsType + SmsConstant.Sms_Message_Empty + SmsConstant.Sms_Split_Key_Symbol;
+		String message = smsType + SmsConstant.Sms_Message_Empty + SmsConstant.Sms_Split_Key_Symbol;
+
+		SmsServer.sendMessage(message);
 	}
 
 	public static boolean isAdmin() {

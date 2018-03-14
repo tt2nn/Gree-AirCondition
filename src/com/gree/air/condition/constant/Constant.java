@@ -30,9 +30,9 @@ public class Constant {
 
 	// =================== about tcp constant ===================
 	// TCP通讯收Buffer
-	public static byte[] Tcp_In_Buffer = new byte[512];
+	public static byte[] Tcp_In_Buffer = new byte[1024];
 	// TCP通讯发Buffer
-	public static byte[] Tcp_Out_Buffer = new byte[512];
+	public static byte[] Tcp_Out_Buffer = new byte[1024];
 	// TCP 上传数据 Buffer
 	public static byte[] Tcp_Out_Data_Buffer = new byte[2048];
 
@@ -71,7 +71,6 @@ public class Constant {
 
 	// =============== about sms constant =====================
 	public static String Sms_Receive = "";
-	public static String Sms_Send = "";
 
 	// ================= about file constant ================
 	public static byte[] File_Buffer = new byte[256];
@@ -94,6 +93,7 @@ public class Constant {
 	// 管理员手机号白名单
 	public static String[] Sms_Admin_List = { "18023036958", "13128553002", "1069800006512610", "18926932781",
 			"15992681809" };
+
 	// 手机短信
 	public static String Sms_Pwd = "123456";
 

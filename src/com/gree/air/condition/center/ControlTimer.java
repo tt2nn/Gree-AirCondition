@@ -7,6 +7,7 @@ import com.gree.air.condition.gpio.GpioPin;
 import com.gree.air.condition.gpio.GpioTool;
 import com.gree.air.condition.tcp.TcpPin;
 import com.gree.air.condition.tcp.TcpServer;
+import com.gree.air.condition.utils.Logger;
 import com.gree.air.condition.variable.Variable;
 
 /**
@@ -176,6 +177,9 @@ public class ControlTimer implements Runnable {
 
 					// 每三秒打包一次数据
 					if (Constant.System_Time - packageTime >= 3 * 1000) {
+
+						Logger.log("ControlTimer",
+								Constant.Transmit_Type + "==========" + DeviceConfigure.getNetworkSignalLevel());
 
 						ControlCenter.packageData();
 					}

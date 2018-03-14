@@ -39,6 +39,7 @@ public class Run {
 		// start timer
 		Timer.startTimer();
 		ControlTimer.startTimer();
+		Logger.startLogTimer();
 
 		DeviceConfigure.deviceInit();
 		SpiTool.init(2048);
@@ -48,7 +49,7 @@ public class Run {
 
 		try {
 
-			Thread.sleep(25 * 1000);
+			Thread.sleep(30 * 1000);
 
 		} catch (InterruptedException e) {
 
@@ -70,8 +71,8 @@ public class Run {
 		Constant.Gprs_Mac[5] = Utils.stringToByte(Device.getInstance().getImei().substring(11, 13));
 		Constant.Gprs_Mac[6] = Utils.stringToByte(Device.getInstance().getImei().substring(13, 15));
 
-		new TcpPin().startPin(false);
 		new TcpPin().startPin(true);
+//		new TcpPin().startPin(false);
 
 		SmsServer.startServer();
 		DataCenter.startUploadData();
