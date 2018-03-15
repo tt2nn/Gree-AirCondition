@@ -32,7 +32,6 @@ public class TcpPin implements Runnable {
 		}
 
 		new Thread(this).start();
-
 	}
 
 	public void run() {
