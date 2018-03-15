@@ -37,10 +37,12 @@ public class MbReadBitModel {
 		}
 
 		// crc16
-		byte[] crc16 = CRC.crc16(Constant.Uart_Out_Buffer, dataLength + 5);
+		byte[] crc16 = CRC.crc16(Constant.Uart_Out_Buffer, 2, dataLength + 5);
 		Constant.Uart_Out_Buffer[dataLength + 5] = crc16[1];
 		Constant.Uart_Out_Buffer[dataLength + 6] = crc16[0];
 
+		Utils.resetData(Constant.Server_Data_Byte_Buffer);
+		
 		UartModel.build(dataLength + 7);
 	}
 

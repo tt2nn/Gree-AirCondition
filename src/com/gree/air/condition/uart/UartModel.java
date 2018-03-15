@@ -157,7 +157,7 @@ public class UartModel {
 		Constant.Uart_Out_Buffer[0] = (byte) 0xFA;
 		Constant.Uart_Out_Buffer[1] = (byte) 0xFB;
 
-		// Logger.log("Uart Send Message", Constant.Uart_Out_Buffer , 0 , length);
+//		Logger.log(Constant.Uart_Out_Buffer, length);
 
 		UartServer.sendData(length);
 	}

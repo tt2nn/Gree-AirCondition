@@ -34,8 +34,6 @@ public class Run {
 
 		Running_State = true;
 
-		Configure.init();
-
 		// start timer
 		Timer.startTimer();
 		ControlTimer.startTimer();
@@ -44,12 +42,12 @@ public class Run {
 		DeviceConfigure.deviceInit();
 		SpiTool.init(2048);
 		GpioPin.gpioInit();
-		GpioPin.closeAllLight();
 		DataCenter.init();
+		Configure.init();
 
 		try {
 
-			Thread.sleep(25 * 1000);
+			Thread.sleep(30 * 1000 - Constant.System_Time);
 
 		} catch (InterruptedException e) {
 
@@ -72,13 +70,13 @@ public class Run {
 		Constant.Gprs_Mac[6] = Utils.stringToByte(Device.getInstance().getImei().substring(13, 15));
 
 		new TcpPin().startPin(true);
-		
+
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		new TcpPin().startPin(false);
 
 		SmsServer.startServer();

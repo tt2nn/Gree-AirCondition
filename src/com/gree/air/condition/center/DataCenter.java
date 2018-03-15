@@ -558,14 +558,10 @@ public class DataCenter implements Runnable {
 	 */
 	public static void registerCheckTransmit() {
 
-		if (Constant.System_Time < Constant.Stop_Time) {
-
-			return;
-		}
-
 		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP
 				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS) {
 
+			Constant.Stop_Time = 0;
 			stopUploadData();
 
 			FileWriteModel.setCheckTransm();

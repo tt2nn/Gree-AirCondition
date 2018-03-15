@@ -296,6 +296,7 @@ public class ControlCenter {
 		DataCenter.stopUploadData();
 		stopTcpServer();
 		FileWriteModel.setStopTransm();
+		Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_STOP;
 	}
 
 	/**

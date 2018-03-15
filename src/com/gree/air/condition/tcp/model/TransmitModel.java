@@ -7,6 +7,7 @@ import com.gree.air.condition.center.ControlCenter;
 import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.tcp.TcpModel;
 import com.gree.air.condition.utils.Utils;
+import com.gree.air.condition.variable.Variable;
 
 /**
  * 传输
@@ -26,7 +27,14 @@ public class TransmitModel {
 
 		Constant.Tcp_Out_Buffer[18] = (byte) 0x91;
 
-		Constant.Tcp_Out_Buffer[19] = Constant.Transmit_Type;
+		if (Variable.Transmit_Cache_Type == Constant.TRANSMIT_TYPE_CHECK) {
+
+			Constant.Tcp_Out_Buffer[19] = (byte) (Constant.Transmit_Type | Constant.TRANSMIT_TYPE_CHECK);
+
+		} else {
+
+			Constant.Tcp_Out_Buffer[19] = Constant.Transmit_Type;
+		}
 
 		// 获取年月日时分秒
 		date.setTime(Constant.System_Time);
@@ -95,7 +103,7 @@ public class TransmitModel {
 
 			break;
 
-		case Constant.TRANSMIT_TYPE_CHECK:
+		case (byte) 0x02:
 
 			ControlCenter.startCheckTransmit();
 

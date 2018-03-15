@@ -61,7 +61,7 @@ public class Constant {
 	// 上电上报
 	public static final byte TRANSMIT_TYPE_POWER = (byte) 0x08;
 	// 打卡上报
-	public static final byte TRANSMIT_TYPE_CHECK = (byte) 0x09;
+	public static final byte TRANSMIT_TYPE_CHECK = (byte) 0x80;
 	// 开机上报
 	public static final byte TRANSMIT_TYPE_OPEN = (byte) 0X0A;
 	// 停止上报
