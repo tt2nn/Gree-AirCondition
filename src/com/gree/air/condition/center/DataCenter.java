@@ -503,8 +503,6 @@ public class DataCenter implements Runnable {
 
 			stopUploadData();
 
-			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_WARNING;
-
 			// 重置发送游标
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
 
