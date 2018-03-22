@@ -450,7 +450,6 @@ public class ControlCenter {
 		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_WARNING && warning == 0) {
 
 			// 亚健康标志位由1-0，停止亚健康上报
-			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_CHECK;
 			DataCenter.stopUploadData();
 
 		} else if (Variable.Transmit_Cache_Type == Constant.TRANSMIT_TYPE_WARNING && warning == 1) {
@@ -488,6 +487,21 @@ public class ControlCenter {
 	public static boolean getTransmit_Mark_Open() {
 
 		if (Transmit_Mark_Open == 1) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * get warn mark
+	 * 
+	 * @return
+	 */
+	public static boolean getTransmit_Mark_Warning() {
+
+		if (Transmit_Mark_Warning == 1) {
 
 			return true;
 		}

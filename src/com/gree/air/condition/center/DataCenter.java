@@ -561,11 +561,11 @@ public class DataCenter implements Runnable {
 		if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_STOP
 				|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_ALWAYS) {
 
-			Constant.Stop_Time = 0;
 			stopUploadData();
-
-			FileWriteModel.setCheckTransm();
 		}
+
+		Constant.Stop_Time = 0;
+		FileWriteModel.setCheckTransm();
 	}
 
 	/**
@@ -586,7 +586,7 @@ public class DataCenter implements Runnable {
 		}
 
 		// 判断缓存上报状态
-		if (Variable.Transmit_Cache_Type != Constant.TRANSMIT_TYPE_CHECK) {
+		if (ControlCenter.getTransmit_Mark_Warning() || Variable.Transmit_Cache_Type != Constant.TRANSMIT_TYPE_CHECK) {
 
 			return;
 		}
