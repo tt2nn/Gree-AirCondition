@@ -27,6 +27,7 @@ import com.gree.air.condition.sms.model.UsronModel;
 import com.gree.air.condition.sms.model.VerModel;
 import com.gree.air.condition.utils.Logger;
 import com.gree.air.condition.utils.Utils;
+import com.gree.air.condition.variable.Variable;
 
 public class SmsModel {
 
@@ -41,7 +42,7 @@ public class SmsModel {
 
 		Logger.log("SMS Get", Constant.Sms_Receive);
 		
-		if (!Constant.Gprs_Choosed || !Constant.Init_Success) {
+		if (!Constant.Gprs_Choosed || !Constant.Init_Success || !Variable.Transmit_Choose_Or_Power) {
 
 			return;
 		}
