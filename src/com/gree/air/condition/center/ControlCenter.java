@@ -5,6 +5,7 @@ import com.gree.air.condition.constant.Constant;
 import com.gree.air.condition.file.FileModel;
 import com.gree.air.condition.file.FileWriteModel;
 import com.gree.air.condition.gpio.GpioPin;
+import com.gree.air.condition.gpio.GpioTool;
 import com.gree.air.condition.sms.SmsServer;
 import com.gree.air.condition.tcp.TcpServer;
 import com.gree.air.condition.tcp.model.LoginModel;
@@ -520,7 +521,9 @@ public class ControlCenter {
 	public static void resetSystem() {
 
 		Run.Running_State = false;
-		GpioPin.closeAllLight();
+		GpioPin.communicationLight();
+		GpioPin.errorLight();
+		GpioTool.setSignLevel(20);
 		FileModel.deleteAllFile();
 		uploadData();
 		destoryUploadData();

@@ -42,6 +42,7 @@ public class Run {
 		DeviceConfigure.deviceInit();
 		SpiTool.init(2048);
 		GpioPin.gpioInit();
+		GpioPin.closeAllLight();
 		DataCenter.init();
 		Configure.init();
 
