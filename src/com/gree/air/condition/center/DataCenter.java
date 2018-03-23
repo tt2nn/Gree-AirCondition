@@ -503,7 +503,7 @@ public class DataCenter implements Runnable {
 
 			stopUploadData();
 
-			// 重置发送游标
+			ControlCenter.Warning_Transmit = true;
 			Data_Buffer_Out_Mark = Data_Buffer_Mark;
 
 			Constant.Transmit_Type = Constant.TRANSMIT_TYPE_WARNING;
@@ -584,7 +584,7 @@ public class DataCenter implements Runnable {
 		}
 
 		// 判断缓存上报状态
-		if (ControlCenter.getTransmit_Mark_Warning() || Variable.Transmit_Cache_Type != Constant.TRANSMIT_TYPE_CHECK) {
+		if (ControlCenter.Warning_Transmit || Variable.Transmit_Cache_Type != Constant.TRANSMIT_TYPE_CHECK) {
 
 			return;
 		}

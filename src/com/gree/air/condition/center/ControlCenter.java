@@ -44,6 +44,8 @@ public class ControlCenter {
 	// 判断模块是否登录
 	public static boolean Gprs_Login = false;
 
+	public static boolean Warning_Transmit = false;
+
 	/**
 	 * 判断App是否可以工作
 	 * 
@@ -293,6 +295,7 @@ public class ControlCenter {
 	 */
 	public static void destoryUploadData() {
 
+		Warning_Transmit = false;
 		DataCenter.stopUploadData();
 		stopTcpServer();
 		FileWriteModel.setStopTransm();
@@ -447,12 +450,14 @@ public class ControlCenter {
 			// 亚健康标志位由0-1，启动亚健康上报
 			DataCenter.warningTransmit();
 
-		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_WARNING && warning == 0) {
+		} else if (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_WARNING && Transmit_Mark_Warning == 1
+				&& warning == 0) {
 
 			// 亚健康标志位由1-0，停止亚健康上报
+			Warning_Transmit = false;
 			DataCenter.stopUploadData();
 
-		} else if (Variable.Transmit_Cache_Type == Constant.TRANSMIT_TYPE_WARNING && warning == 1) {
+		} else if (Warning_Transmit && warning == 1) {
 
 			// 缓存上报模式为亚健康上报，标志位为1，继续亚健康上报
 			DataCenter.warningTransmit();
@@ -487,21 +492,6 @@ public class ControlCenter {
 	public static boolean getTransmit_Mark_Open() {
 
 		if (Transmit_Mark_Open == 1) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * get warn mark
-	 * 
-	 * @return
-	 */
-	public static boolean getTransmit_Mark_Warning() {
-
-		if (Transmit_Mark_Warning == 1) {
 
 			return true;
 		}
