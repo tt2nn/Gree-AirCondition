@@ -197,6 +197,7 @@ public class ControlCenter {
 		Constant.GPRS_ERROR_TYPE = Constant.GPRS_ERROR_TYPE_NO;
 		FileWriteModel.setNotChoosed();
 		destoryUploadData();
+		Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_CHECK;
 	}
 
 	/**
@@ -297,8 +298,7 @@ public class ControlCenter {
 	public static void destoryUploadData() {
 
 		Warning_Transmit = false;
-		DataCenter.stopUploadData();
-		stopTcpServer();
+		stopUploadData();
 		FileWriteModel.setStopTransm();
 		Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_STOP;
 	}
