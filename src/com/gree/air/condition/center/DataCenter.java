@@ -32,7 +32,6 @@ public class DataCenter implements Runnable {
 	private static final int TRANSMIT_LEVEL_DEBUG = 9;
 	private static final int TRANSMIT_LEVEL_ALWAYS = 10;
 	private static int Transmit_Level = TRANSMIT_LEVEL_STOP;
-	private static int Transmit_Cache_Level = TRANSMIT_LEVEL_STOP;
 
 	// 数据使用游标 由 0-2047
 	private static int Data_Buffer_Mark = 0;
@@ -237,14 +236,11 @@ public class DataCenter implements Runnable {
 				if (!Variable.Transmit_Choose_Or_Power && (Constant.Transmit_Type == Constant.TRANSMIT_TYPE_CHOOSE
 						|| Constant.Transmit_Type == Constant.TRANSMIT_TYPE_POWER)) {
 
-					if (Transmit_Cache_Level > Transmit_Level) {
+					switch (Variable.Transmit_Cache_Type) {
+					case Constant.TRANSMIT_TYPE_ALWAYS:
 
-						switch (Variable.Transmit_Cache_Type) {
-						case Constant.TRANSMIT_TYPE_ALWAYS:
-
-							alwaysTransmit();
-							break;
-						}
+						alwaysTransmit();
+						break;
 					}
 
 					Variable.Transmit_Choose_Or_Power = true;
@@ -324,11 +320,9 @@ public class DataCenter implements Runnable {
 	 */
 	public static void alwaysTransmit() {
 
-		if (!Variable.Transmit_Choose_Or_Power && Transmit_Cache_Level < TRANSMIT_LEVEL_ALWAYS) {
+		if (!Variable.Transmit_Choose_Or_Power) {
 
-			Transmit_Cache_Level = TRANSMIT_LEVEL_ALWAYS;
 			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_ALWAYS;
-
 			return;
 		}
 
