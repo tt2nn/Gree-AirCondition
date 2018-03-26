@@ -30,7 +30,7 @@ public class Run {
 
 	public static void main(String[] args) {
 
-		Logger.log("System Running", "Start Run");
+		Logger.log("System Running", "Start Run -------Version:" + Constant.APP_VERSION);
 
 		Running_State = true;
 
