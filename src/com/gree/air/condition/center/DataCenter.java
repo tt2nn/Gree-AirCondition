@@ -320,12 +320,6 @@ public class DataCenter implements Runnable {
 	 */
 	public static void alwaysTransmit() {
 
-		if (!Variable.Transmit_Choose_Or_Power) {
-
-			Variable.Transmit_Cache_Type = Constant.TRANSMIT_TYPE_ALWAYS;
-			return;
-		}
-
 		if (Transmit_Level < TRANSMIT_LEVEL_ALWAYS) {
 
 			// 重置静默时间
